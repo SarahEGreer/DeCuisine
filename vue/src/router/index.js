@@ -6,6 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import RecipeFormView from '../views/RecipeFormView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -47,7 +48,16 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/recipes/new",
+    name: "recipe-form",
+    component: RecipeFormView,
+    meta: {
+      requiresAuth: false //Set to true when authentication is implemented
+    }
   }
+
 ];
 
 // Create the router
