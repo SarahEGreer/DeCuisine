@@ -118,6 +118,7 @@ export default {
             newRecipe: {...this.recipe},
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
+            newIngredients: [],
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
             prepTimeHours: 0,
             prepTimeMinutes: 0,
@@ -153,6 +154,30 @@ export default {
             });
         },
 
+        checkNewIngredients(ingredients) { //check for duplicates and only post 1 copy BACKEND??
+            ingredients.forEach(ingredient => { //&& statement for newIngredients array
+                if (!this.ingredientOptions.map(opt => opt.toLowerCase()).includes(ingredient.name.toLowerCase())) {
+                    this.newIngredients.push(ingredient.name);
+                }
+            });
+        },
+
+        // checkNewIngredients(ingredients) {
+        //     ingredients.forEach(ingredient => {
+        //         if (!this.ingredientOptions.includes(ingredient.name.toLowerCase())) {
+        //             console.log(ingredient.name.toLowerCase());
+        //             this.newIngredients.push(ingredient.name);
+        //         }
+        //     });
+        // },
+
+
+        // checkNewIngredient(ingredientName) {
+        //     if (!this.ingredientOptions.includes(ingredientName.toLowerCase())) {
+        //         this.newIngredients.push(ingredientName);
+        //     }
+        // },
+
         submitForm() {
             // RecipeService.createRecipe(this.recipe).then(response => {
             //     this.$router.push({ name: 'RecipeList' })
@@ -160,7 +185,10 @@ export default {
             
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+            this.checkNewIngredients(this.newRecipe.ingredients);
+            console.log(this.newIngredients);
             console.log(this.newRecipe);
+            
             this.newRecipe = {
                     id: 0,
                     name: '',
@@ -171,6 +199,7 @@ export default {
                     ingredients: [],
                     instructions: ''
             };
+            this.newIngredients = [];
             this.prepTimeHours = 0;
             this.prepTimeMinutes = 0;
             this.cookTimeHours = 0;
