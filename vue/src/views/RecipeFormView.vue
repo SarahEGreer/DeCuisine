@@ -3,11 +3,7 @@
 
     <recipe-form v-bind:recipe="recipe"/>
 
-    
-
-
 </template>
-
 
 
 <script>
@@ -32,7 +28,6 @@ export default {
         }
     }
 }
-
 
 
 </script>
