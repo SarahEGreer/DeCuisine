@@ -10,53 +10,26 @@
 
             <label for="prep-time-hours">Prep Time:</label>
             <input type="number" id="prep-time-hours" name="prep-time-hours"
-                min="0" placeholder="Hours" >
+                min="0" placeholder="Hours" v-model.number="prepTimeHours">
             <input type="number" id="prep-time-minutes" name="prep-time-minutes"
-                min="0" max="59" placeholder="Minutes">
+                min="0" max="59" placeholder="Minutes" v-model.number="prepTimeMinutes">
 
             </div>
 
             <div>
             <label for="cook-time-hours">Cook Time:</label>
             <input type="number" id="cook-time-hours" name="cook-time-hours"
-                min="0" placeholder="Hours" >
+                min="0" placeholder="Hours" v-model.number="cookTimeHours">
             <input type="number" id="cook-time-minutes" name="cook-time-minutes"
-                min="0" max="59" placeholder="Minutes" >
-
-                <!-- upon !SUBMIT! call converter to take in time-hours and time minutes, model the return to time object -->
-
-                <!-- call converter to take in time-hours and time minutes, model the return to time object -->
-                
-
-                <!-- make into multiparam hour minute object pushed to new recipe as '....time'
-                 convert hours to minutes and add to minutes then push out as time in minutes  
-                take in two above inputs and create a new v-model
-                -->
-
+                min="0" max="59" placeholder="Minutes" v-model.number="cookTimeMinutes">
             </div>
-
-
-
-                <!-- <label for="prep-time">Prep Time: </label>
-            <input type="time" id="prep-time" name="prep-time" v-model="newRecipe.prepTime"> -->
-
-            <!-- <label for="cook-time">Cook Time: </label>
-            <input type="time" id="cook-time" name="cook-time" v-model="newRecipe.cookTime"> -->
-
-            <!-- <label for="cook-time">Cook Time:</label>
-            <input type="number" id="cook-time" name="cook-time" min="1"
-                required><select id="cook-time-unit" name="cook-time-unit">
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-            </select> -->
-
 
 
             <label for="description">Description: </label>
             <textarea id="description" name="description" v-model="newRecipe.description"></textarea>
 
             <label for="servings">Servings: </label>
-            <input type="number" id="servings" name="servings" v-model="newRecipe.servings">
+            <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings">
 
 
             <label for="ingredients">Ingredients: </label>
@@ -90,26 +63,6 @@
 
             <button type="button" v-on:click="addIngredient">Add Ingredient</button>
 
-            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            
-            For loop that generates a new ingredient builder for each index in ingredient array
-            v-for loop that iterates through newRecipe key=index (length plus 1)
-
-            Ingredient name
-            select v-model ingredient.name 
-            TEMP for testing purposes
-            option v-for option in ingredientOptions TODO key option value option 
-
-            Quantity input
-            input type = number v-model ingredient.quantity 
-            
-            Unit selector
-            select v-model ingredient.unit
-            option v-for option in unitOptions TODO key unit value unit            
-            
-            
-            -->
-
             <label for="instructions">Instructions: </label>
             <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required></textarea>
 
@@ -125,11 +78,6 @@
 // import RecipeService from '../services/RecipeService.js'
 // import IngredientService from '../services/IngredientService.js'
 
-
-let cookTime = 0; //UNUTILIZED VARIABLE for use in conversion at submit time
-let prepTime = 0; //UNUTILIZED VARIABLE
-
-
 export default {
 
     props: {
@@ -140,8 +88,8 @@ export default {
                 return {
                     id: 0,
                     name: '',
-                    prepTime: '', //CONVERT TO MINUTES?
-                    cookTime: '', //CONVERT TO MINUTES?
+                    prepTime: '', 
+                    cookTime: '', 
                     description: '',
                     servings: '',
                     ingredients: [],
@@ -157,24 +105,13 @@ export default {
             newRecipe: {...this.recipe},
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
+            prepTimeHours: 0,
+            prepTimeMinutes: 0,
+            cookTimeHours: 0,
+            cookTimeMinutes: 0
         };
 
     },
-    // data() {
-    //     return {
-    //         newRecipe: {
-    //             // id: this.recipe.id,
-    //             name: this.recipe.name,
-    //             prepTime: this.recipe.prepTime,
-    //             cookTime: this.recipe.cookTime,
-    //             description: this.recipe.description,
-    //             servings: this.recipe.servings,
-    //             ingredients: this.recipe.ingredients,
-    //             instructions: this.recipe.instructions
-    //         },
-    //         ingredients: []
-    //     }
-    // },
 
     // mounted() {
     //     // IngredientService.getIngredients().then(response => {
@@ -191,30 +128,33 @@ export default {
         removeIngredient(index) {
             this.newRecipe.ingredients.splice(index, 1);
         },
-        
 
-        updateCookTime(timeType, prepOrCook) { //UNUTILIZED FUNCTION for use in conversion at submit time
-            if (prepOrCook === 'cook') {
-                if (timeType === 'hours') {
-                    this.newRecipe.cookTime += document.getElementById('cook-time-hours').value * 60;
-                } else {
-                    this.newRecipe.cookTime += document.getElementById('cook-time-minutes').value;
-                }
-            } else {
-                if (timeType === 'hours') {
-                this.newRecipe.prepTime += document.getElementById('prep-time-hours').value * 60;
-                 } else {
-                this.newRecipe.prepTime += document.getElementById('prep-time-minutes').value;
-                }
-            }
+        convertToMinutes(hours, minutes){
+            return (hours*60) + minutes;
         },
-    
 
-        // submitForm() {
-        //     // RecipeService.createRecipe(this.recipe).then(response => {
-        //     //     this.$router.push({ name: 'RecipeList' })
-        //     // })
-        // }
+        submitForm() {
+            // RecipeService.createRecipe(this.recipe).then(response => {
+            //     this.$router.push({ name: 'RecipeList' })
+            // })
+            this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
+            this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+            this.newRecipe = {
+                    id: 0,
+                    name: '',
+                    prepTime: '', 
+                    cookTime: '', 
+                    description: '',
+                    servings: '',
+                    ingredients: [],
+                    instructions: ''
+            };
+            this.prepTimeHours = 0;
+            this.prepTimeMinutes = 0;
+            this.cookTimeHours = 0;
+            this.cookTimeMinutes = 0;
+
+        }
     }
 
 }
@@ -230,3 +170,5 @@ textarea {
     resize: none;
   }
 </style>
+
+
