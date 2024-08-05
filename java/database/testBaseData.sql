@@ -25,20 +25,20 @@ INSERT INTO ingredients (ingredient_name) VALUES
 ('Chocolate Chips');
 -- Recipes_Ingredients Table
 INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
-(1, 51, 400, 'grams', 'Metric'),
-(1, 52, 4, 'pieces', 'Metric'),
-(1, 53, 100, 'grams', 'Metric'),
-(1, 54, 150, 'grams', 'Metric'),
-(1, 55, 5, 'grams', 'Metric'),
-(2, 56, 1, 'cup', 'Imperial'),
+(1, 50, 400, 'grams', 'Metric'),
+(1, 51, 4, 'pieces', 'Metric'),
+(1, 52, 100, 'grams', 'Metric'),
+(1, 53, 150, 'grams', 'Metric'),
+(1, 54, 5, 'grams', 'Metric'),
+(2, 55, 1, 'cup', 'Imperial'),
+(2, 56, 0.5, 'cup', 'Imperial'),
 (2, 57, 0.5, 'cup', 'Imperial'),
-(2, 58, 0.5, 'cup', 'Imperial'),
-(2, 59, 2, 'pieces', 'Imperial'),
-(2, 60, 1, 'tsp', 'Imperial'),
-(2, 61, 2.5, 'cups', 'Imperial'),
-(2, 62, 1, 'tsp', 'Imperial'),
-(2, 63, 0.5, 'tsp', 'Imperial'),
-(2, 64, 2, 'cups', 'Imperial');
+(2, 58, 2, 'pieces', 'Imperial'),
+(2, 59, 1, 'tsp', 'Imperial'),
+(2, 60, 2.5, 'cups', 'Imperial'),
+(2, 61, 1, 'tsp', 'Imperial'),
+(2, 62, 0.5, 'tsp', 'Imperial'),
+(2, 63, 2, 'cups', 'Imperial');
 -- Recipe_Tags Table
 -- INSERT INTO recipe_tags (recipe_id, tag_id) VALUES
 -- (1, 3),
