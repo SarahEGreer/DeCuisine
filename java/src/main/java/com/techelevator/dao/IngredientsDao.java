@@ -1,16 +1,17 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Ingredients;
+import com.techelevator.model.Recipe;
+import com.techelevator.model.Recipe_Ingredients;
 
 import java.util.List;
 
 public interface IngredientsDao {
 
-    List<Ingredients> getAllIngredients ();
+    List<Recipe_Ingredients> getAllIngredients ();
 
-    List<Ingredients> getIngredientsByRecipe (int recipeId);
+    List<Recipe_Ingredients> getIngredientsByRecipe (int recipeId);
 
-    Ingredients createIngredient (Ingredients ingredients);
+    Recipe_Ingredients createIngredient (Recipe_Ingredients ingredients);
 
 
 
