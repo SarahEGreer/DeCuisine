@@ -1,26 +1,55 @@
 package com.techelevator.model;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
-public class RecipeDto {
+public class Recipe {
 
-    @NotNull
+    private int recipeId;
+    private int userId;
     private String recipeName;
     private String recipeDescription;
-    @NotNull
     private String recipeInstructions;
     private String prepTime;
     private String cookTime;
     private String servings;
+    private List<String> ingredientsList;
 
+    public Recipe(){};
 
-    public RecipeDto(String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings) {
+    public Recipe(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings, List<String> ingredientsList) {
+        this.recipeId = recipeId;
+        this.userId = userId;
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
         this.recipeInstructions = recipeInstructions;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
+        this.ingredientsList = ingredientsList;
+    }
+
+    public List<String> getIngredientsList() {
+        return ingredientsList;
+    }
+
+    public void setIngredientsList(List<String> ingredientsList) {
+        this.ingredientsList = ingredientsList;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getRecipeName() {
@@ -70,6 +99,4 @@ public class RecipeDto {
     public void setServings(String servings) {
         this.servings = servings;
     }
-
-
 }
