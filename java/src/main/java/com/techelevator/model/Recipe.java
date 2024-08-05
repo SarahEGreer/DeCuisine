@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public class Recipe {
 
     private int recipeId;
@@ -10,8 +12,11 @@ public class Recipe {
     private String prepTime;
     private String cookTime;
     private String servings;
+    private List<String> ingredientsList;
 
-    public Recipe(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings) {
+    public Recipe(){};
+
+    public Recipe(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings, List<String> ingredientsList) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.recipeName = recipeName;
@@ -20,6 +25,15 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
+        this.ingredientsList = ingredientsList;
+    }
+
+    public List<String> getIngredientsList() {
+        return ingredientsList;
+    }
+
+    public void setIngredientsList(List<String> ingredientsList) {
+        this.ingredientsList = ingredientsList;
     }
 
     public int getRecipeId() {

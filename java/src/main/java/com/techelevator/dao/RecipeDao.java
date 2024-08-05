@@ -11,7 +11,7 @@ public interface RecipeDao {
 
     List<Recipe> getCreatedRecipesByUser(int userId);
 
-    Recipe createRecipe (Recipe recipe);
+     void createRecipe (Recipe recipe, int userId);
 
     Recipe updateRecipe (Recipe recipe);
 

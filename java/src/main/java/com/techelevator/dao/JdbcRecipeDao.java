@@ -1,9 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Ingredients;
 import com.techelevator.model.Recipe;
 import com.techelevator.model.RecipeDto;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -13,12 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-
 public class JdbcRecipeDao implements RecipeDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public JdbcRecipeDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -55,8 +54,41 @@ public class JdbcRecipeDao implements RecipeDao {
     }
 
     @Override
-    public Recipe createRecipe(RecipeDto recipeDto) {
-        Recipe newRecipe = null;
+    public void createRecipe(Recipe newRecipe, int userId) {
+        //put into recipe
+        int newRecipeId = 0;
+        List<Integer> ingredientsIdList = new ArrayList<>();
+        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?,?);";
+        try {
+            newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
+            userId, newRecipe.getRecipeName(), newRecipe.getRecipeDescription(),
+            newRecipe.getRecipeInstructions(), newRecipe.getPrepTime(), newRecipe.getCookTime(),
+            newRecipe.getServings());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        List<String> newIngredientsList = newRecipe.getIngredientsList();
+        //put into ingredient
+        for(int i = 0; i < newIngredientsList.size(); i++) {
+            try{
+
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
+            }
+        }
+
+        String ingredientsSql = "";
+        //put into tags
+        String tagsSql = "";
+
+
+
+
+        Recipe createdRecipe = null;
     }
 
 
