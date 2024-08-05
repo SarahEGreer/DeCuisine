@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore src"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.4",
     "axios": "^1.6",
     "primevue": "^4.0.4",
     "vue": "^3.3.4",

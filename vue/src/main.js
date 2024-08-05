@@ -4,6 +4,7 @@ import { createStore } from './store'
 import router from './router'
 import axios from 'axios'
 import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
 
 /* sets the base url for server API communication with axios */
 axios.defaults.baseURL = import.meta.env.VITE_REMOTE_API;
@@ -27,7 +28,9 @@ const store = createStore(currentToken, currentUser);
 
 const app = createApp(CapstoneApp);
 app.use(PrimeVue, {
-  unstyled: true
+  theme: {
+    preset: Aura
+  }
 });
 app.use(store);
 app.use(router);
