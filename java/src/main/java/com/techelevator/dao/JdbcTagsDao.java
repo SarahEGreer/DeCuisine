@@ -4,5 +4,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 
-public class JdbcTagsDao {
+public class JdbcTagsDao implements TagsDao {
 }
