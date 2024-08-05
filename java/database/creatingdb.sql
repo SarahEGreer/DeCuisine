@@ -1,6 +1,23 @@
 START TRANSACTION;
 
 DROP TABLE IF EXISTS user_tracked_recipes, recipe_tags, recipes_ingredients, ingredients, recipe, tag_id, users CASCADE;
+DROP SEQUENCE IF EXISTS sec_ingredient_id, sec_recipe_id, sec_tag_id;
+
+CREATE SEQUENCE sec_recipe_id
+ INCREMENT BY 1
+ START WITH 2001
+ NO MAXVALUE;
+
+CREATE SEQUENCE sec_ingredient_id
+  INCREMENT BY 1
+  START WITH 50
+  NO MAXVALUE;
+  
+CREATE SEQUENCE sec_tag_id
+  INCREMENT BY 1
+  START WITH 50
+  NO MAXVALUE;    
+
 
 CREATE TABLE users
 (
@@ -12,7 +29,7 @@ CREATE TABLE users
 
 CREATE TABLE recipe
 (
-    recipe_id SERIAL PRIMARY KEY,
+    recipe_id int PRIMARY KEY DEFAULT nextval('sec_recipe_id'),
     created_by_user_id INT NOT NULL,
     recipe_name VARCHAR(200) NOT NULL,
     description VARCHAR(1000),
@@ -25,7 +42,7 @@ CREATE TABLE recipe
 
 CREATE TABLE ingredients
 (
-    ingredient_id SERIAL PRIMARY KEY,
+    ingredient_id int PRIMARY KEY DEFAULT nextval('sec_ingredient_id'),
     ingredient_name VARCHAR(100) NOT NULL
 );
 
@@ -43,7 +60,7 @@ CREATE TABLE recipes_ingredients
 
 CREATE TABLE tag_id
 (
-    tag_id INT PRIMARY KEY,
+    tag_id INT PRIMARY KEY DEFAULT nextval('sec_tag_id'),
     tag_name VARCHAR(50) NOT NULL
 );
 
@@ -66,3 +83,5 @@ CREATE TABLE user_tracked_recipes
 );
 
 COMMIT TRANSACTION;
+
+-- rollback;
