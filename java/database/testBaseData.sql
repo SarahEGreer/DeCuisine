@@ -33,12 +33,12 @@ INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, sy
 (2, 55, 1, 'cup', 'Imperial'),
 (2, 56, 0.5, 'cup', 'Imperial'),
 (2, 57, 0.5, 'cup', 'Imperial'),
-(2, 58, 2, 'pieces', 'Imperial'),
-(2, 59, 1, 'tsp', 'Imperial'),
-(2, 60, 2.5, 'cups', 'Imperial'),
-(2, 61, 1, 'tsp', 'Imperial'),
-(2, 62, 0.5, 'tsp', 'Imperial'),
-(2, 63, 2, 'cups', 'Imperial');
+(2, 51, 2, 'pieces', 'Imperial'),
+(2, 58, 1, 'tsp', 'Imperial'),
+(2, 59, 2.5, 'cups', 'Imperial'),
+(2, 60, 1, 'tsp', 'Imperial'),
+(2, 61, 0.5, 'tsp', 'Imperial'),
+(2, 62, 2, 'cups', 'Imperial');
 -- Recipe_Tags Table
 -- INSERT INTO recipe_tags (recipe_id, tag_id) VALUES
 -- (1, 3),
