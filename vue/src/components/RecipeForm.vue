@@ -5,7 +5,6 @@
             <label for="name">Recipe Name: </label>
             <input type="text" id="name" name="name" v-model="newRecipe.name" required>
 
-            
             <div>
 
             <label for="prep-time-hours">Prep Time:</label>
@@ -40,21 +39,6 @@
                 
                 <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" 
                 @complete="searchIngredients" dropdown />
-                
-
-
-                <!-- <select id="ingredient" name="ingredient" v-model="ingredient.name" required>
-                    <option v-for="option in ingredientOptions" :key="option" :value="option">{{ option }}</option>
-                </select> -->
-
-                <!-- 
-                     TODO auto complete for ingredient name  
-                     TODO make new ingredient name button that adds nonexistent ingredient
-                     LOGIC for POST:
-                     - UPON SUBMIT, first check if new ingredient name has been added
-                        - IF new ingredient name has been added, POST new ingredient name to ingredient table
-                        - THEN POST new recipe with new ingredient name
-                     -->
 
 
                 <label for="quantity">Quantity: </label>
@@ -84,8 +68,8 @@
 
 <script>
 import AutoComplete from 'primevue/autocomplete';
-// import RecipeService from '../services/RecipeService.js'
-// import IngredientService from '../services/IngredientService.js'
+import RecipeService from '../services/RecipeService.js'
+import IngredientService from '../services/IngredientService.js'
 
 export default {
 
@@ -118,7 +102,6 @@ export default {
             newRecipe: {...this.recipe},
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
-            newIngredients: [],
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
             prepTimeHours: 0,
             prepTimeMinutes: 0,
@@ -154,38 +137,25 @@ export default {
             });
         },
 
-        checkNewIngredients(ingredients) { //check for duplicates and only post 1 copy BACKEND??
-            ingredients.forEach(ingredient => { //&& statement for newIngredients array
-                if (!this.ingredientOptions.map(opt => opt.toLowerCase()).includes(ingredient.name.toLowerCase())) {
-                    this.newIngredients.push(ingredient.name);
-                }
-            });
+        checkForDuplicateIngredients(){
+            
+
         },
 
-        // checkNewIngredients(ingredients) {
-        //     ingredients.forEach(ingredient => {
-        //         if (!this.ingredientOptions.includes(ingredient.name.toLowerCase())) {
-        //             console.log(ingredient.name.toLowerCase());
-        //             this.newIngredients.push(ingredient.name);
-        //         }
-        //     });
-        // },
 
 
-        // checkNewIngredient(ingredientName) {
-        //     if (!this.ingredientOptions.includes(ingredientName.toLowerCase())) {
-        //         this.newIngredients.push(ingredientName);
-        //     }
-        // },
+
 
         submitForm() {
-            // RecipeService.createRecipe(this.recipe).then(response => {
+            // RecipeService.submitRecipe(this.recipe).then(response => {
             //     this.$router.push({ name: 'RecipeList' })
             // })
             
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-            this.checkNewIngredients(this.newRecipe.ingredients);
+            //check ingredients for duplicates and give error (try catch? something like that?)
+            //if throw error, don't submit form
+            
             console.log(this.newIngredients);
             console.log(this.newRecipe);
             
@@ -210,10 +180,7 @@ export default {
 
 }
 
-
 </script>
-
-
 
 
 <style scoped>
