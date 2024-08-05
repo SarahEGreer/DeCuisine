@@ -53,7 +53,6 @@ CREATE TABLE recipes_ingredients
     amount NUMERIC NOT NULL,
     unit_type VARCHAR(100) NOT NULL,
     system_of_measurement VARCHAR(100) NOT NULL,
-    CONSTRAINT pk_recipes_ingredients PRIMARY KEY (recipe_id, ingredient_id),
     CONSTRAINT fk_recipes_ingredients_recipe FOREIGN KEY (recipe_id) REFERENCES recipe(recipe_id),
     CONSTRAINT fk_recipes_ingredients_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
 );
@@ -107,23 +106,26 @@ INSERT INTO ingredients (ingredient_name) VALUES
 ('Flour'),
 ('Baking Soda'),
 ('Salt'),
-('Chocolate Chips');
+('Chocolate Chips')
+ON CONFLICT (ingredient_name) DO NOTHING;
+
 -- Recipes_Ingredients Table
 INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
-(1, 50, 400, 'grams', 'Metric'),
-(1, 51, 4, 'pieces', 'Metric'),
-(1, 52, 100, 'grams', 'Metric'),
-(1, 53, 150, 'grams', 'Metric'),
-(1, 54, 5, 'grams', 'Metric'),
-(2, 55, 1, 'cup', 'Imperial'),
-(2, 56, 0.5, 'cup', 'Imperial'),
-(2, 57, 0.5, 'cup', 'Imperial'),
-(2, 51, 2, 'pieces', 'Imperial'),
-(2, 58, 1, 'tsp', 'Imperial'),
-(2, 59, 2.5, 'cups', 'Imperial'),
-(2, 60, 1, 'tsp', 'Imperial'),
-(2, 61, 0.5, 'tsp', 'Imperial'),
-(2, 62, 2, 'cups', 'Imperial');
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 4, 'pieces', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 100, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Pancetta'), 150, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Black Pepper'), 5, 'grams', 'Metric'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Butter'), 1, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Sugar'), 0.5, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Brown Sugar'), 0.5, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 2, 'pieces', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Vanilla Extract'), 1, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Flour'), 2.5, 'cups', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Baking Soda'), 1, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Salt'), 0.5, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial');
+
 -- Recipe_Tags Table
 -- INSERT INTO recipe_tags (recipe_id, tag_id) VALUES
 -- (1, 3),
