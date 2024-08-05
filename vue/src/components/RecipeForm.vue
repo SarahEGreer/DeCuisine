@@ -32,13 +32,20 @@
             <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings">
 
 
-            <label for="ingredients">Ingredients: </label>
+            <!-- <label for="ingredients">Ingredients: </label> -->
+             <h3>Ingredients:</h3>
 
             <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
                 <label for="ingredient">Ingredient: </label>
-                <select id="ingredient" name="ingredient" v-model="ingredient.name" required>
+                
+                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" 
+                @complete="searchIngredients" dropdown />
+                
+
+
+                <!-- <select id="ingredient" name="ingredient" v-model="ingredient.name" required>
                     <option v-for="option in ingredientOptions" :key="option" :value="option">{{ option }}</option>
-                </select>
+                </select> -->
 
                 <!-- 
                      TODO auto complete for ingredient name  
@@ -51,7 +58,8 @@
 
 
                 <label for="quantity">Quantity: </label>
-                <input type="number" id="quantity" name="quantity" v-model="ingredient.quantity" required>
+                <input type="number" name="quantity" v-model="ingredient.quantity" required>
+                
 
                 <label for="unit">Unit: </label>
                 <select id="unit" name="unit" v-model="ingredient.unit" required>
@@ -75,10 +83,15 @@
 </template>
 
 <script>
+import AutoComplete from 'primevue/autocomplete';
 // import RecipeService from '../services/RecipeService.js'
 // import IngredientService from '../services/IngredientService.js'
 
 export default {
+
+    components: {
+        AutoComplete
+    },
 
     props: {
         recipe: {
@@ -104,6 +117,7 @@ export default {
         return {
             newRecipe: {...this.recipe},
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
+            filteredIngredients: [],
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
             prepTimeHours: 0,
             prepTimeMinutes: 0,
@@ -133,12 +147,20 @@ export default {
             return (hours*60) + minutes;
         },
 
+        searchIngredients(event) {
+            this.filteredIngredients = this.ingredientOptions.filter((ingredient) => {
+                return ingredient.toLowerCase().includes(event.query.toLowerCase());
+            });
+        },
+
         submitForm() {
             // RecipeService.createRecipe(this.recipe).then(response => {
             //     this.$router.push({ name: 'RecipeList' })
             // })
+            
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+            console.log(this.newRecipe);
             this.newRecipe = {
                     id: 0,
                     name: '',
