@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -11,3 +11,6 @@ CREATE TABLE users (
 );
 
 COMMIT TRANSACTION;
+
+
+-- rollback;
