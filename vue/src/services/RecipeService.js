@@ -12,6 +12,10 @@ export default {
 
     submitRecipe(recipe) {
         return http.post('/recipes', recipe)
+    },
+
+    getRecipeDetails(id){
+        return http.get(`/recipes/${id}`)
     }
 
 }
