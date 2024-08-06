@@ -2,22 +2,23 @@ package com.techelevator.model;
 
 import java.util.List;
 
-public class Recipe {
+public class Recipe_Test {
 
     private int recipeId;
     private int userId;
     private String recipeName;
     private String recipeDescription;
     private String recipeInstructions;
-    private int prepTime;
-    private int cookTime;
-    private int servings;
-//    private List<String> ingredientsList;
+    private String prepTime;
+    private String cookTime;
+    private String servings;
+
+    //come back too
     private List<Recipe_DetailDto_Test.IngredientDetail> ingredientsList;
 
-    public Recipe(){};
+    public Recipe_Test(){};
 
-    public Recipe(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, int prepTime, int cookTime, int servings, List<Recipe_DetailDto_Test.IngredientDetail> ingredientsList) {
+    public Recipe_Test(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings, List<Recipe_DetailDto_Test.IngredientDetail> ingredientsList) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.recipeName = recipeName;
@@ -29,13 +30,6 @@ public class Recipe {
         this.ingredientsList = ingredientsList;
     }
 
-//    public List<String> getIngredientsList() {
-//        return ingredientsList;
-//    }
-//
-//    public void setIngredientsList(List<String> ingredientsList) {
-//        this.ingredientsList = ingredientsList;
-//    }
 
     public List<Recipe_DetailDto_Test.IngredientDetail> getIngredientsList() {
         return ingredientsList;
@@ -85,27 +79,27 @@ public class Recipe {
         this.recipeInstructions = recipeInstructions;
     }
 
-    public int getPrepTime() {
+    public String getPrepTime() {
         return prepTime;
     }
 
-    public void setPrepTime(int prepTime) {
+    public void setPrepTime(String prepTime) {
         this.prepTime = prepTime;
     }
 
-    public int getCookTime() {
+    public String getCookTime() {
         return cookTime;
     }
 
-    public void setCookTime(int cookTime) {
+    public void setCookTime(String cookTime) {
         this.cookTime = cookTime;
     }
 
-    public int getServings() {
+    public String getServings() {
         return servings;
     }
 
-    public void setServings(int servings) {
+    public void setServings(String servings) {
         this.servings = servings;
     }
 }

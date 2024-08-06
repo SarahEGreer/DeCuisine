@@ -43,9 +43,9 @@ public class JdbcRecipeDao implements RecipeDao {
     @Override
     public Recipe_detailDto getRecipeDetailsByRecipeId(int recipeId) {
         Recipe_detailDto returnDto = new Recipe_detailDto();
-        List<Recipe_Ingredients> returnRI = new ArrayList<>();
-        ;
         Recipe returnRecipe = new Recipe();
+        List<Recipe_DetailDto_Test.IngredientDetail> ingredientDetails = new ArrayList<>();
+
         String rsql = "Select * FROM recipe WHERE recipe_id = ?";
 
         try {
@@ -57,7 +57,7 @@ public class JdbcRecipeDao implements RecipeDao {
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        returnDto.setRecipe(returnRecipe);
+
         String rIsql = "SELECT i.ingredient_id, i.ingredient_name, ri.recipe_id, ri.amount, ri.unit_type, ri.system_of_measurement\n" +
                                 "FROM ingredients i \n" +
                                 "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredient_id\n" +
@@ -65,19 +65,18 @@ public class JdbcRecipeDao implements RecipeDao {
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(rIsql, recipeId);
             while (results.next()) {
-                Recipe_Ingredients ingredient = new Recipe_Ingredients();
-                ingredient.setRecipeId(results.getInt("recipe_id"));
-                ingredient.setIngredientId(results.getInt("ingredient_id"));
-                ingredient.setIngredientName(results.getString("ingredient_name"));
-                ingredient.setIngredientAmount(results.getDouble("amount"));
-                ingredient.setIngredientUnitType(results.getString("unit_type"));
-                ingredient.setIngredientSystemOfMeasurement(results.getString("system_of_measurement"));
-                returnRI.add(ingredient);
+                Recipe_DetailDto_Test.IngredientDetail ingredientDetail = new Recipe_DetailDto_Test.IngredientDetail();
+                ingredientDetail.setIngredientName(results.getString("ingredient_name"));
+                ingredientDetail.setAmount(results.getDouble("amount"));
+                ingredientDetail.setUnitType(results.getString("unit_type"));
+                ingredientDetail.setSystemOfMeasurement(results.getString("system_of_measurement"));
+                ingredientDetails.add(ingredientDetail);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        returnDto.setRecipeIngredients(returnRI);
+        returnRecipe.setIngredientsList(ingredientDetails);
+        returnDto.setRecipe(returnRecipe);
 
         return returnDto;
     }
@@ -145,9 +144,9 @@ public class JdbcRecipeDao implements RecipeDao {
         recipe.setRecipeName(rs.getString("recipe_name"));
         recipe.setRecipeDescription(rs.getString("description"));
         recipe.setRecipeInstructions(rs.getString("instructions"));
-        recipe.setPrepTime(rs.getString("prep_time"));
-        recipe.setCookTime(rs.getString("cook_time"));
-        recipe.setServings(rs.getString("servings"));
+        recipe.setPrepTime(rs.getInt("prep_time"));
+        recipe.setCookTime(rs.getInt("cook_time"));
+        recipe.setServings(rs.getInt("servings"));
         return recipe;
     }
 

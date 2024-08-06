@@ -2,21 +2,21 @@ package com.techelevator.model;
 
 import java.util.List;
 
-public class Recipe_detailDto {
+public class Recipe_DetailDto_Test {
 
-    private Recipe recipe;
+    private Recipe_Test recipe;
 
-    public Recipe_detailDto() {}
+    public Recipe_DetailDto_Test() {}
 
-    public Recipe_detailDto(Recipe recipe) {
+    public Recipe_DetailDto_Test(Recipe_Test recipe) {
         this.recipe = recipe;
     }
 
-    public Recipe getRecipe() {
+    public Recipe_Test getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
+    public void setRecipe(Recipe_Test recipe) {
         this.recipe = recipe;
     }
 
