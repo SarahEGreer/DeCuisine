@@ -111,11 +111,11 @@ export default {
 
     },
 
-    // mounted() {
-    //     // IngredientService.getIngredients().then(response => {
-    //     //     this.ingredients = response.data
-    //     // })
-    // },
+    mounted() {
+        IngredientService.getIngredients().then(response => {
+            this.ingredientOptions = response.data;
+        })
+    },
 
     methods: {
 
@@ -137,28 +137,11 @@ export default {
             });
         },
 
-        checkForDuplicateIngredients(){
-            
-
+        hasDuplicates(array){
+            return array.length !== new Set(array).size;
         },
 
-
-
-
-
-        submitForm() {
-            // RecipeService.submitRecipe(this.recipe).then(response => {
-            //     this.$router.push({ name: 'RecipeList' })
-            // })
-            
-            this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
-            this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-            //check ingredients for duplicates and give error (try catch? something like that?)
-            //if throw error, don't submit form
-            
-            console.log(this.newIngredients);
-            console.log(this.newRecipe);
-            
+        resetForm(){
             this.newRecipe = {
                     id: 0,
                     name: '',
@@ -174,6 +157,25 @@ export default {
             this.prepTimeMinutes = 0;
             this.cookTimeHours = 0;
             this.cookTimeMinutes = 0;
+        },
+
+
+
+
+
+        submitForm() {
+            this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
+            this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+            //check ingredients for duplicates and give error (try catch? something like that?)
+            //if throw error, don't submit form
+            if(this.hasDuplicates(this.newRecipe.ingredients)){
+               throw new Error('Your recipe must not have duplicate ingredients')
+            }
+            RecipeService.submitRecipe(this.recipe).then(response => {
+                console.log(response.data);
+                this.resetForm();
+                // add try catch block
+            })
 
         }
     }

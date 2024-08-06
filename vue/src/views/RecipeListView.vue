@@ -6,7 +6,7 @@
 </template>
 
 <script>
-// import RecipeService from '../services/RecipeService';
+import RecipeService from '../services/RecipeService';
 import RecipeThumbnail from '../components/RecipeThumbnail.vue'
 
 export default{
@@ -16,20 +16,26 @@ export default{
     data(){
         return {
             recipes: [
-                {
-                    name: 'Pizza',
-                    description: 'it is pizza',
-                },
-                {
-                    name: 'Toast',
-                    description: 'put it in the toaster',
-                }, 
-                {
-                    name: 'gilled cheese',
-                    description: 'grill it'
-                }
+                // {
+                //     name: 'Pizza',
+                //     description: 'it is pizza',
+                // },
+                // {
+                //     name: 'Toast',
+                //     description: 'put it in the toaster',
+                // }, 
+                // {
+                //     name: 'gilled cheese',
+                //     description: 'grill it'
+                // }
             ],
         }
+    },
+    mounted(){
+        RecipeService.getRecipes().then(response => {
+            this.recipes = response.data;
+            // add catch block 
+        })
     }
 }
 
