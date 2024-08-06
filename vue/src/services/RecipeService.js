@@ -14,8 +14,8 @@ export default {
         return http.post('/recipes', recipe)
     },
 
-    getRecipeDetails(id){
-        return http.get(`/recipes/${id}`)
+    getRecipeDetails(recipeId){
+        return http.get(`/recipes/details/${recipeId}`)
     }
 
 }

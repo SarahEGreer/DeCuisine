@@ -13,8 +13,8 @@ export default {
         RecipeCard
     },
     methods: {
-        getRecipeDetails(id) {
-            RecipeService.get(id)
+        getCurrentRecipeDetails(recipeId) {
+            RecipeService.getRecipeDetails(recipeId)
                 .then((response => {
                     this.recipe = response.data;
                 }))
@@ -31,7 +31,7 @@ export default {
             }
         },
         created() {
-            this.getRecipeDetails(this.$route.params.recipeId);
+            this.getCurrentRecipeDetails(this.$route.params.recipeId);
         }
     }
 }

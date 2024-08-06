@@ -83,7 +83,7 @@ export default {
             required: true,
             default: () => {
                 return {
-                    id: 0,
+                    recipeId: 0,
                     name: '',
                     prepTime: '', 
                     cookTime: '', 
@@ -143,7 +143,7 @@ export default {
 
         resetForm(){
             this.newRecipe = {
-                    id: 0,
+                    recipeId: 0,
                     name: '',
                     prepTime: '', 
                     cookTime: '', 

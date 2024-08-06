@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             recipe: {
-                id: 0,
+                recipeId: 0,
                 name: '',
                 prepTime: '',
                 cookTime: '',

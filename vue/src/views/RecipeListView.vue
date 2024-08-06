@@ -1,6 +1,6 @@
 <template>
     <h1>Recipe List</h1>
-    <div v-for="recipe in recipes" :key="recipe.id">
+    <div v-for="recipe in recipes" :key="recipe.recipeId">
         <RecipeThumbnail :recipe="recipe" />
     </div>
 </template>
