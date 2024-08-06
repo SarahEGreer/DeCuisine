@@ -2,8 +2,8 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Recipe;
-import com.techelevator.model.RecipeDto;
 import com.techelevator.model.Recipe_Ingredients;
+import com.techelevator.model.Recipe_detailDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,7 +28,7 @@ public class JdbcRecipeDao implements RecipeDao {
         String sql = "SELECT * FROM recipe;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while(results.next()) {
+            while (results.next()) {
                 Recipe recipe = mapRowToRecipe(results);
                 recipes.add(recipe);
             }
@@ -38,8 +38,51 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipes;
     }
 
+    //get recipe details
     @Override
-    public List<Recipe> getCreatedRecipesByUser (int userId) {
+    public Recipe_detailDto getRecipeDetailsByRecipeId(int recipeId) {
+        Recipe_detailDto returnDto = new Recipe_detailDto();
+        List<Recipe_Ingredients> returnRI = new ArrayList<>();
+        ;
+        Recipe returnRecipe = new Recipe();
+        String rsql = "Select * FROM recipe WHERE recipe_id = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(rsql, recipeId);
+            while (results.next()) {
+                Recipe recipe = mapRowToRecipe(results);
+                returnRecipe = recipe;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        returnDto.setRecipe(returnRecipe);
+        String rIsql = "SELECT i.ingredient_id, i.ingredient_name, ri.recipe_id, ri.amount, ri.unit_type, ri.system_of_measurement\n" +
+                                "FROM ingredients i \n" +
+                                "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredient_id\n" +
+                                "WHERE ri.recipe_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(rIsql, recipeId);
+            while (results.next()) {
+                Recipe_Ingredients ingredient = new Recipe_Ingredients();
+                ingredient.setRecipeId(results.getInt("recipe_id"));
+                ingredient.setIngredientId(results.getInt("ingredient_id"));
+                ingredient.setIngredientName(results.getString("ingredient_name"));
+                ingredient.setIngredientAmount(results.getDouble("amount"));
+                ingredient.setIngredientUnitType(results.getString("unit_type"));
+                ingredient.setIngredientSystemOfMeasurement(results.getString("system_of_measurement"));
+                returnRI.add(ingredient);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        returnDto.setRecipeIngredients(returnRI);
+
+        return returnDto;
+    }
+
+    @Override
+    public List<Recipe> getCreatedRecipesByUser(int userId) {
         List<Recipe> recipesByUser = new ArrayList<>();
         String sql = "SELECT * FROM recipe WHERE created_by_user_id = ?";
         try {
@@ -62,9 +105,9 @@ public class JdbcRecipeDao implements RecipeDao {
         String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?,?);";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
-            userId, newRecipe.getRecipeName(), newRecipe.getRecipeDescription(),
-            newRecipe.getRecipeInstructions(), newRecipe.getPrepTime(), newRecipe.getCookTime(),
-            newRecipe.getServings());
+                    userId, newRecipe.getRecipeName(), newRecipe.getRecipeDescription(),
+                    newRecipe.getRecipeInstructions(), newRecipe.getPrepTime(), newRecipe.getCookTime(),
+                    newRecipe.getServings());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -72,15 +115,15 @@ public class JdbcRecipeDao implements RecipeDao {
         }
         //put into ingredient
         int ingredientId = 0;
-        for(Recipe_Ingredients i: ingredients) {
-            try{
+        for (Recipe_Ingredients i : ingredients) {
+            try {
                 String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
                         "ON CONFLICT (ingredient_name) DO UPDATE\n" +
                         "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
                         "RETURNING ingredient_id;";
                 ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, i.getIngredientName());
                 String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
-                int placeholder =  jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getIngredientAmount(),i.getIngredientUnitType() , i.getIngredientSystemOfMeasurement());
+                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getIngredientAmount(), i.getIngredientUnitType(), i.getIngredientSystemOfMeasurement());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
@@ -90,7 +133,6 @@ public class JdbcRecipeDao implements RecipeDao {
         //put into tags
         String tagsSql = "";
     }
-
 
 
     private Recipe mapRowToRecipe(SqlRowSet rs) {
@@ -106,6 +148,22 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipe;
     }
 
+    private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
+        Recipe_Ingredients ingredient = new Recipe_Ingredients();
+        ingredient.setRecipeId(rs.getInt("recipe_id"));
+        ingredient.setIngredientId(rs.getInt("ingredient_id"));
+        ingredient.setIngredientAmount(rs.getDouble("amount"));
+        ingredient.setIngredientUnitType(rs.getString("unit_type"));
+        ingredient.setIngredientSystemOfMeasurement(rs.getString("system_of_measurement"));
+        return ingredient;
+    }
+
+    private Recipe_Ingredients mapRowToIngredient(SqlRowSet rs) {
+        Recipe_Ingredients ingredient = new Recipe_Ingredients();
+        ingredient.setIngredientId(rs.getInt("ingredient_id"));
+        ingredient.setIngredientName(rs.getString("ingredient_name"));
+        return ingredient;
 
 
+    }
 }
