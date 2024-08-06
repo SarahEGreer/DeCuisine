@@ -24,7 +24,7 @@ public class JdbcIngredientsDao implements IngredientsDao {
     @Override
     public List<Recipe_Ingredients> getAllIngredients() {
         List<Recipe_Ingredients> ingredients = new ArrayList<>();
-        String sql = "SELECT * FROM ingredients;";
+        String sql = "SELECT ingredient_name FROM ingredients;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while(results.next()) {
