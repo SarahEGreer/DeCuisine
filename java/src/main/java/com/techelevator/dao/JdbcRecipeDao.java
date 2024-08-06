@@ -30,7 +30,10 @@ public class JdbcRecipeDao implements RecipeDao {
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
-                Recipe recipe = mapRowToRecipe(results);
+                Recipe recipe = new Recipe();
+                recipe.setRecipeId(results.getInt("recipe_id"));
+                recipe.setRecipeName(results.getString("recipe_name"));
+                recipe.setRecipeDescription(results.getString("description"));
                 recipes.add(recipe);
             }
         } catch (CannotGetJdbcConnectionException e) {
