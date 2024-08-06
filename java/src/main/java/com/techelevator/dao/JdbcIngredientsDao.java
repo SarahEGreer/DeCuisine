@@ -48,13 +48,29 @@ public class JdbcIngredientsDao implements IngredientsDao {
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
             while (results.next()) {
-                Recipe_Ingredients ingredients = mapRowToIngredients(results);
-                ingredientsByRecipe.add(ingredients);
+                Recipe_Ingredients ingredient = new Recipe_Ingredients();
+                ingredient.setIngredientId(results.getInt("ingredient_id"));
+                ingredient.setIngredientName(results.getString("ingredient_name"));
+                ingredient.setIngredientAmount(results.getDouble("amount"));
+                ingredient.setIngredientUnitType(results.getString("unit_type"));
+                ingredient.setIngredientSystemOfMeasurement(results.getString("system_of_measurement"));
+                ingredientsByRecipe.add(ingredient);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return ingredientsByRecipe;
+
+//        try {
+//            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
+//            while (results.next()) {
+//                Recipe_Ingredients ingredients = mapRowToIngredients(results);
+//                ingredientsByRecipe.add(ingredients);
+//            }
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        }
+//        return ingredientsByRecipe;
     }
 
     @Override

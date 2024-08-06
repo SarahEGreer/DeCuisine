@@ -24,7 +24,7 @@ public class IngredientsController {
         this.ingredientsDao = ingredientsDao;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<String> getAllIngredients() {
         try {
             return ingredientsDao.getAllIngredients();

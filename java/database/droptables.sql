@@ -3,6 +3,6 @@
 -- ***********************
 
 
-DROP TABLE ingredients, recipe, recipe_tags, recipes_ingredients, tag_id, user_tracked_recipes, users;
+DROP TABLE ingredients, recipe, recipe_tags, recipes_ingredients, tag_id, user_tracked_recipes;
 
 -- rollback;
