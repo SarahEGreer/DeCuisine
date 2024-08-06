@@ -25,14 +25,12 @@ public class IngredientsController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public List<Recipe_Ingredients> getAllIngredients() {
-        List<Recipe_Ingredients> ingredients = null;
+    public List<String> getAllIngredients() {
         try {
-            ingredients = ingredientsDao.getAllIngredients();
+            return ingredientsDao.getAllIngredients();
         } catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
-        return ingredients;
     }
 
     @RequestMapping(path = "/{recipeId}", method = RequestMethod.GET)

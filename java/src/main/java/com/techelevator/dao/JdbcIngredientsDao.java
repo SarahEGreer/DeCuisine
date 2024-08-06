@@ -22,13 +22,13 @@ public class JdbcIngredientsDao implements IngredientsDao {
     }
 
     @Override
-    public List<Recipe_Ingredients> getAllIngredients() {
-        List<Recipe_Ingredients> ingredients = new ArrayList<>();
+    public List<String> getAllIngredients() {
+        List<String> ingredients = new ArrayList<>();
         String sql = "SELECT ingredient_name FROM ingredients;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while(results.next()) {
-                Recipe_Ingredients ingredient = mapRowToIngredients(results);
+                String ingredient = results.getString("ingredient_name");
                 ingredients.add(ingredient);
             }
         } catch (CannotGetJdbcConnectionException e) {
