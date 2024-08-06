@@ -26,9 +26,9 @@ CREATE TABLE recipe
     recipe_name VARCHAR(200) NOT NULL,
     description VARCHAR(1000),
     instructions VARCHAR(6500) NOT NULL,
-    prep_time VARCHAR(100),
-    cook_time VARCHAR(100),
-    servings VARCHAR(100),
+    prep_time NUMERIC,
+    cook_time NUMERIC,
+    servings NUMERIC,
     CONSTRAINT fk_recipe_users FOREIGN KEY (created_by_user_id) REFERENCES users(user_id)
 );
 
@@ -76,8 +76,8 @@ CREATE TABLE user_tracked_recipes
 
 --test data
 INSERT INTO recipe (recipe_id, created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES
-(1, 1, 'Spaghetti Carbonara', 'A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.', '1. Cook spaghetti according to package instructions. 2. In a bowl, whisk eggs and cheese together. 3. In a pan, cook pancetta until crispy. 4. Combine spaghetti, pancetta, and egg mixture. 5. Serve with pepper and extra cheese.', '10 minutes', '15 minutes', '4 servings'),
-(2, 2, 'Chocolate Chip Cookies', 'Delicious homemade chocolate chip cookies.', '1. Preheat oven to 350°F (175°C). 2. Cream together butter and sugars. 3. Add eggs and vanilla extract. 4. Mix in dry ingredients and chocolate chips. 5. Scoop dough onto baking sheets and bake for 10-12 minutes.', '15 minutes', '12 minutes', '24 cookies');
+(1, 1, 'Spaghetti Carbonara', 'A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.', '1. Cook spaghetti according to package instructions. 2. In a bowl, whisk eggs and cheese together. 3. In a pan, cook pancetta until crispy. 4. Combine spaghetti, pancetta, and egg mixture. 5. Serve with pepper and extra cheese.', 10, 15, 4),
+(2, 2, 'Chocolate Chip Cookies', 'Delicious homemade chocolate chip cookies.', '1. Preheat oven to 350°F (175°C). 2. Cream together butter and sugars. 3. Add eggs and vanilla extract. 4. Mix in dry ingredients and chocolate chips. 5. Scoop dough onto baking sheets and bake for 10-12 minutes.', 15, 12, 24);
 -- Ingredients Table
 INSERT INTO ingredients (ingredient_name) VALUES
 ('Spaghetti'),
