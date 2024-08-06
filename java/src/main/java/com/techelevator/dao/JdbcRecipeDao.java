@@ -1,9 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Recipe;
-import com.techelevator.model.Recipe_Ingredients;
-import com.techelevator.model.Recipe_detailDto;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Component
+
 public class JdbcRecipeDao implements RecipeDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -100,24 +99,25 @@ public class JdbcRecipeDao implements RecipeDao {
     }
 
     @Override
-    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
+//    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
+        public void createRecipe(RecipeDto recipeDto, int userId) {
         //put into recipe
         int newRecipeId = 0;
         List<Integer> ingredientsIdList = new ArrayList<>();
         String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?,?);";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
-                    userId, newRecipe.getRecipeName(), newRecipe.getRecipeDescription(),
-                    newRecipe.getRecipeInstructions(), newRecipe.getPrepTime(), newRecipe.getCookTime(),
-                    newRecipe.getServings());
+                    userId, recipeDto.getRecipeName(), recipeDto.getRecipeDescription(),
+                    recipeDto.getRecipeInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
+                    recipeDto.getServings());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        //put into ingredient
+        List<Recipe_IngredientDto> ingredients = recipeDto.getRecipe_ingredientDtoList();
         int ingredientId = 0;
-        for (Recipe_Ingredients i : ingredients) {
+        for (Recipe_IngredientDto i : ingredients) {
             try {
                 String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
                         "ON CONFLICT (ingredient_name) DO UPDATE\n" +

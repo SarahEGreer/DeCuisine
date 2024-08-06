@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class RecipeDto {
 
@@ -13,14 +14,17 @@ public class RecipeDto {
     private int cookTime;
     private int servings;
 
+    private List<Recipe_IngredientDto> recipe_ingredientDtoList;
 
-    public RecipeDto(String recipeName, String recipeDescription, String recipeInstructions, int prepTime, int cookTime, int servings) {
+
+    public RecipeDto(String recipeName, String recipeDescription, String recipeInstructions, int prepTime, int cookTime, int servings, List<Recipe_IngredientDto> recipe_ingredientDto) {
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
         this.recipeInstructions = recipeInstructions;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
+        this.recipe_ingredientDtoList = recipe_ingredientDto;
     }
 
     public String getRecipeName() {
@@ -71,5 +75,7 @@ public class RecipeDto {
         this.servings = servings;
     }
 
-
+    public List<Recipe_IngredientDto> getRecipe_ingredientDtoList() {
+        return recipe_ingredientDtoList;
+    }
 }

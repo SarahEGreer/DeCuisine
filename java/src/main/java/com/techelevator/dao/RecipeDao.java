@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 
 import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeDto;
 import com.techelevator.model.Recipe_Ingredients;
 import com.techelevator.model.Recipe_detailDto;
 
@@ -16,7 +17,7 @@ public interface RecipeDao {
 
     List<Recipe> getCreatedRecipesByUser(int userId);
 
-     void createRecipe (Recipe recipe, int userId, List<Recipe_Ingredients> ingredients );
+     void createRecipe (RecipeDto recipeDto, int userId );
 
 //    Recipe updateRecipe (Recipe recipe);
 
