@@ -40,15 +40,16 @@ public class JdbcIngredientsDao implements IngredientsDao {
     @Override
     public List<Recipe_Ingredients> getIngredientsByRecipe (int recipeId) {
         List<Recipe_Ingredients> ingredientsByRecipe = new ArrayList<>();
-        String sql = "SELECT i.ingredient_id, i.ingredient_name, ri.amount, ri.unit_type, ri.system_of_measurement\n" +
+        String sql = "SELECT i.ingredient_id, i.ingredient_name, ri.recipe_id, ri.amount, ri.unit_type, ri.system_of_measurement\n" +
                 "FROM ingredients i \n" +
-                "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredients_id\n" +
+                "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredient_id\n" +
                 "WHERE ri.recipe_id = ?;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
             while (results.next()) {
                 Recipe_Ingredients ingredient = new Recipe_Ingredients();
+                ingredient.setRecipeId(results.getInt("recipe_id"));
                 ingredient.setIngredientId(results.getInt("ingredient_id"));
                 ingredient.setIngredientName(results.getString("ingredient_name"));
                 ingredient.setIngredientAmount(results.getDouble("amount"));
