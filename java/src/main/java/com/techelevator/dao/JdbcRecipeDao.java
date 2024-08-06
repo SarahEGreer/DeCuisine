@@ -44,7 +44,7 @@ public class JdbcRecipeDao implements RecipeDao {
     public Recipe_detailDto getRecipeDetailsByRecipeId(int recipeId) {
         Recipe_detailDto returnDto = new Recipe_detailDto();
         Recipe returnRecipe = new Recipe();
-        List<Recipe_DetailDto_Test.IngredientDetail> ingredientDetails = new ArrayList<>();
+        List<Recipe_detailDto.IngredientDetail> ingredientDetails = new ArrayList<>();
 
         String rsql = "Select * FROM recipe WHERE recipe_id = ?";
 
@@ -65,7 +65,7 @@ public class JdbcRecipeDao implements RecipeDao {
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(rIsql, recipeId);
             while (results.next()) {
-                Recipe_DetailDto_Test.IngredientDetail ingredientDetail = new Recipe_DetailDto_Test.IngredientDetail();
+                Recipe_detailDto.IngredientDetail ingredientDetail = new Recipe_detailDto.IngredientDetail();
                 ingredientDetail.setIngredientName(results.getString("ingredient_name"));
                 ingredientDetail.setAmount(results.getDouble("amount"));
                 ingredientDetail.setUnitType(results.getString("unit_type"));
