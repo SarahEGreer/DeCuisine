@@ -1,0 +1,72 @@
+{
+    "recipes": [
+        {
+            "id": 0,
+            "name": "Spaghetti Carbonara",
+            "prepTime": "10",
+            "cookTime": "20",
+            "description": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
+            "servings": "4",
+            "ingredients": [
+                { "name": "spaghetti", "quantity": 200, "unit": "grams" },
+                { "name": "pancetta", "quantity": 100, "unit": "grams" },
+                { "name": "eggs", "quantity": 2, "unit": "large" },
+                { "name": "Pecorino cheese", "quantity": 50, "unit": "grams" },
+                { "name": "Parmesan", "quantity": 50, "unit": "grams" },
+                { "name": "black pepper", "quantity": 1, "unit": "tsp" },
+                { "name": "salt", "quantity": 1, "unit": "tsp" },
+                { "name": "garlic", "quantity": 2, "unit": "cloves" },
+                { "name": "olive oil", "quantity": 1, "unit": "tbsp" }
+            ],
+            "instructions": "1. Boil the spaghetti. 2. Fry the pancetta with the garlic. 3. Beat the eggs and mix with cheese. 4. Combine spaghetti with pancetta, remove from heat, and mix in the egg mixture."
+        },
+        {
+            "id": 1,
+            "name": "Chicken Curry",
+            "prepTime": "15",
+            "cookTime": "30",
+            "description": "A flavorful and spicy chicken curry made with a blend of spices and coconut milk.",
+            "servings": "4",
+            "ingredients": [
+                { "name": "chicken breast", "quantity": 500, "unit": "grams" },
+                { "name": "onion", "quantity": 1, "unit": "large" },
+                { "name": "tomatoes", "quantity": 2, "unit": "medium" },
+                { "name": "garlic", "quantity": 2, "unit": "cloves" },
+                { "name": "ginger", "quantity": 1, "unit": "inch" },
+                { "name": "coconut milk", "quantity": 1, "unit": "can" },
+                { "name": "curry powder", "quantity": 2, "unit": "tbsp" },
+                { "name": "turmeric", "quantity": 1, "unit": "tsp" },
+                { "name": "cumin", "quantity": 1, "unit": "tsp" },
+                { "name": "salt", "quantity": 1, "unit": "tsp" },
+                { "name": "pepper", "quantity": 1, "unit": "tsp" },
+                { "name": "vegetable oil", "quantity": 2, "unit": "tbsp" },
+                { "name": "cilantro", "quantity": 1, "unit": "bunch" }
+            ],
+            "instructions": "1. Sauté onions, garlic, and ginger. 2. Add spices and cook for 2 minutes. 3. Add chicken and cook until browned. 4. Add tomatoes and coconut milk, simmer for 20 minutes. 5. Garnish with cilantro."
+        },
+        {
+            "id": 2,
+            "name": "Vegetable Stir Fry",
+            "prepTime": "10",
+            "cookTime": "15",
+            "description": "A quick and healthy stir fry with a variety of vegetables and a savory sauce.",
+            "servings": "4",
+            "ingredients": [
+                { "name": "bell pepper", "quantity": 1, "unit": "large" },
+                { "name": "carrot", "quantity": 1, "unit": "large" },
+                { "name": "broccoli", "quantity": 100, "unit": "grams" },
+                { "name": "snap peas", "quantity": 100, "unit": "grams" },
+                { "name": "onion", "quantity": 1, "unit": "large" },
+                { "name": "garlic", "quantity": 2, "unit": "cloves" },
+                { "name": "soy sauce", "quantity": 2, "unit": "tbsp" },
+                { "name": "oyster sauce", "quantity": 1, "unit": "tbsp" },
+                { "name": "sesame oil", "quantity": 1, "unit": "tsp" },
+                { "name": "vegetable oil", "quantity": 1, "unit": "tbsp" },
+                { "name": "salt", "quantity": 1, "unit": "tsp" },
+                { "name": "pepper", "quantity": 1, "unit": "tsp" },
+                { "name": "sesame seeds", "quantity": 1, "unit": "tbsp" }
+            ],
+            "instructions": "1. Chop all vegetables. 2. Heat oil in a wok and sauté garlic. 3. Add vegetables and stir fry for 5-7 minutes. 4. Add soy sauce, oyster sauce, and sesame oil. 5. Cook for another 5 minutes and garnish with sesame seeds."
+        }
+    ]
+}

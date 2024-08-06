@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeDto;
 import com.techelevator.model.Recipe_detailDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -11,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recipe")
+@RequestMapping("/recipes")
 public class RecipeController {
     private final RecipeDao recipeDao;
 
@@ -36,6 +37,11 @@ public class RecipeController {
         }catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public void createRecipes(@RequestBody RecipeDto recipeDto){
+
     }
 
 

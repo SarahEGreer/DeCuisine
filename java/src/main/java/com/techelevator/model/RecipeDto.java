@@ -9,12 +9,12 @@ public class RecipeDto {
     private String recipeDescription;
     @NotNull
     private String recipeInstructions;
-    private String prepTime;
-    private String cookTime;
-    private String servings;
+    private int prepTime;
+    private int cookTime;
+    private int servings;
 
 
-    public RecipeDto(String recipeName, String recipeDescription, String recipeInstructions, String prepTime, String cookTime, String servings) {
+    public RecipeDto(String recipeName, String recipeDescription, String recipeInstructions, int prepTime, int cookTime, int servings) {
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
         this.recipeInstructions = recipeInstructions;
@@ -47,27 +47,27 @@ public class RecipeDto {
         this.recipeInstructions = recipeInstructions;
     }
 
-    public String getPrepTime() {
+    public int getPrepTime() {
         return prepTime;
     }
 
-    public void setPrepTime(String prepTime) {
+    public void setPrepTime(int prepTime) {
         this.prepTime = prepTime;
     }
 
-    public String getCookTime() {
+    public int getCookTime() {
         return cookTime;
     }
 
-    public void setCookTime(String cookTime) {
+    public void setCookTime(int cookTime) {
         this.cookTime = cookTime;
     }
 
-    public String getServings() {
+    public int getServings() {
         return servings;
     }
 
-    public void setServings(String servings) {
+    public void setServings(int servings) {
         this.servings = servings;
     }
 

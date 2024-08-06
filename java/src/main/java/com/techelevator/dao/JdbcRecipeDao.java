@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class JdbcRecipeDao implements RecipeDao {
@@ -25,7 +26,8 @@ public class JdbcRecipeDao implements RecipeDao {
     @Override
     public List<Recipe> getAllRecipes() {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT * FROM recipe;";
+        //                           add picture when time comes\/
+        String sql = "SELECT recipe_id, recipe_name, description  FROM recipe;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -121,7 +123,8 @@ public class JdbcRecipeDao implements RecipeDao {
                         "ON CONFLICT (ingredient_name) DO UPDATE\n" +
                         "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
                         "RETURNING ingredient_id;";
-                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, i.getIngredientName());
+                String lowerCaseName = i.getIngredientName().toLowerCase();
+                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, lowerCaseName);
                 String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
                 int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getIngredientAmount(), i.getIngredientUnitType(), i.getIngredientSystemOfMeasurement());
             } catch (CannotGetJdbcConnectionException e) {
