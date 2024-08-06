@@ -19,14 +19,6 @@ CREATE SEQUENCE sec_tag_id
   NO MAXVALUE;    
 
 
-CREATE TABLE users (
-	user_id SERIAL,
-	username varchar(50) NOT NULL UNIQUE,
-	password_hash varchar(200) NOT NULL,
-	role varchar(50) NOT NULL,
-	CONSTRAINT PK_user PRIMARY KEY (user_id)
-);
-
 CREATE TABLE recipe
 (
     recipe_id int PRIMARY KEY DEFAULT nextval('sec_recipe_id'),
@@ -82,12 +74,7 @@ CREATE TABLE user_tracked_recipes
 );
 
 
--- test data
-
--- INSERT INTO users (user_id, username, password_hash, role) VALUES
--- (1, 'chefjohn', 'password123', 'ROLE_USER'),
--- (2, 'bakerbeth', 'cookieLover', 'ROLE_USER');
---  Recipe Table
+--test data
 INSERT INTO recipe (recipe_id, created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES
 (1, 1, 'Spaghetti Carbonara', 'A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.', '1. Cook spaghetti according to package instructions. 2. In a bowl, whisk eggs and cheese together. 3. In a pan, cook pancetta until crispy. 4. Combine spaghetti, pancetta, and egg mixture. 5. Serve with pepper and extra cheese.', '10 minutes', '15 minutes', '4 servings'),
 (2, 2, 'Chocolate Chip Cookies', 'Delicious homemade chocolate chip cookies.', '1. Preheat oven to 350°F (175°C). 2. Cream together butter and sugars. 3. Add eggs and vanilla extract. 4. Mix in dry ingredients and chocolate chips. 5. Scoop dough onto baking sheets and bake for 10-12 minutes.', '15 minutes', '12 minutes', '24 cookies');
