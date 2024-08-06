@@ -19,12 +19,12 @@ CREATE SEQUENCE sec_tag_id
   NO MAXVALUE;    
 
 
-CREATE TABLE users
-(
-    user_id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL CHECK (role IN ('ROLE_ADMIN', 'ROLE_USER'))
+CREATE TABLE users (
+	user_id SERIAL,
+	username varchar(50) NOT NULL UNIQUE,
+	password_hash varchar(200) NOT NULL,
+	role varchar(50) NOT NULL,
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
 CREATE TABLE recipe
@@ -84,7 +84,7 @@ CREATE TABLE user_tracked_recipes
 
 -- test data
 
-INSERT INTO users (user_id, username, password, role) VALUES
+INSERT INTO users (user_id, username, password_hash, role) VALUES
 (1, 'chefjohn', 'password123', 'ROLE_USER'),
 (2, 'bakerbeth', 'cookieLover', 'ROLE_USER');
 --  Recipe Table
@@ -140,3 +140,5 @@ INSERT INTO user_tracked_recipes (user_id, recipes_id) VALUES
 COMMIT TRANSACTION;
 
 -- rollback;
+
+
