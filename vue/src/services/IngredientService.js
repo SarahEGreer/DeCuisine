@@ -11,3 +11,8 @@ export default {
     }
 
 }
+
+
+// http.interceptors.request.use((config) => {
+// const token = localStorage.getItem('token');
+// assign Authorization to the received token
