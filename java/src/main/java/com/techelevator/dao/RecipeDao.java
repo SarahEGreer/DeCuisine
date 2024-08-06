@@ -14,12 +14,12 @@ public interface RecipeDao {
 
      void createRecipe (Recipe recipe, int userId, List<Recipe_Ingredients> ingredients );
 
-    Recipe updateRecipe (Recipe recipe);
+//    Recipe updateRecipe (Recipe recipe);
 
 
 
     //meal planner (future sprint)
-    List<Recipe> getRecipeByTrackedByUser (int userId);
+//    List<Recipe> getRecipeByTrackedByUser (int userId);
 
 
 
