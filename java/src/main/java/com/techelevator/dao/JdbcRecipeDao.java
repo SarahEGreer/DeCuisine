@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Recipe;
 import com.techelevator.model.RecipeDto;
+import com.techelevator.model.Recipe_Ingredients;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,7 +55,7 @@ public class JdbcRecipeDao implements RecipeDao {
     }
 
     @Override
-    public void createRecipe(Recipe newRecipe, int userId) {
+    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
         //put into recipe
         int newRecipeId = 0;
         List<Integer> ingredientsIdList = new ArrayList<>();
@@ -69,26 +70,25 @@ public class JdbcRecipeDao implements RecipeDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        List<String> newIngredientsList = newRecipe.getIngredientsList();
         //put into ingredient
-        for(int i = 0; i < newIngredientsList.size(); i++) {
+        int ingredientId = 0;
+        for(Recipe_Ingredients i: ingredients) {
             try{
-
+                String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
+                        "ON CONFLICT (ingredient_name) DO UPDATE\n" +
+                        "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
+                        "RETURNING ingredient_id;";
+                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, i.getIngredientName());
+                String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
+                int placeholder =  jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getIngredientAmount(),i.getIngredientUnitType() , i.getIngredientSystemOfMeasurement());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
                 throw new DaoException("Data integrity violation", e);
             }
         }
-
-        String ingredientsSql = "";
         //put into tags
         String tagsSql = "";
-
-
-
-
-        Recipe createdRecipe = null;
     }
 
 

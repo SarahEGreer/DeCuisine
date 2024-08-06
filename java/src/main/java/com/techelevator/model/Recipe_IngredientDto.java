@@ -13,7 +13,7 @@ public class Recipe_IngredientDto {
         this.ingredientUnitType = ingredientUnitType;
         this.ingredientSystemOfMeasurement = ingredientSystemOfMeasurement;
     }
-    
+
     public String getIngredientName() {
         return ingredientName;
     }
