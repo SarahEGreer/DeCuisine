@@ -11,7 +11,9 @@ public interface IngredientsDao {
 
     List<Recipe_Ingredients> getIngredientsByRecipe (int recipeId);
 
-    Recipe_Ingredients createIngredient (Recipe_Ingredients ingredients);
+//    Recipe_Ingredients createIngredientByRecipe (Recipe_Ingredients ingredients);
+
+    void createIngredientsForIngredientTable (List<Recipe_Ingredients> recipeIngredientsList);
 
 
 

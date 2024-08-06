@@ -62,20 +62,25 @@ public class JdbcIngredientsDao implements IngredientsDao {
         }
         return ingredientsByRecipe;
 
-//        try {
-//            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
-//            while (results.next()) {
-//                Recipe_Ingredients ingredients = mapRowToIngredients(results);
-//                ingredientsByRecipe.add(ingredients);
-//            }
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        }
-//        return ingredientsByRecipe;
+/*
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
+            while (results.next()) {
+                Recipe_Ingredients ingredients = mapRowToIngredients(results);
+                ingredientsByRecipe.add(ingredients);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return ingredientsByRecipe;
+*/
     }
 
+
+    /*
+creates an ingredient based on a recipe - not needed because this is done within recipe
     @Override
-    public Recipe_Ingredients createIngredient(Recipe_Ingredients recipeIngredients) {
+    public Recipe_Ingredients createIngredientByRecipe (Recipe_Ingredients recipeIngredients) {
 
         String sql = "INSERT INTO ingredients (ingredient_name) VALUES (?);";
 
@@ -88,8 +93,26 @@ public class JdbcIngredientsDao implements IngredientsDao {
         }
         return recipeIngredients;
     }
+*/
 
-//    @Override
+
+    //inserts a list of ingredients from an array of ingredients into the ingredient table
+    public void createIngredientsForIngredientTable(List<Recipe_Ingredients> recipeIngredientsList) {
+        String sql = "INSERT INTO ingredients (ingredient_name) VALUES (?)";
+        try {
+            jdbcTemplate.batchUpdate(sql, recipeIngredientsList, recipeIngredientsList.size(),
+                    (ps, ingredient) -> {
+                        ps.setString(1, ingredient.getIngredientName());
+                    });
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+    }
+
+
+
+/*
+    @Override - not needed
     public Recipe_Ingredients getIngredientByIngredientId (int ingredientId) {
         Recipe_Ingredients ingredientByIngredientId = null;
         String sql = "SELECT ingredient_id, ingredient_name FROM ingredients WHERE ingredient_id = ?";
@@ -103,7 +126,7 @@ public class JdbcIngredientsDao implements IngredientsDao {
         }
         return ingredientByIngredientId;
     }
-
+*/
 
 
     private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
