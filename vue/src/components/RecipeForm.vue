@@ -68,8 +68,8 @@
 
 <script>
 import AutoComplete from 'primevue/autocomplete';
-import RecipeService from '../services/RecipeService.js'
-import IngredientService from '../services/IngredientService.js'
+import RecipeService from '../services/RecipeService.js';
+import IngredientService from '../services/IngredientService.js';
 
 export default {
 
