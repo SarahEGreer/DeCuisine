@@ -1,7 +1,20 @@
-<template>
+<!-- <template>
     <h1>Recipe List</h1>
     <div v-for="recipe in recipes" :key="recipe.recipeId">
-        <RecipeThumbnail :recipe="recipe" />
+        <recipe-thumbnail :recipe="recipe" />
+    </div>
+</template> -->
+
+
+<template>
+    <h1>Recipe List</h1>
+    <div v-if="recipes.length">
+        <div v-for="recipe in recipes" :key="recipe.recipeId">
+            <recipe-thumbnail :recipe="recipe" />
+        </div>
+    </div>
+    <div v-else>
+        <p>No recipes available.</p>
     </div>
 </template>
 
@@ -34,12 +47,25 @@ export default {
             ],
         }
     },
-    mounted(){
-        RecipeService.getRecipes().then(response => {
-            this.recipes = response.data;
-            // add catch block 
-        })
+    created(){
+        RecipeService.getRecipes()
+            .then(response => {
+                console.log('Recipes fetched:', response.data); // Log the fetched data
+                this.recipes = response.data;
+            })
+            .catch(error => {
+                console.error('Error fetching recipes:', error); // Log any error
+            });
+        RecipeService.getRecipeDetails(1)
+            .then(response => {
+                console.log('Recipe details fetched:', response.data); // Log the fetched data
+            })
+            .catch(error => {
+                console.error('Error fetching recipe details:', error); // Log any error
+            });
     }
+
+    
 }
 
 </script>
