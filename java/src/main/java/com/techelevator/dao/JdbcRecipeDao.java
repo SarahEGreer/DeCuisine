@@ -115,7 +115,7 @@ public class JdbcRecipeDao implements RecipeDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        List<Recipe_IngredientDto> ingredients = recipeDto.getRecipe_ingredientDtoList();
+        List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
         int ingredientId = 0;
         for (Recipe_IngredientDto i : ingredients) {
             try {

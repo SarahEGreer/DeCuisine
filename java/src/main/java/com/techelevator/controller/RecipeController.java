@@ -42,7 +42,7 @@ public class RecipeController {
 
 
 
-    @GetMapping(path = "/{recipeId}/details")
+    @GetMapping(path = "/details/{recipeId}")
     public Recipe_detailDto getRecipeDetails(@PathVariable int recipeId){
         try{
             return recipeDao.getRecipeDetailsByRecipeId(recipeId);
