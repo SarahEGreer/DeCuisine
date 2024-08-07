@@ -40,6 +40,26 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipeSummary;
     }
 
+
+  @Override
+    public RecipeSummary getRecipeSummaryByRecipeId (int recipeId) {
+        RecipeSummary recipeSummary = null;
+        String sql = "SELECT recipe_id, recipe_name FROM recipe WHERE recipe_id = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
+            while (results.next()) {
+                recipeSummary = mapRowToRecipeName(results);
+            }
+
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return recipeSummary;
+
+    }
+
+
+
     //get recipe details
     @Override
     public Recipe_detailDto getRecipeDetailsByRecipeId(int recipeId) {

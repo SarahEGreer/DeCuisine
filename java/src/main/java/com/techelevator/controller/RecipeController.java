@@ -41,6 +41,16 @@ public class RecipeController {
     }
 
 
+    @GetMapping(path = "/{recipeId}")
+    public RecipeSummary getRecipeSummaryByRecipeId(@PathVariable int recipeId) {
+        try {
+            return recipeDao.getRecipeSummaryByRecipeId(recipeId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        }
+    }
+
+
 
     @GetMapping(path = "/details/{recipeId}")
     public Recipe_detailDto getRecipeDetails(@PathVariable int recipeId){

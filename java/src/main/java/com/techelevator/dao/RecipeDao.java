@@ -9,6 +9,9 @@ public interface RecipeDao {
 
     List<RecipeSummary> getAllRecipes();
 
+    RecipeSummary getRecipeSummaryByRecipeId(int recipeId);
+
+
     //get recipe details
     Recipe_detailDto getRecipeDetailsByRecipeId(int inputId);
 
