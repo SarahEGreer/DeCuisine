@@ -14,9 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin
-//        (origins = "http://localhost:9000")  //what do we put here
+
 @RestController
+@CrossOrigin
 @RequestMapping("/ingredients")
 @PreAuthorize("isAuthenticated()")
 
