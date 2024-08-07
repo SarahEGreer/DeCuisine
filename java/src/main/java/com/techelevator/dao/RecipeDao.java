@@ -19,6 +19,8 @@ public interface RecipeDao {
 
      void createRecipe (RecipeDto recipeDto, int userId );
 
+     void updateRecipe (RecipeDto recipeDto, int recipeId);
+
 //    Recipe updateRecipe (Recipe recipe);
 
 

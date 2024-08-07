@@ -76,6 +76,19 @@ public class RecipeController {
     }
 
 
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{recipeId}")
+    public void updateRecipe(@RequestBody RecipeDto recipeDto, @PathVariable int recipeId) {
+        try {
+            recipeDao.updateRecipe(recipeDto, recipeId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
+        }
+    }
+
+
 
 
 

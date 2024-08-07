@@ -204,6 +204,41 @@ public class JdbcRecipeDao implements RecipeDao {
     }
 
 
+    @Override
+    public void updateRecipe(RecipeDto recipeDto, int recipeId) {
+        String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ? WHERE recipe_id = ?";
+        try {
+            jdbcTemplate.update(updateRecipeSql,
+                    recipeDto.getName(),
+                    recipeDto.getDescription(),
+                    recipeDto.getInstructions(),
+                    recipeDto.getPrepTime(),
+                    recipeDto.getCookTime(),
+                    recipeDto.getServings(),
+                    recipeId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
+        String deleteIngredientsSql = "DELETE FROM recipes_ingredients WHERE recipe_id = ?";
+        jdbcTemplate.update(deleteIngredientsSql, recipeId);
+
+        String insertIngredientSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) ON CONFLICT (ingredient_name) DO NOTHING RETURNING ingredient_id";
+        String insertRecipeIngredientSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?, ?, ?, ?, ?)";
+        for (Recipe_IngredientDto ingredient : ingredients) {
+            int ingredientId = jdbcTemplate.queryForObject(insertIngredientSql, new Object[]{ingredient.getName()}, Integer.class);
+            jdbcTemplate.update(insertRecipeIngredientSql, recipeId, ingredientId, ingredient.getAmount(), ingredient.getUnit(), "SOWplaceholder");
+        }
+    }
+
+
+
+
+
+
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();
         recipe.setRecipeId(rs.getInt("recipe_id"));
