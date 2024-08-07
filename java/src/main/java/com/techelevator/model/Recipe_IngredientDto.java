@@ -1,48 +1,39 @@
 package com.techelevator.model;
 
 public class Recipe_IngredientDto {
-    private String ingredientName;
-    private double ingredientAmount;
-    private String ingredientUnitType;
-    private String ingredientSystemOfMeasurement;
+    private String name;
+    private double amount;
+    private String unit;
+//    private String ingredientSystemOfMeasurement;
 
-    public Recipe_IngredientDto (String ingredientName, double ingredientAmount, String ingredientUnitType, String ingredientSystemOfMeasurement) {
 
-        this.ingredientName = ingredientName;
-        this.ingredientAmount = ingredientAmount;
-        this.ingredientUnitType = ingredientUnitType;
-        this.ingredientSystemOfMeasurement = ingredientSystemOfMeasurement;
+    public Recipe_IngredientDto(String name, double amount, String unit) {
+        this.name = name;
+        this.amount = amount;
+        this.unit = unit;
     }
 
-    public String getIngredientName() {
-        return ingredientName;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getIngredientAmount() {
-        return ingredientAmount;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setIngredientAmount(double ingredientAmount) {
-        this.ingredientAmount = ingredientAmount;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public String getIngredientUnitType() {
-        return ingredientUnitType;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setIngredientUnitType(String ingredientUnitType) {
-        this.ingredientUnitType = ingredientUnitType;
-    }
-
-    public String getIngredientSystemOfMeasurement() {
-        return ingredientSystemOfMeasurement;
-    }
-
-    public void setIngredientSystemOfMeasurement(String ingredientSystemOfMeasurement) {
-        this.ingredientSystemOfMeasurement = ingredientSystemOfMeasurement;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

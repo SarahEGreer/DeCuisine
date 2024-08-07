@@ -103,12 +103,12 @@ public class JdbcRecipeDao implements RecipeDao {
         public void createRecipe(RecipeDto recipeDto, int userId) {
         //put into recipe
         int newRecipeId = 0;
-        List<Integer> ingredientsIdList = new ArrayList<>();
+
         String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?,?);";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
-                    userId, recipeDto.getRecipeName(), recipeDto.getRecipeDescription(),
-                    recipeDto.getRecipeInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
+                    userId, recipeDto.getName(), recipeDto.getDescription(),
+                    recipeDto.getInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
                     recipeDto.getServings());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -123,10 +123,10 @@ public class JdbcRecipeDao implements RecipeDao {
                         "ON CONFLICT (ingredient_name) DO UPDATE\n" +
                         "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
                         "RETURNING ingredient_id;";
-                String lowerCaseName = i.getIngredientName().toLowerCase();
+                String lowerCaseName = i.getName().toLowerCase();
                 ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, lowerCaseName);
                 String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
-                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getIngredientAmount(), i.getIngredientUnitType(), i.getIngredientSystemOfMeasurement());
+                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getAmount(), i.getUnit(), "SOWplaceholder");
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
