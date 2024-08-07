@@ -182,12 +182,10 @@ public class JdbcRecipeDao implements RecipeDao {
                 String selectSql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?";
                 List<Integer> existingIds = jdbcTemplate.queryForList(selectSql, Integer.class, i.getName().toLowerCase());
 
-
                 //if ingredient does not exist (returns empty) then insert new ingredient
                 if (existingIds.isEmpty()) {
                     String ingredientsSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) RETURNING ingredient_id;";
                     ingredientId = jdbcTemplate.queryForObject(ingredientsSql, Integer.class, i.getName().toLowerCase());
-
 
                 } else {
                     ingredientId = existingIds.get(0);
@@ -203,7 +201,6 @@ public class JdbcRecipeDao implements RecipeDao {
                 throw new DaoException("Data integrity violation", e);
             }
         }
-
     }
 
 
