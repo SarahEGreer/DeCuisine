@@ -14,16 +14,16 @@ public class RecipeDto {
     private int cookTime;
     private int servings;
 
-    private List<Recipe_IngredientDto> recipe_ingredientDtoList;
+    private List<Recipe_IngredientDto> ingredients;
 
-    public RecipeDto(String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_IngredientDto> recipe_ingredientDtoList) {
+    public RecipeDto(String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_IngredientDto> ingredients) {
         this.name = name;
         this.description = description;
         this.instructions = instructions;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
-        this.recipe_ingredientDtoList = recipe_ingredientDtoList;
+        this.ingredients = ingredients;
     }
 
     public String getName() {
@@ -74,11 +74,11 @@ public class RecipeDto {
         this.servings = servings;
     }
 
-    public List<Recipe_IngredientDto> getRecipe_ingredientDtoList() {
-        return recipe_ingredientDtoList;
+    public List<Recipe_IngredientDto> getIngredients() {
+        return ingredients;
     }
 
-    public void setRecipe_ingredientDtoList(List<Recipe_IngredientDto> recipe_ingredientDtoList) {
-        this.recipe_ingredientDtoList = recipe_ingredientDtoList;
+    public void setIngredients(List<Recipe_IngredientDto> ingredients) {
+        this.ingredients = ingredients;
     }
 }
