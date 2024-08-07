@@ -23,23 +23,21 @@ public class JdbcRecipeDao implements RecipeDao {
     }
 
     @Override
-    public List<Recipe> getAllRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
+    public List<RecipeSummary> getAllRecipes() {
+        List<RecipeSummary> recipeSummary = new ArrayList<>();
         //                           add picture when time comes\/
         String sql = "SELECT recipe_id, recipe_name, description  FROM recipe;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
-                Recipe recipe = new Recipe();
-                recipe.setRecipeId(results.getInt("recipe_id"));
-                recipe.setRecipeName(results.getString("recipe_name"));
-                recipe.setRecipeDescription(results.getString("description"));
-                recipes.add(recipe);
+                RecipeSummary recipe = mapRowToRecipeName(results);
+                recipeSummary.add(recipe);
+
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return recipes;
+        return recipeSummary;
     }
 
     //get recipe details
@@ -153,6 +151,14 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipe;
     }
 
+    private RecipeSummary mapRowToRecipeName(SqlRowSet rs) {
+        RecipeSummary recipe = new RecipeSummary();
+        recipe.setRecipeId(rs.getInt("recipe_id"));
+        recipe.setRecipeName(rs.getString("recipe_name"));
+        return recipe;
+
+    }
+
     private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
         Recipe_Ingredients ingredient = new Recipe_Ingredients();
         ingredient.setRecipeId(rs.getInt("recipe_id"));
@@ -168,7 +174,9 @@ public class JdbcRecipeDao implements RecipeDao {
         ingredient.setIngredientId(rs.getInt("ingredient_id"));
         ingredient.setIngredientName(rs.getString("ingredient_name"));
         return ingredient;
-
-
     }
+
+
+
+
 }

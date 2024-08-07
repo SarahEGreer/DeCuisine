@@ -1,16 +1,13 @@
 package com.techelevator.dao;
 
 
-import com.techelevator.model.Recipe;
-import com.techelevator.model.RecipeDto;
-import com.techelevator.model.Recipe_Ingredients;
-import com.techelevator.model.Recipe_detailDto;
+import com.techelevator.model.*;
 
 import java.util.List;
 
 public interface RecipeDao {
 
-    List<Recipe> getAllRecipes();
+    List<RecipeSummary> getAllRecipes();
 
     //get recipe details
     Recipe_detailDto getRecipeDetailsByRecipeId(int inputId);

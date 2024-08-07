@@ -30,8 +30,8 @@ public class RecipeController {
     }
 
     @GetMapping
-    public List<Recipe> getAllRecipes() {
-        List<Recipe> recipes = null;
+    public List<RecipeSummary> getAllRecipes() {
+        List<RecipeSummary> recipes = null;
         try{
             recipes = recipeDao.getAllRecipes();
         } catch (CannotGetJdbcConnectionException e) {

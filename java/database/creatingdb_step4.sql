@@ -44,7 +44,7 @@ CREATE TABLE recipes_ingredients
     ingredient_id INT NOT NULL,
     amount NUMERIC NOT NULL,
     unit_type VARCHAR(100) NOT NULL,
-    system_of_measurement VARCHAR(100) NOT NULL,
+    system_of_measurement VARCHAR(100),
     CONSTRAINT fk_recipes_ingredients_recipe FOREIGN KEY (recipe_id) REFERENCES recipe(recipe_id),
     CONSTRAINT fk_recipes_ingredients_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
 );
