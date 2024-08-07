@@ -41,8 +41,8 @@
                 @complete="searchIngredients" dropdown />
 
 
-                <label for="quantity">Quantity: </label>
-                <input type="number" name="quantity" v-model="ingredient.quantity" required>
+                <label for="amount">Amount: </label>
+                <input type="number" name="amount" v-model="ingredient.amount" required>
                 
 
                 <label for="unit">Unit: </label>
@@ -84,7 +84,7 @@ export default {
             default: () => {
                 return {
                     recipeId: 0,
-                    name: '',
+                    recipeName: '',
                     prepTime: '', 
                     cookTime: '', 
                     description: '',
@@ -111,7 +111,7 @@ export default {
 
     },
 
-    mounted() {
+    created() {
         IngredientService.getIngredients().then(response => {
             this.ingredientOptions = response.data;
         })
@@ -120,7 +120,7 @@ export default {
     methods: {
 
         addIngredient() {
-            this.newRecipe.ingredients.push({ name: '', quantity: 0, unit: '' });
+            this.newRecipe.ingredients.push({ name: '', amount: 0, unit: '' });
         },
 
         removeIngredient(index) {
@@ -144,7 +144,7 @@ export default {
         resetForm(){
             this.newRecipe = {
                     recipeId: 0,
-                    name: '',
+                    recipeName: '',
                     prepTime: '', 
                     cookTime: '', 
                     description: '',
@@ -171,6 +171,7 @@ export default {
             if(this.hasDuplicates(this.newRecipe.ingredients)){
                throw new Error('Your recipe must not have duplicate ingredients')
             }
+            console.log(this.newRecipe);
             RecipeService.submitRecipe(this.recipe).then(response => {
                 console.log(response.data);
                 this.resetForm();

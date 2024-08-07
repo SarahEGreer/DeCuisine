@@ -17,6 +17,7 @@ export default {
             RecipeService.getRecipeDetails(recipeId)
                 .then((response => {
                     this.recipe = response.data;
+                    console.log(response.data);
                 }))
                 .catch((error => {
                     this.handleErrorResponse(error);
@@ -31,7 +32,10 @@ export default {
             }
         },
         created() {
+            console.log('THIS IS A STATEMENT');
             this.getCurrentRecipeDetails(this.$route.params.recipeId);
+            console.log('This is the recipe ID' + this.recipe.recipeId);
+
         }
     }
 }
