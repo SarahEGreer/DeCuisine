@@ -98,13 +98,48 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipesByUser;
     }
 
-    @Override
-//    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
-        public void createRecipe(RecipeDto recipeDto, int userId) {
-        //put into recipe
-        int newRecipeId = 0;
+//    @Override
+////    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
+//        public void createRecipe(RecipeDto recipeDto, int userId) {
+//        //put into recipe
+//        int newRecipeId = 0;
+//
+//        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURN recipe_id;";
+//        try {
+//            newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
+//                    userId, recipeDto.getName(), recipeDto.getDescription(),
+//                    recipeDto.getInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
+//                    recipeDto.getServings());
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DaoException("Data integrity violation", e);
+//        }
+//        List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
+//        int ingredientId = 0;
+//        for (Recipe_IngredientDto i : ingredients) {
+//            try {
+//                String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
+//                        "ON CONFLICT (ingredient_name) DO UPDATE\n" +
+//                        "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
+//                        "RETURNING ingredient_id;";
+//                String lowerCaseName = i.getName().toLowerCase();
+//                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, lowerCaseName);
+//                String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
+//                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getAmount(), i.getUnit(), "SOWplaceholder");
+//            } catch (CannotGetJdbcConnectionException e) {
+//                throw new DaoException("Unable to connect to server or database", e);
+//            } catch (DataIntegrityViolationException e) {
+//                throw new DaoException("Data integrity violation", e);
+//            }
+//        }
+//        //put into tags
+//        String tagsSql = "";
+//    }
 
-        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURN recipe_id;";
+    public void createRecipe(RecipeDto recipeDto, int userId) {
+        int newRecipeId = 0;
+        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURNING recipe_id;";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
                     userId, recipeDto.getName(), recipeDto.getDescription(),
@@ -115,26 +150,40 @@ public class JdbcRecipeDao implements RecipeDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
+
         List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
-        int ingredientId = 0;
+
+        //for each ingredient within the dto, do the following try/catch for it
         for (Recipe_IngredientDto i : ingredients) {
+            Integer ingredientId = null;
             try {
-                String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
-                        "ON CONFLICT (ingredient_name) DO UPDATE\n" +
-                        "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
-                        "RETURNING ingredient_id;";
-                String lowerCaseName = i.getName().toLowerCase();
-                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, lowerCaseName);
-                String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
-                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getAmount(), i.getUnit(), "SOWplaceholder");
+
+                //checks to see if ingredient exists
+                String selectSql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?";
+                List<Integer> existingIds = jdbcTemplate.queryForList(selectSql, Integer.class, i.getName().toLowerCase());
+
+
+                //if ingredient does not exist (returns empty) then insert new ingredient
+                if (existingIds.isEmpty()) {
+                    String ingredientsSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) RETURNING ingredient_id;";
+                    ingredientId = jdbcTemplate.queryForObject(ingredientsSql, Integer.class, i.getName().toLowerCase());
+
+
+                } else {
+                    ingredientId = existingIds.get(0);
+                }
+
+                // insert into recipes_ingredients table
+                String recipeIngredientsSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
+                jdbcTemplate.update(recipeIngredientsSql, newRecipeId, ingredientId, i.getAmount(), i.getUnit(), i.getSystemOfMeasurement());
+
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
                 throw new DaoException("Data integrity violation", e);
             }
         }
-        //put into tags
-        String tagsSql = "";
+
     }
 
 

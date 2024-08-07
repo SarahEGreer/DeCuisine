@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/ingredients")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 
 public class IngredientsController {
 
