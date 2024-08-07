@@ -19,7 +19,7 @@ import com.techelevator.security.jwt.JWTFilter;
 import com.techelevator.security.jwt.TokenProvider;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;
