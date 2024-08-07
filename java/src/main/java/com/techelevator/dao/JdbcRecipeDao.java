@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 @Component
 
@@ -118,44 +119,6 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipesByUser;
     }
 
-//    @Override
-////    public void createRecipe(Recipe newRecipe, int userId, List<Recipe_Ingredients> ingredients) {
-//        public void createRecipe(RecipeDto recipeDto, int userId) {
-//        //put into recipe
-//        int newRecipeId = 0;
-//
-//        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURN recipe_id;";
-//        try {
-//            newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
-//                    userId, recipeDto.getName(), recipeDto.getDescription(),
-//                    recipeDto.getInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
-//                    recipeDto.getServings());
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new DaoException("Data integrity violation", e);
-//        }
-//        List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
-//        int ingredientId = 0;
-//        for (Recipe_IngredientDto i : ingredients) {
-//            try {
-//                String ingredientsSql = "INSERT INTO ingredients (ingredient_name)VALUES('?')\n" +
-//                        "ON CONFLICT (ingredient_name) DO UPDATE\n" +
-//                        "\tSET ingredient_id = (SELECT ingredient_id FROM ingredients WHERE ingredient_name = '?')\n" +
-//                        "RETURNING ingredient_id;";
-//                String lowerCaseName = i.getName().toLowerCase();
-//                ingredientId = jdbcTemplate.queryForObject(ingredientsSql, int.class, lowerCaseName);
-//                String recipe_ingredientsSql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?,?,?,?,?)";
-//                int placeholder = jdbcTemplate.queryForObject(recipe_ingredientsSql, int.class, newRecipeId, ingredientId, i.getAmount(), i.getUnit(), "SOWplaceholder");
-//            } catch (CannotGetJdbcConnectionException e) {
-//                throw new DaoException("Unable to connect to server or database", e);
-//            } catch (DataIntegrityViolationException e) {
-//                throw new DaoException("Data integrity violation", e);
-//            }
-//        }
-//        //put into tags
-//        String tagsSql = "";
-//    }
 
     public void createRecipe(RecipeDto recipeDto, int userId) {
         int newRecipeId = 0;
