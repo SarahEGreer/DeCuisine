@@ -104,7 +104,7 @@ public class JdbcRecipeDao implements RecipeDao {
         //put into recipe
         int newRecipeId = 0;
 
-        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?,?);";
+        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURN recipe_id;";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
                     userId, recipeDto.getName(), recipeDto.getDescription(),
