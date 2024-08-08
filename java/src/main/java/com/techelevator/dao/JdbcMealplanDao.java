@@ -54,7 +54,7 @@ public class JdbcMealplanDao implements MealplanDao{
         return mealplans;
     }
 
-    ;
+
     @Override
     public MealplanDto getMealplanDetailsWithSchedule(int mealplanId) {
         MealplanDto mealplanDto = null;
@@ -76,10 +76,10 @@ public class JdbcMealplanDao implements MealplanDao{
             SqlRowSet results = jdbcTemplate.queryForRowSet(mpsql, mealplanId);
             while(results.next()) {
                 MealplanScheduleDto mealplanScheduleDto = new MealplanScheduleDto();
-                mealplanScheduleDto.setDay(results.getInt("day"));
-                mealplanScheduleDto.setBreakfastId(results.getInt("breakfastId"));
-                mealplanScheduleDto.setLunchId(results.getInt("lunchId"));
-                mealplanScheduleDto.setDinnerId(results.getInt("dinnerId"));
+                mealplanScheduleDto.setDay(results.getInt("mealplan_day_count"));
+                mealplanScheduleDto.setBreakfastId(results.getInt("breakfast_recipe_id"));
+                mealplanScheduleDto.setLunchId(results.getInt("lunch_recipe_id"));
+                mealplanScheduleDto.setDinnerId(results.getInt("dinner_recipe_id"));
                 schedule.add(mealplanScheduleDto);
             }
         } catch (CannotGetJdbcConnectionException e) {
