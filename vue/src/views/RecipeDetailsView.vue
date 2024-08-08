@@ -42,6 +42,7 @@ export default {
         },
         editRecipe() {
             // take to edit recipe view 
+            this.$router.push({ name: 'recipe-edit', params: { recipeId: this.recipe.recipeId } });
         }
     },
     created() {

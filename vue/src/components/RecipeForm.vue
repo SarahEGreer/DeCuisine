@@ -81,25 +81,34 @@ export default {
         recipe: {
             type: Object,
             required: true,
-            default: () => {
-                return {
-                    recipeId: 0,
-                    name: '',
-                    prepTime: '',
-                    cookTime: '',
-                    description: '',
-                    servings: '',
-                    ingredients: [],
-                    instructions: '',
-                }
-            }
+            // default: () => {
+            //     return {
+            //         recipeId: 0,
+            //         name: '',
+            //         prepTime: '',
+            //         cookTime: '',
+            //         description: '',
+            //         servings: '',
+            //         ingredients: [],
+            //         instructions: '',
+            //     }
+            // }
         }
     },
 
 
     data() {
         return {
-            newRecipe: { ...this.recipe },
+            newRecipe: {
+                recipeId: this.recipe.recipeId,
+                name: this.recipe.name,
+                prepTime: this.recipe.prepTime,
+                cookTime: this.recipe.cookTime,
+                description: this.recipe.description,
+                servings: this.recipe.servings,
+                ingredients: this.recipe.ingredients,
+                instructions: this.recipe.instructions,
+            },
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL

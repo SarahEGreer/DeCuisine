@@ -76,6 +76,15 @@ const routes = [
       requiresAuth: false //Set to true when authentication is implemented
     }
   },
+  
+  {
+  path: '/recipes/:recipeId/edit',
+  name: 'recipe-edit',
+  component: RecipeFormView,
+  meta: {
+   requiresAuth: true
+  }
+},
 
 ];
 
