@@ -4,7 +4,7 @@ public class Recipe_Ingredients {
     private int recipeId;
     private int ingredientId;
     private String name;
-    private double quantity;
+    private double amount;
     private String unit;
     private String systemOfMeasurement;
     public Recipe_Ingredients(){};
@@ -33,12 +33,12 @@ public class Recipe_Ingredients {
         this.name = name;
     }
 
-    public double getQuantity() {
-        return quantity;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public String getUnit() {
@@ -57,15 +57,13 @@ public class Recipe_Ingredients {
         this.systemOfMeasurement = systemOfMeasurement;
     }
 
-    public Recipe_Ingredients(int recipeId, int ingredientId, String name, double quantity, String unit, String systemOfMeasurement) {
+    public Recipe_Ingredients(int recipeId, int ingredientId, String name, double amount, String unit, String systemOfMeasurement) {
         this.recipeId = recipeId;
         this.ingredientId = ingredientId;
         this.name = name;
-        this.quantity = quantity;
+        this.amount = amount;
         this.unit = unit;
         this.systemOfMeasurement = systemOfMeasurement;
-
-
 
     }
 }
