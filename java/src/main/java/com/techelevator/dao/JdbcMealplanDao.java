@@ -70,11 +70,11 @@ public class JdbcMealplanDao implements MealplanDao{
             throw new DaoException("Unable to connect to server or database", e);
         }
 
-        String mpsql =  "SELECT mealplan_day_count, breakfast_recipe_id, lunch_recipe_id, dinner_recipe_id" +
+        String mpsql =  "SELECT *" +
                 "FROM mealplan_recipe WHERE mealplan_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(mpsql, mealplanId);
-            while(results.next()) {
+            while (results.next()) {
                 MealplanScheduleDto mealplanScheduleDto = new MealplanScheduleDto();
                 mealplanScheduleDto.setDay(results.getInt("mealplan_day_count"));
                 mealplanScheduleDto.setBreakfastId(results.getInt("breakfast_recipe_id"));
@@ -98,8 +98,8 @@ public class JdbcMealplanDao implements MealplanDao{
         int newMealplanId = 0;
         String mealplanSql = "INSERT INTO mealplan (mealplan_name, mealplan_description, created_by_user_id) VALUES (?,?,?) RETURNING mealplan_id;";
         try {
-            newMealplanId = jdbcTemplate.queryForObject(mealplanSql, int.class, userId,
-                    mealplanDto.getName(), mealplanDto.getDescription());
+            newMealplanId = jdbcTemplate.queryForObject(mealplanSql, int.class,
+                    mealplanDto.getName(), mealplanDto.getDescription(), userId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -146,7 +146,7 @@ public class JdbcMealplanDao implements MealplanDao{
         for (MealplanScheduleDto day : schedule) {
             try {
                 String scheduleSql = "INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_id, lunch_recipe_id, dinner_recipe_id) VALUES (?,?,?,?,?);";
-                jdbcTemplate.update(sql, mealplanId, day.getDay(), day.getBreakfastId(), day.getLunchId(), day.getDinnerId());
+                jdbcTemplate.update(scheduleSql, mealplanId, day.getDay(), day.getBreakfastId(), day.getLunchId(), day.getDinnerId());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
