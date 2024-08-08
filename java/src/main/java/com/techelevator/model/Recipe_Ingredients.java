@@ -3,20 +3,11 @@ package com.techelevator.model;
 public class Recipe_Ingredients {
     private int recipeId;
     private int ingredientId;
-    private String ingredientName;
-    private double ingredientAmount;
-    private String ingredientUnitType;
-    private String ingredientSystemOfMeasurement;
+    private String name;
+    private double quantity;
+    private String unit;
+    private String systemOfMeasurement;
     public Recipe_Ingredients(){};
-
-    public Recipe_Ingredients(int recipeId, int ingredientId, String ingredientName, double ingredientAmount, String ingredientUnitType, String ingredientSystemOfMeasurement) {
-        this.recipeId = recipeId;
-        this.ingredientId = ingredientId;
-        this.ingredientName = ingredientName;
-        this.ingredientAmount = ingredientAmount;
-        this.ingredientUnitType = ingredientUnitType;
-        this.ingredientSystemOfMeasurement = ingredientSystemOfMeasurement;
-    }
 
     public int getRecipeId() {
         return recipeId;
@@ -34,35 +25,47 @@ public class Recipe_Ingredients {
         this.ingredientId = ingredientId;
     }
 
-    public String getIngredientName() {
-        return ingredientName;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getIngredientAmount() {
-        return ingredientAmount;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setIngredientAmount(double ingredientAmount) {
-        this.ingredientAmount = ingredientAmount;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
-    public String getIngredientUnitType() {
-        return ingredientUnitType;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setIngredientUnitType(String ingredientUnitType) {
-        this.ingredientUnitType = ingredientUnitType;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
-    public String getIngredientSystemOfMeasurement() {
-        return ingredientSystemOfMeasurement;
+    public String getSystemOfMeasurement() {
+        return systemOfMeasurement;
     }
 
-    public void setIngredientSystemOfMeasurement(String ingredientSystemOfMeasurement) {
-        this.ingredientSystemOfMeasurement = ingredientSystemOfMeasurement;
+    public void setSystemOfMeasurement(String systemOfMeasurement) {
+        this.systemOfMeasurement = systemOfMeasurement;
+    }
+
+    public Recipe_Ingredients(int recipeId, int ingredientId, String name, double quantity, String unit, String systemOfMeasurement) {
+        this.recipeId = recipeId;
+        this.ingredientId = ingredientId;
+        this.name = name;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.systemOfMeasurement = systemOfMeasurement;
+
+
+
     }
 }

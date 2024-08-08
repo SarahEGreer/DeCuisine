@@ -51,10 +51,10 @@ public class JdbcIngredientsDao implements IngredientsDao {
                 Recipe_Ingredients ingredient = new Recipe_Ingredients();
                 ingredient.setRecipeId(results.getInt("recipe_id"));
                 ingredient.setIngredientId(results.getInt("ingredient_id"));
-                ingredient.setIngredientName(results.getString("ingredient_name"));
-                ingredient.setIngredientAmount(results.getDouble("amount"));
-                ingredient.setIngredientUnitType(results.getString("unit_type"));
-                ingredient.setIngredientSystemOfMeasurement(results.getString("system_of_measurement"));
+                ingredient.setName(results.getString("ingredient_name"));
+                ingredient.setQuantity(results.getDouble("amount"));
+                ingredient.setUnit(results.getString("unit_type"));
+                ingredient.setSystemOfMeasurement(results.getString("system_of_measurement"));
                 ingredientsByRecipe.add(ingredient);
             }
         } catch (CannotGetJdbcConnectionException e) {
@@ -102,7 +102,7 @@ creates an ingredient based on a recipe - not needed because this is done within
         try {
             jdbcTemplate.batchUpdate(sql, recipeIngredientsList, recipeIngredientsList.size(),
                     (ps, ingredient) -> {
-                        ps.setString(1, ingredient.getIngredientName());
+                        ps.setString(1, ingredient.getName());
                     });
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -133,16 +133,16 @@ creates an ingredient based on a recipe - not needed because this is done within
         Recipe_Ingredients ingredient = new Recipe_Ingredients();
         ingredient.setRecipeId(rs.getInt("recipe_id"));
         ingredient.setIngredientId(rs.getInt("ingredient_id"));
-        ingredient.setIngredientAmount(rs.getDouble("amount"));
-        ingredient.setIngredientUnitType(rs.getString("unit_type"));
-        ingredient.setIngredientSystemOfMeasurement(rs.getString("system_of_measurement"));
+        ingredient.setQuantity(rs.getDouble("amount"));
+        ingredient.setUnit(rs.getString("unit_type"));
+        ingredient.setSystemOfMeasurement(rs.getString("system_of_measurement"));
         return ingredient;
     }
 
     private Recipe_Ingredients mapRowToIngredient(SqlRowSet rs) {
         Recipe_Ingredients ingredient = new Recipe_Ingredients();
         ingredient.setIngredientId(rs.getInt("ingredient_id"));
-        ingredient.setIngredientName(rs.getString("ingredient_name"));
+        ingredient.setName(rs.getString("ingredient_name"));
         return ingredient;
     }
 

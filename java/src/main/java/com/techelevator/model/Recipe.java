@@ -6,9 +6,9 @@ public class Recipe {
 
     private int recipeId;
     private int userId;
-    private String recipeName;
-    private String recipeDescription;
-    private String recipeInstructions;
+    private String name;
+    private String description;
+    private String instructions;
     private int prepTime;
     private int cookTime;
     private int servings;
@@ -17,12 +17,12 @@ public class Recipe {
 
     public Recipe(){};
 
-    public Recipe(int recipeId, int userId, String recipeName, String recipeDescription, String recipeInstructions, int prepTime, int cookTime, int servings, List<Recipe_detailDto.IngredientDetail> ingredients) {
+    public Recipe(int recipeId, int userId, String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_detailDto.IngredientDetail> ingredients) {
         this.recipeId = recipeId;
         this.userId = userId;
-        this.recipeName = recipeName;
-        this.recipeDescription = recipeDescription;
-        this.recipeInstructions = recipeInstructions;
+        this.name = name;
+        this.description = description;
+        this.instructions = instructions;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
@@ -45,28 +45,29 @@ public class Recipe {
         this.userId = userId;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRecipeDescription() {
-        return recipeDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRecipeDescription(String recipeDescription) {
-        this.recipeDescription = recipeDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getRecipeInstructions() {
-        return recipeInstructions;
+    public String getInstructions() {
+        return instructions;
     }
 
-    public void setRecipeInstructions(String recipeInstructions) {
-        this.recipeInstructions = recipeInstructions;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     public int getPrepTime() {
