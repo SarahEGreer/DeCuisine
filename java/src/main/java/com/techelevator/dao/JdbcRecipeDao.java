@@ -89,7 +89,7 @@ public class JdbcRecipeDao implements RecipeDao {
             while (results.next()) {
                 Recipe_detailDto.IngredientDetail ingredientDetail = new Recipe_detailDto.IngredientDetail();
                 ingredientDetail.setName(results.getString("ingredient_name"));
-                ingredientDetail.setAmount(results.getDouble("amount"));
+                ingredientDetail.setQuantity(results.getDouble("amount"));
                 ingredientDetail.setUnit(results.getString("unit_type"));
                 ingredientDetail.setSystemOfMeasurement(results.getString("system_of_measurement"));
                 ingredientDetails.add(ingredientDetail);
