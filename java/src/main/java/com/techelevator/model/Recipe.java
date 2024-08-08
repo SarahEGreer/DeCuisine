@@ -5,7 +5,7 @@ import java.util.List;
 public class Recipe {
 
     private int recipeId;
-    private int userId;
+//    private int userId;
     private String name;
     private String description;
     private String instructions;
@@ -17,9 +17,9 @@ public class Recipe {
 
     public Recipe(){};
 
-    public Recipe(int recipeId, int userId, String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_detailDto.IngredientDetail> ingredients) {
+    public Recipe(int recipeId, String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_detailDto.IngredientDetail> ingredients) {
         this.recipeId = recipeId;
-        this.userId = userId;
+//        this.userId = userId;
         this.name = name;
         this.description = description;
         this.instructions = instructions;
@@ -37,13 +37,13 @@ public class Recipe {
         this.recipeId = recipeId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+//    public int getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(int userId) {
+//        this.userId = userId;
+//    }
 
 
     public String getName() {
