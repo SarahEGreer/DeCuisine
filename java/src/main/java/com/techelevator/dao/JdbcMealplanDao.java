@@ -115,27 +115,84 @@ public class JdbcMealplanDao implements MealplanDao{
                 jdbcTemplate.update(mealplanRecipeSql, newMealplanId, day.getDay(), day.getBreakfastId(), day.getLunchId(), day.getDinnerId());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
+            }
+        }
+    }
+
+    @Override
+    public void updateMealplan (MealplanDto mealplanDto, int mealplanId) {
+        String sql = "UPDATE mealplan SET mealplan_name = ?, mealplan_description = ? WHERE mealplan_id = ?";
+        try {
+            jdbcTemplate.update(sql,
+                    mealplanDto.getName(),
+                    mealplanDto.getDescription(),
+                    mealplanId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        //deleting the existing schedule
+        List<MealplanScheduleDto> schedule = mealplanDto.getSchedule();
+        String deleteScheduleSql = "DELETE FROM mealplan_recipe WHERE mealplan_id = ?";
+        try {
+            jdbcTemplate.update(deleteScheduleSql, mealplanId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        //insert new schedule
+        for (MealplanScheduleDto day : schedule) {
+            try {
+                String scheduleSql = "INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_id, lunch_recipe_id, dinner_recipe_id) VALUES (?,?,?,?,?);";
+                jdbcTemplate.update(sql, mealplanId, day.getDay(), day.getBreakfastId(), day.getLunchId(), day.getDinnerId());
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
                 throw new DaoException("Data integrity violation", e);
             }
+        }
+
+    }
+
+
+    @Override
+    public void deleteMealplan (int mealplanId) {
+
+        //delete from mealplan_recipe
+        String scheduleSql = "DELETE FROM mealplan_recipe WHERE mealplan_id = ?";
+        try {
+            jdbcTemplate.update(scheduleSql, mealplanId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        //delete from user_tracked_mealplan
+        String userSql = "DELETE FROM user_tracked_mealplan WHERE mealplan_id = ?";
+        try {
+            jdbcTemplate.update(userSql, mealplanId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        //delete from mealplan
+        String mealplanSql = "DELETE FROM mealplan WHERE mealplan_id = ?";
+        try {
+            jdbcTemplate.update(mealplanSql, mealplanId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
         }
     }
 
 
 
-
-
-
-
-
-
-
-
-
-//
-//    void updateMealplan (MealplanDto mealplanDto, int userId);
-//
-//    void deleteMealplan (int mealplanId);
 
     private Mealplan mapRowToMealplan(SqlRowSet rs) {
         Mealplan mealplan = new Mealplan();
