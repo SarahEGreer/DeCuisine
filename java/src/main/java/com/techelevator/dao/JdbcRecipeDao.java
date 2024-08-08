@@ -88,9 +88,9 @@ public class JdbcRecipeDao implements RecipeDao {
             SqlRowSet results = jdbcTemplate.queryForRowSet(rIsql, recipeId);
             while (results.next()) {
                 Recipe_detailDto.IngredientDetail ingredientDetail = new Recipe_detailDto.IngredientDetail();
-                ingredientDetail.setIngredientName(results.getString("ingredient_name"));
+                ingredientDetail.setName(results.getString("ingredient_name"));
                 ingredientDetail.setAmount(results.getDouble("amount"));
-                ingredientDetail.setUnitType(results.getString("unit_type"));
+                ingredientDetail.setUnit(results.getString("unit_type"));
                 ingredientDetail.setSystemOfMeasurement(results.getString("system_of_measurement"));
                 ingredientDetails.add(ingredientDetail);
             }
@@ -189,15 +189,36 @@ public class JdbcRecipeDao implements RecipeDao {
         String deleteIngredientsSql = "DELETE FROM recipes_ingredients WHERE recipe_id = ?";
         jdbcTemplate.update(deleteIngredientsSql, recipeId);
 
-        String insertIngredientSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) ON CONFLICT (ingredient_name) DO NOTHING RETURNING ingredient_id";
-        String insertRecipeIngredientSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?, ?, ?, ?, ?)";
-        for (Recipe_IngredientDto ingredient : ingredients) {
-            int ingredientId = jdbcTemplate.queryForObject(insertIngredientSql, new Object[]{ingredient.getName()}, Integer.class);
-            jdbcTemplate.update(insertRecipeIngredientSql, recipeId, ingredientId, ingredient.getAmount(), ingredient.getUnit(), ingredient.getSystemOfMeasurement());
+
+        for (Recipe_IngredientDto i : ingredients) {
+            Integer ingredientId = null;
+            try {
+
+                //checks to see if ingredient exists
+                String selectSql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?";
+                List<Integer> existingIds = jdbcTemplate.queryForList(selectSql, Integer.class, i.getName().toLowerCase());
+
+                //if ingredient does not exist (returns empty) then insert new ingredient
+                if (existingIds.isEmpty()) {
+                    String insertIngredientSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) ON CONFLICT (ingredient_name) DO NOTHING RETURNING ingredient_id";
+                    ingredientId = jdbcTemplate.queryForObject(insertIngredientSql, Integer.class, i.getName().toLowerCase());
+
+                } else {
+                    ingredientId = existingIds.get(0);
+                }
+
+                // insert into recipes_ingredients table
+                String insertRecipeIngredientSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(insertRecipeIngredientSql, recipeId, ingredientId, i.getAmount(), i.getUnit(), i.getSystemOfMeasurement());
+
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
+            }
+
         }
     }
-
-
 
 
 
@@ -223,22 +244,22 @@ public class JdbcRecipeDao implements RecipeDao {
 
     }
 
-    private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
-        Recipe_Ingredients ingredient = new Recipe_Ingredients();
-        ingredient.setRecipeId(rs.getInt("recipe_id"));
-        ingredient.setIngredientId(rs.getInt("ingredient_id"));
-        ingredient.setIngredientAmount(rs.getDouble("amount"));
-        ingredient.setIngredientUnitType(rs.getString("unit_type"));
-        ingredient.setIngredientSystemOfMeasurement(rs.getString("system_of_measurement"));
-        return ingredient;
-    }
-
-    private Recipe_Ingredients mapRowToIngredient(SqlRowSet rs) {
-        Recipe_Ingredients ingredient = new Recipe_Ingredients();
-        ingredient.setIngredientId(rs.getInt("ingredient_id"));
-        ingredient.setIngredientName(rs.getString("ingredient_name"));
-        return ingredient;
-    }
+//    private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
+//        Recipe_Ingredients ingredient = new Recipe_Ingredients();
+//        ingredient.setRecipeId(rs.getInt("recipe_id"));
+//        ingredient.setIngredientId(rs.getInt("ingredient_id"));
+//        ingredient.setIngredientAmount(rs.getDouble("amount"));
+//        ingredient.setIngredientUnitType(rs.getString("unit_type"));
+//        ingredient.setIngredientSystemOfMeasurement(rs.getString("system_of_measurement"));
+//        return ingredient;
+//    }
+//
+//    private Recipe_Ingredients mapRowToIngredient(SqlRowSet rs) {
+//        Recipe_Ingredients ingredient = new Recipe_Ingredients();
+//        ingredient.setIngredientId(rs.getInt("ingredient_id"));
+//        ingredient.setIngredientName(rs.getString("ingredient_name"));
+//        return ingredient;
+//    }
 
 
 

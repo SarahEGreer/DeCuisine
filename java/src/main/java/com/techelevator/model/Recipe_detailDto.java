@@ -21,26 +21,26 @@ public class Recipe_detailDto {
     }
 
     public static class IngredientDetail {
-        private String ingredientName;
+        private String name;
         private double amount;
-        private String unitType;
+        private String unit;
         private String systemOfMeasurement;
 
         public IngredientDetail() {}
 
-        public IngredientDetail(String ingredientName, double amount, String unitType, String systemOfMeasurement) {
-            this.ingredientName = ingredientName;
+        public IngredientDetail(String name, double amount, String unit, String systemOfMeasurement) {
+            this.name = name;
             this.amount = amount;
-            this.unitType = unitType;
+            this.unit = unit;
             this.systemOfMeasurement = systemOfMeasurement;
         }
 
-        public String getIngredientName() {
-            return ingredientName;
+        public String getName() {
+            return name;
         }
 
-        public void setIngredientName(String ingredientName) {
-            this.ingredientName = ingredientName;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public double getAmount() {
@@ -51,12 +51,12 @@ public class Recipe_detailDto {
             this.amount = amount;
         }
 
-        public String getUnitType() {
-            return unitType;
+        public String getUnit() {
+            return unit;
         }
 
-        public void setUnitType(String unitType) {
-            this.unitType = unitType;
+        public void setUnit(String unit) {
+            this.unit = unit;
         }
 
         public String getSystemOfMeasurement() {
