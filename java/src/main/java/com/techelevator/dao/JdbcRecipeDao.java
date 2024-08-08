@@ -239,7 +239,7 @@ public class JdbcRecipeDao implements RecipeDao {
     private RecipeSummary mapRowToRecipeName(SqlRowSet rs) {
         RecipeSummary recipe = new RecipeSummary();
         recipe.setRecipeId(rs.getInt("recipe_id"));
-        recipe.setRecipeName(rs.getString("recipe_name"));
+        recipe.setName(rs.getString("recipe_name"));
         return recipe;
 
     }

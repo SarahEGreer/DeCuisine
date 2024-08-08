@@ -3,14 +3,14 @@ package com.techelevator.model;
 public class RecipeSummary {
 
     private int recipeId;
-    private String recipeName;
+    private String name;
 
 
     public RecipeSummary() {};
 
-    public RecipeSummary(int recipeId, String recipeName) {
+    public RecipeSummary(int recipeId, String name) {
         this.recipeId = recipeId;
-        this.recipeName = recipeName;
+        this.name = name;
     }
 
     public int getRecipeId() {
@@ -21,11 +21,12 @@ public class RecipeSummary {
         this.recipeId = recipeId;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public String getName() {
+        return name;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public void setName(String name) {
+        this.name = name;
     }
+
 }
