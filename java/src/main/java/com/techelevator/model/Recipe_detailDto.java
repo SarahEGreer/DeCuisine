@@ -22,15 +22,15 @@ public class Recipe_detailDto {
 
     public static class IngredientDetail {
         private String name;
-        private double quantity;
+        private double amount;
         private String unit;
         private String systemOfMeasurement;
 
         public IngredientDetail() {}
 
-        public IngredientDetail(String name, double quantity, String unit, String systemOfMeasurement) {
+        public IngredientDetail(String name, double amount, String unit, String systemOfMeasurement) {
             this.name = name;
-            this.quantity = quantity;
+            this.amount = amount;
             this.unit = unit;
             this.systemOfMeasurement = systemOfMeasurement;
         }
@@ -43,12 +43,12 @@ public class Recipe_detailDto {
             this.name = name;
         }
 
-        public double getQuantity() {
-            return quantity;
+        public double getAmount() {
+            return amount;
         }
 
-        public void setQuantity(double quantity) {
-            this.quantity = quantity;
+        public void setAmount(double amount) {
+            this.amount = amount;
         }
 
         public String getUnit() {

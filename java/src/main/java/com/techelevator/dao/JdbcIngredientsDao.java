@@ -52,7 +52,7 @@ public class JdbcIngredientsDao implements IngredientsDao {
                 ingredient.setRecipeId(results.getInt("recipe_id"));
                 ingredient.setIngredientId(results.getInt("ingredient_id"));
                 ingredient.setName(results.getString("ingredient_name"));
-                ingredient.setQuantity(results.getDouble("amount"));
+                ingredient.setAmount(results.getDouble("amount"));
                 ingredient.setUnit(results.getString("unit_type"));
                 ingredient.setSystemOfMeasurement(results.getString("system_of_measurement"));
                 ingredientsByRecipe.add(ingredient);
@@ -133,7 +133,7 @@ creates an ingredient based on a recipe - not needed because this is done within
         Recipe_Ingredients ingredient = new Recipe_Ingredients();
         ingredient.setRecipeId(rs.getInt("recipe_id"));
         ingredient.setIngredientId(rs.getInt("ingredient_id"));
-        ingredient.setQuantity(rs.getDouble("amount"));
+        ingredient.setAmount(rs.getDouble("amount"));
         ingredient.setUnit(rs.getString("unit_type"));
         ingredient.setSystemOfMeasurement(rs.getString("system_of_measurement"));
         return ingredient;
