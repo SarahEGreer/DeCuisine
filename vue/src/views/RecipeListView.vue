@@ -29,21 +29,6 @@ export default {
     data() {
         return {
             recipes: [
-                // {
-                //     name: 'Pizza',
-                //     description: 'it is pizza',
-                //     id: 1,
-                // },
-                // {
-                //     name: 'Toast',
-                //     description: 'put it in the toaster',
-                //     id: 2,
-                // },
-                // {
-                //     name: 'gilled cheese',
-                //     description: 'grill it',
-                //     id: 3,
-                // }
             ],
         }
     },
@@ -56,13 +41,6 @@ export default {
             .catch(error => {
                 console.error('Error fetching recipes:', error); // Log any error
             });
-        // RecipeService.getRecipeDetails(1)
-        //     .then(response => {
-        //         console.log('Recipe details fetched:', response.data); // Log the fetched data
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching recipe details:', error); // Log any error
-        //     });
     }
 
 

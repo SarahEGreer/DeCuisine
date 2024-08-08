@@ -1,7 +1,7 @@
 <template>
     <h1>Create Recipe</h1>
 
-    <recipe-form v-bind:recipe="recipe"/>
+    <recipe-form v-bind:recipe="recipe" />
 
 </template>
 
@@ -17,7 +17,7 @@ export default {
         return {
             recipe: {
                 recipeId: 0,
-                recipeName: '',
+                name: '',
                 prepTime: '',
                 cookTime: '',
                 description: '',

@@ -1,6 +1,7 @@
 <template>
     <h1>Recipe Details</h1>
     <recipe-card v-bind:recipe="recipe" />
+    <button @click="editRecipe">Edit Recipe</button>
 
 </template>
 
@@ -23,7 +24,6 @@ export default {
             RecipeService.getRecipeDetails(recipeId)
                 .then((response => {
                     this.recipe = response.data;
-                    // console.log("this is the response data" + response.data);
                     this.recipe = this.recipe.recipe;
                     // API returns recipe nested within a recipe object. May update on backend if time allows
                     console.log("This is from the view" + this.recipe);
@@ -40,12 +40,12 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', `Could not get message data from server.`);
             }
         },
+        editRecipe() {
+            // take to edit recipe view 
+        }
     },
     created() {
-        console.log("it has been created")
         this.getCurrentRecipeDetails(this.$route.params.recipeId);
-        // console.log("it has been created")
-
     }
 }
 

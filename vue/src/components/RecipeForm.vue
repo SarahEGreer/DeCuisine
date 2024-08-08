@@ -7,20 +7,20 @@
 
             <div>
 
-            <label for="prep-time-hours">Prep Time:</label>
-            <input type="number" id="prep-time-hours" name="prep-time-hours"
-                min="0" placeholder="Hours" v-model.number="prepTimeHours">
-            <input type="number" id="prep-time-minutes" name="prep-time-minutes"
-                min="0" max="59" placeholder="Minutes" v-model.number="prepTimeMinutes">
+                <label for="prep-time-hours">Prep Time:</label>
+                <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
+                    v-model.number="prepTimeHours">
+                <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
+                    placeholder="Minutes" v-model.number="prepTimeMinutes">
 
             </div>
 
             <div>
-            <label for="cook-time-hours">Cook Time:</label>
-            <input type="number" id="cook-time-hours" name="cook-time-hours"
-                min="0" placeholder="Hours" v-model.number="cookTimeHours">
-            <input type="number" id="cook-time-minutes" name="cook-time-minutes"
-                min="0" max="59" placeholder="Minutes" v-model.number="cookTimeMinutes">
+                <label for="cook-time-hours">Cook Time:</label>
+                <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
+                    v-model.number="cookTimeHours">
+                <input type="number" id="cook-time-minutes" name="cook-time-minutes" min="0" max="59"
+                    placeholder="Minutes" v-model.number="cookTimeMinutes">
             </div>
 
 
@@ -32,18 +32,18 @@
 
 
             <!-- <label for="ingredients">Ingredients: </label> -->
-             <h3>Ingredients:</h3>
+            <h3>Ingredients:</h3>
 
             <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
                 <label for="ingredient">Ingredient: </label>
-                
-                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" 
-                @complete="searchIngredients" dropdown />
+
+                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
+                    dropdown />
 
 
                 <label for="amount">Amount: </label>
                 <input type="number" name="amount" v-model="ingredient.amount" required>
-                
+
 
                 <label for="unit">Unit: </label>
                 <select id="unit" name="unit" v-model="ingredient.unit" required>
@@ -84,9 +84,9 @@ export default {
             default: () => {
                 return {
                     recipeId: 0,
-                    recipeName: '',
-                    prepTime: '', 
-                    cookTime: '', 
+                    name: '',
+                    prepTime: '',
+                    cookTime: '',
                     description: '',
                     servings: '',
                     ingredients: [],
@@ -97,9 +97,9 @@ export default {
     },
 
 
-    data(){
+    data() {
         return {
-            newRecipe: {...this.recipe},
+            newRecipe: { ...this.recipe },
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
             unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
@@ -110,13 +110,6 @@ export default {
         };
 
     },
-
-    created() {
-        IngredientService.getIngredients().then(response => {
-            this.ingredientOptions = response.data;
-        })
-    },
-
     methods: {
 
         addIngredient() {
@@ -127,8 +120,8 @@ export default {
             this.newRecipe.ingredients.splice(index, 1);
         },
 
-        convertToMinutes(hours, minutes){
-            return (hours*60) + minutes;
+        convertToMinutes(hours, minutes) {
+            return (hours * 60) + minutes;
         },
 
         searchIngredients(event) {
@@ -137,20 +130,20 @@ export default {
             });
         },
 
-        hasDuplicates(array){
+        hasDuplicates(array) {
             return array.length !== new Set(array).size;
         },
 
-        resetForm(){
+        resetForm() {
             this.newRecipe = {
-                    recipeId: 0,
-                    recipeName: '',
-                    prepTime: '', 
-                    cookTime: '', 
-                    description: '',
-                    servings: '',
-                    ingredients: [],
-                    instructions: ''
+                recipeId: 0,
+                name: '',
+                prepTime: '',
+                cookTime: '',
+                description: '',
+                servings: '',
+                ingredients: [],
+                instructions: ''
             };
             this.newIngredients = [];
             this.prepTimeHours = 0;
@@ -159,27 +152,34 @@ export default {
             this.cookTimeMinutes = 0;
         },
 
-
-
-
-
         submitForm() {
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
             //check ingredients for duplicates and give error (try catch? something like that?)
             //if throw error, don't submit form
-            if(this.hasDuplicates(this.newRecipe.ingredients)){
-               throw new Error('Your recipe must not have duplicate ingredients')
+            if (this.hasDuplicates(this.newRecipe.ingredients)) {
+                console.log("your recipe has a duplicate")
+                throw new Error('Your recipe must not have duplicate ingredients')
             }
-            console.log(this.newRecipe);
-            RecipeService.submitRecipe(this.recipe).then(response => {
-                console.log(response.data);
+            // this is not working^
+            console.log("You made it past the error");
+            RecipeService.submitRecipe(this.newRecipe).then(response => {
+                console.log("This is our submit response data" + response.status);
+                // ^ check for response status and add user success message for created - 201, updated 200 in App view
+                // route to recipe list 
+
                 this.resetForm();
+                this.$router.push({ name: 'recipe-list' });
                 // add try catch block
             })
 
         }
-    }
+    },
+    created() {
+        IngredientService.getIngredients().then(response => {
+            this.ingredientOptions = response.data;
+        })
+    },
 
 }
 
@@ -189,7 +189,5 @@ export default {
 <style scoped>
 textarea {
     resize: none;
-  }
+}
 </style>
-
-

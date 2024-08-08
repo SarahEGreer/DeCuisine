@@ -10,8 +10,8 @@ export default {
     props: {
         recipe: { type: Object, required: true }
     },
-    created() {
-        console.log('RecipeThumbnail created for:', this.recipe); // Log the creation of the component
-    },
+    // created() {
+    //     console.log('RecipeThumbnail created for:', this.recipe); // Log the creation of the component
+    // },
 };
 </script>

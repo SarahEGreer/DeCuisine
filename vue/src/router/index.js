@@ -62,6 +62,7 @@ const routes = [
   {
     path: "/recipes/list",
     name: "recipe-list",
+    // standardize naming conventions
     component: RecipeListView,
     meta: {
       requiresAuth: false //Set to true when authentication is implemented
@@ -74,7 +75,7 @@ const routes = [
     meta: {
       requiresAuth: false //Set to true when authentication is implemented
     }
-  }
+  },
 
 ];
 
