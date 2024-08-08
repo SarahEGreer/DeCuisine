@@ -2,6 +2,7 @@
     <h1>Recipe Details</h1>
     <recipe-card v-bind:recipe="recipe" />
     <button @click="editRecipe">Edit Recipe</button>
+    
 
 </template>
 

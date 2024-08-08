@@ -46,9 +46,12 @@
 
 
                 <label for="unit">Unit: </label>
-                <select id="unit" name="unit" v-model="ingredient.unit" required>
+
+                <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
+
+                <!-- <select id="unit" name="unit" v-model="ingredient.unit" required>
                     <option v-for="option in unitOptions" :key="option" :value="option">{{ option }}</option>
-                </select>
+                </select> -->
 
                 <button type="button" v-on:click="removeIngredient(index)">Remove Ingredient</button>
             </div>
@@ -61,6 +64,10 @@
             <!-- <button type="submit">Submit Recipe</button> -->
 
             <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
+
+            <button type="button" @click="deleteRecipe"> Delete </button>
+
+            <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
 
 
         </form>
@@ -117,7 +124,41 @@ export default {
             },
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
-            unitOptions: ['tsp', 'tbsp', 'cup', 'oz', 'lb', 'g', 'kg'], //TEMP -> API CALL
+            unitOptions: [
+                'tsp',  // teaspoon
+                'tbsp', // tablespoon
+                'cup',  // cup
+                'oz',   // ounce
+                'lb',   // pound
+                'g',    // gram
+                'kg',   // kilogram
+                'ml',   // milliliter
+                'l',    // liter
+                'pinch',// pinch
+                'dash', // dash
+                'quart',// quart
+                'pint', // pint
+                'fl oz',// fluid ounce
+                'gal',  // gallon
+                'mg',   // milligram
+                'cm',   // centimeter
+                'inch', // inch
+                'dozen', // dozen
+                'whole', // whole
+                'piece', // piece
+                'slice', // slice
+                'stick', // stick
+                'bunch', // bunch
+                'can',   // can
+                'jar',   // jar
+                'box',   // box
+                'bag',   // bag
+                'leaf',  // leaf
+                'clove', // clove
+                'head',  // head
+                'stalk', // stalk
+            ], 
+            filteredUnits: [],
             prepTimeHours: 0,
             prepTimeMinutes: 0,
             cookTimeHours: 0,
@@ -160,9 +201,30 @@ export default {
             });
         },
 
+        searchUnits(event) {
+            this.filteredUnits = this.unitOptions.filter((unit) => {
+                return unit.toLowerCase().includes(event.query.toLowerCase());
+            });
+        },
+
         hasDuplicates(array) {
             return array.length !== new Set(array).size;
         },
+
+        deleteRecipe() {
+            if (confirm("Are you sure you want to delete this recipe? This action cannot be undone.")) {
+                RecipeService.delete(this.recipe.recipeId) //double check this line
+                    .then(() => {
+                        this.$router.push({ name: 'recipe-list' });
+                    })
+                    .catch(error => {
+                        this.handleErrorResponse(error, 'deleting');
+                    });
+            }
+        },
+        cancelForm() {
+            this.$router.back();
+        }, 
 
         resetForm() {
             this.newRecipe = {
@@ -205,28 +267,28 @@ export default {
         }
     },
 
-        // submitForm() {
-        //     this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
-        //     this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-        //     //check ingredients for duplicates and give error (try catch? something like that?)
-        //     //if throw error, don't submit form
-        //     if (this.hasDuplicates(this.newRecipe.ingredients)) {
-        //         console.log("your recipe has a duplicate")
-        //         throw new Error('Your recipe must not have duplicate ingredients')
-        //     }
-        //     // this is not working^
-        //     console.log("You made it past the error");
-        //     RecipeService.submitRecipe(this.newRecipe).then(response => {
-        //         console.log("This is our submit response data" + response.status);
-        //         // ^ check for response status and add user success message for created - 201, updated 200 in App view
-        //         // route to recipe list 
+    // submitForm() {
+    //     this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
+    //     this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+    //     //check ingredients for duplicates and give error (try catch? something like that?)
+    //     //if throw error, don't submit form
+    //     if (this.hasDuplicates(this.newRecipe.ingredients)) {
+    //         console.log("your recipe has a duplicate")
+    //         throw new Error('Your recipe must not have duplicate ingredients')
+    //     }
+    //     // this is not working^
+    //     console.log("You made it past the error");
+    //     RecipeService.submitRecipe(this.newRecipe).then(response => {
+    //         console.log("This is our submit response data" + response.status);
+    //         // ^ check for response status and add user success message for created - 201, updated 200 in App view
+    //         // route to recipe list 
 
-        //         this.resetForm();
-        //         this.$router.push({ name: 'recipe-list' });
-        //         // add try catch block
-        //     })
+    //         this.resetForm();
+    //         this.$router.push({ name: 'recipe-list' });
+    //         // add try catch block
+    //     })
 
-        // }
+    // }
     // },
 
     created() {

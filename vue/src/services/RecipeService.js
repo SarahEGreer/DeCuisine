@@ -35,4 +35,8 @@ export default {
         return http.put(`/recipes/${recipeId}`, recipe)
     },
 
+    deleteRecipe(recipeId){
+        return http.delete(`/recipes/${recipeId}`)
+    }
+
 }
