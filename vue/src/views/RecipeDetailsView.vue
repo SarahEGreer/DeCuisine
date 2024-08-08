@@ -12,12 +12,21 @@ export default {
     components: {
         RecipeCard
     },
+    data() {
+        return {
+            recipe: {}
+        }
+    },
     methods: {
         getCurrentRecipeDetails(recipeId) {
+            console.log("get card details")
             RecipeService.getRecipeDetails(recipeId)
                 .then((response => {
                     this.recipe = response.data;
-                    console.log(response.data);
+                    console.log("this is the response data" + response.data);
+                    // this.recipe = this.recipe.recipe;
+                    // API returns recipe nested within a recipe object. May update on backend if time allows
+                    console.log("This is from the view" + this.recipe);
                 }))
                 .catch((error => {
                     this.handleErrorResponse(error);
@@ -32,9 +41,8 @@ export default {
             }
         },
         created() {
-            console.log('THIS IS A STATEMENT');
             this.getCurrentRecipeDetails(this.$route.params.recipeId);
-            console.log('This is the recipe ID' + this.recipe.recipeId);
+            console.log("it has been created")
 
         }
     }

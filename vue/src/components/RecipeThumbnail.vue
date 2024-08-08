@@ -1,6 +1,6 @@
 <template>
     <div v-on:click="$router.push({ name: 'RecipeDetailsView', params: { recipeId: recipe.recipeId } })">
-        <h1>{{ recipe.recipeName }}</h1>
+        <h1>{{ recipe.name }}</h1>
     </div>
 </template>
 
