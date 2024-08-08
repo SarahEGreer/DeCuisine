@@ -1,15 +1,15 @@
 <template>
     <div>
-        <!-- <h1>{{ recipe.recipeName }}</h1>
-        <span>Prep time: {{ recipe.prepTime}}</span>
+        <h1>{{ recipe.name }}</h1>
+        <span>Prep time: {{ recipe.prepTime }}</span>
         <span>Cook time: {{ recipe.cookTime }}</span>
-        <p>{{ recipe.recipeDescription }}</p>
+        <p>{{ recipe.description }}</p>
         <span>Servings: {{ recipe.servings }}</span>
         <ul>
-            <li v-for="(ingredient, index) in recipe.ingredientsList" :key="index">name: {{ ingredient.ingredientName }} amount: {{ ingredient.amount }} unit: {{ ingredient.unitType }}</li>
+            <li v-for="(ingredient, index) in recipe.ingredients" :key="index">name: {{ ingredient.name }}
+                amount: {{ ingredient.amount }} unit: {{ ingredient.unit }}</li>
         </ul>
-        <p>{{ recipe.recipeInstructions }}</p> -->
-        TEST
+        <p>{{ recipe.instructions }}</p>
     </div>
 </template>
 
@@ -17,12 +17,15 @@
 
 // import RecipeService from '../services/RecipeService.js';
 
-export default{
+export default {
     props: {
-        recipe:{ type: Object, required: true}
+        recipe: {
+            type: Object,
+            required: true
+        }
     },
-    created(){
-        console.log(this.recipe);
+    created() {
+        console.log("this is from the component" + this.recipe);
     }
 }
 </script>
