@@ -84,7 +84,7 @@ public class MealplanController {
         }
     }
     @DeleteMapping("/{mealplanId}")
-    public void deleteMealplan (int mealplanId) {
+    public void deleteMealplan (@PathVariable int mealplanId) {
         try{
             mealplanDao.deleteMealplan(mealplanId);
         }catch (CannotGetJdbcConnectionException e) {
