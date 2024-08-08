@@ -42,7 +42,7 @@
 
 
                 <label for="amount">Amount: </label>
-                <input type="number" name="amount" v-model="ingredient.amount" required>
+                <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required>
 
 
                 <label for="unit">Unit: </label>
@@ -228,7 +228,7 @@ export default {
 
         // }
     // },
-    
+
     created() {
         IngredientService.getIngredients().then(response => {
             this.ingredientOptions = response.data;
