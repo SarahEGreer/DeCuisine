@@ -73,7 +73,7 @@ public class MealplanController {
         }
     }
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{recipeId}")
+    @PutMapping("/{mealplanId}")
     public  void updateMealplan(@RequestBody MealplanDto mealplanDto, @PathVariable int mealplanId) {
         try{
             mealplanDao.updateMealplan(mealplanDto, mealplanId);
@@ -83,6 +83,17 @@ public class MealplanController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
         }
     }
+    @DeleteMapping("/{mealplanId}")
+    public void deleteMealplan (int mealplanId) {
+        try{
+            mealplanDao.deleteMealplan(mealplanId);
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
+        }
+    }
+
 
 
 
