@@ -23,8 +23,8 @@ export default {
             RecipeService.getRecipeDetails(recipeId)
                 .then((response => {
                     this.recipe = response.data;
-                    console.log("this is the response data" + response.data);
-                    // this.recipe = this.recipe.recipe;
+                    // console.log("this is the response data" + response.data);
+                    this.recipe = this.recipe.recipe;
                     // API returns recipe nested within a recipe object. May update on backend if time allows
                     console.log("This is from the view" + this.recipe);
                 }))
@@ -40,11 +40,12 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', `Could not get message data from server.`);
             }
         },
-        created() {
-            this.getCurrentRecipeDetails(this.$route.params.recipeId);
-            console.log("it has been created")
+    },
+    created() {
+        console.log("it has been created")
+        this.getCurrentRecipeDetails(this.$route.params.recipeId);
+        // console.log("it has been created")
 
-        }
     }
 }
 

@@ -47,25 +47,25 @@ export default {
             ],
         }
     },
-    created(){
+    created() {
         RecipeService.getRecipes()
             .then(response => {
-                console.log('Recipes fetched:', response.data); // Log the fetched data
+                // console.log('Recipes fetched:', response.data); // Log the fetched data
                 this.recipes = response.data;
             })
             .catch(error => {
                 console.error('Error fetching recipes:', error); // Log any error
             });
-        RecipeService.getRecipeDetails(1)
-            .then(response => {
-                console.log('Recipe details fetched:', response.data); // Log the fetched data
-            })
-            .catch(error => {
-                console.error('Error fetching recipe details:', error); // Log any error
-            });
+        // RecipeService.getRecipeDetails(1)
+        //     .then(response => {
+        //         console.log('Recipe details fetched:', response.data); // Log the fetched data
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching recipe details:', error); // Log any error
+        //     });
     }
 
-    
+
 }
 
 </script>
