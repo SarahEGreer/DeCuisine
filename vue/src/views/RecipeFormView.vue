@@ -1,7 +1,7 @@
 <template>
     <!-- <h1>Create Recipe</h1> -->
     <h1>{{ isEdit ? 'Edit Recipe' : 'Create Recipe' }}</h1>
-    <recipe-form v-bind:recipe="recipe" />
+    <recipe-form v-bind:recipe="recipe" v-bind:isEdit="isEdit"/>
 
 </template>
 
@@ -17,19 +17,19 @@ export default {
     data() {
         return {
 
-            recipe: {},
+            // recipe: {},
 
-            // recipe: {
-            //     recipeId: 0,
-            //     name: '',
-            //     prepTime: '',
-            //     cookTime: '',
-            //     description: '',
-            //     servings: '',
-            //     ingredients: [],
-            //     instructions: ''
-            // },
-            isEdit: true
+            recipe: {
+                recipeId: 0,
+                name: '',
+                prepTime: '',
+                cookTime: '',
+                description: '',
+                servings: '',
+                ingredients: [],
+                instructions: ''
+            },
+            isEdit: false
         }
     },
     methods: {
@@ -46,18 +46,18 @@ export default {
     created(){
         if(this.$route.params.recipeId){
             this.getRecipeDetails(this.$route.params.recipeId);
-        } else {
-            this.isEdit = false;
-            this.recipe = {
-                recipeId: 0,
-                name: '',
-                prepTime: '',
-                cookTime: '',
-                description: '',
-                servings: '',
-                ingredients: [],
-                instructions: ''
-            }
+        // } else {
+        //     this.isEdit = false;
+        //     this.recipe = {
+        //         recipeId: 0,
+        //         name: '',
+        //         prepTime: '',
+        //         cookTime: '',
+        //         description: '',
+        //         servings: '',
+        //         ingredients: [],
+        //         instructions: ''
+        //     }
         }
     }
 }

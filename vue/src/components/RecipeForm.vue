@@ -58,7 +58,9 @@
             <label for="instructions">Instructions: </label>
             <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required></textarea>
 
-            <button type="submit">Submit Recipe</button>
+            <!-- <button type="submit">Submit Recipe</button> -->
+
+            <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
 
 
         </form>
@@ -93,6 +95,10 @@ export default {
             //         instructions: '',
             //     }
             // }
+        },
+        isEdit: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -119,6 +125,21 @@ export default {
         };
 
     },
+
+    watch: {
+        recipe: {
+            handler(newVal) {
+                this.newRecipe = { ...newVal };
+                // Populate hours and minutes fields based on prepTime and cookTime
+                this.prepTimeHours = Math.floor(this.newRecipe.prepTime / 60);
+                this.prepTimeMinutes = this.newRecipe.prepTime % 60;
+                this.cookTimeHours = Math.floor(this.newRecipe.cookTime / 60);
+                this.cookTimeMinutes = this.newRecipe.cookTime % 60;
+            },
+            immediate: true
+        }
+    },
+
     methods: {
 
         addIngredient() {
@@ -164,26 +185,50 @@ export default {
         submitForm() {
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-            //check ingredients for duplicates and give error (try catch? something like that?)
-            //if throw error, don't submit form
             if (this.hasDuplicates(this.newRecipe.ingredients)) {
-                console.log("your recipe has a duplicate")
-                throw new Error('Your recipe must not have duplicate ingredients')
+                console.log("your recipe has a duplicate");
+                throw new Error('Your recipe must not have duplicate ingredients');
             }
-            // this is not working^
-            console.log("You made it past the error");
-            RecipeService.submitRecipe(this.newRecipe).then(response => {
-                console.log("This is our submit response data" + response.status);
-                // ^ check for response status and add user success message for created - 201, updated 200 in App view
-                // route to recipe list 
-
-                this.resetForm();
-                this.$router.push({ name: 'recipe-list' });
-                // add try catch block
-            })
-
+            if (this.isEdit) {
+                RecipeService.updateRecipe(this.newRecipe.recipeId, this.newRecipe).then(response => {
+                    console.log("This is our update response data", response.status);
+                    this.resetForm();
+                    this.$router.push({ name: 'recipe-list' });
+                });
+            } else {
+                RecipeService.submitRecipe(this.newRecipe).then(response => {
+                    console.log("This is our submit response data", response.status);
+                    this.resetForm();
+                    this.$router.push({ name: 'recipe-list' });
+                });
+            }
         }
     },
+
+        // submitForm() {
+        //     this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
+        //     this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+        //     //check ingredients for duplicates and give error (try catch? something like that?)
+        //     //if throw error, don't submit form
+        //     if (this.hasDuplicates(this.newRecipe.ingredients)) {
+        //         console.log("your recipe has a duplicate")
+        //         throw new Error('Your recipe must not have duplicate ingredients')
+        //     }
+        //     // this is not working^
+        //     console.log("You made it past the error");
+        //     RecipeService.submitRecipe(this.newRecipe).then(response => {
+        //         console.log("This is our submit response data" + response.status);
+        //         // ^ check for response status and add user success message for created - 201, updated 200 in App view
+        //         // route to recipe list 
+
+        //         this.resetForm();
+        //         this.$router.push({ name: 'recipe-list' });
+        //         // add try catch block
+        //     })
+
+        // }
+    // },
+    
     created() {
         IngredientService.getIngredients().then(response => {
             this.ingredientOptions = response.data;

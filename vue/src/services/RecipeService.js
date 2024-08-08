@@ -29,6 +29,10 @@ export default {
 
     getRecipeDetails(recipeId){
         return http.get(`/recipes/details/${recipeId}`)
-    }
+    },
+
+    updateRecipe(recipeId, recipe){
+        return http.put(`/recipes/${recipeId}`, recipe)
+    },
 
 }
