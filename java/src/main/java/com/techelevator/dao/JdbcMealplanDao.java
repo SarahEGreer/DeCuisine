@@ -113,12 +113,16 @@ public class JdbcMealplanDao implements MealplanDao{
             try {
                 String mealplanRecipeSql = "INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_id, lunch_recipe_id, dinner_recipe_id) VALUES (?,?,?,?,?)";
                 jdbcTemplate.update(mealplanRecipeSql, newMealplanId, day.getDay(), day.getBreakfastId(), day.getLunchId(), day.getDinnerId());
-
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
             }
         }
-
-
     }
+
+
+
 
 
 
