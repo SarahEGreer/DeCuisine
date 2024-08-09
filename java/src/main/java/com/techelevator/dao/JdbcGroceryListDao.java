@@ -6,10 +6,13 @@ import com.techelevator.model.Recipe_IngredientDto;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Repository
 public class JdbcGroceryListDao implements GroceryListDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -30,6 +33,8 @@ public class JdbcGroceryListDao implements GroceryListDao {
                 groceryListDto.setMealplanId(mealplanId);
                 groceryListDto.setName(results.getString("mealplan_name"));
 
+            } else {
+                throw new DaoException("Mealplan with id " + mealplanId + " does not exist.");
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

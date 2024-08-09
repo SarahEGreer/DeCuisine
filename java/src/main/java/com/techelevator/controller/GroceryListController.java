@@ -7,10 +7,7 @@ import com.techelevator.model.Recipe_detailDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -20,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/grocerylist")
-@PreAuthorize("isAuthenticated")
+@PreAuthorize("isAuthenticated()")
 public class GroceryListController {
 
     private final GroceryListDao groceryListDao;
@@ -29,14 +26,14 @@ public class GroceryListController {
         this.groceryListDao = groceryListDao;
     }
 
-    @GetMapping
-    public List<GroceryListDto> getGroceryList() {
-        List<GroceryListDto> groceryList = new ArrayList<>();
+    @GetMapping (path = "/{mealplanId}")
+    public GroceryListDto getGroceryListByMealPlan(@PathVariable int mealplanId) {
         try {
-
-            return groceryListDao.getGroceryListByMealPlan();
+            return groceryListDao.getGroceryListByMealPlan(mealplanId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
