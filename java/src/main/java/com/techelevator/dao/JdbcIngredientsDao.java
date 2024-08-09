@@ -24,7 +24,7 @@ public class JdbcIngredientsDao implements IngredientsDao {
     @Override
     public List<String> getAllIngredients() {
         List<String> ingredients = new ArrayList<>();
-        String sql = "SELECT ingredient_name FROM ingredients;";
+        String sql = "SELECT ingredient_name FROM ingredients ORDER BY ingredient_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while(results.next()) {
@@ -43,7 +43,8 @@ public class JdbcIngredientsDao implements IngredientsDao {
         String sql = "SELECT i.ingredient_id, i.ingredient_name, ri.recipe_id, ri.amount, ri.unit_type, ri.system_of_measurement\n" +
                 "FROM ingredients i \n" +
                 "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredient_id\n" +
-                "WHERE ri.recipe_id = ?;";
+                "WHERE ri.recipe_id = ?" +
+                "ORDER BY ingredient_name ASC;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);

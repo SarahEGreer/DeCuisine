@@ -25,7 +25,7 @@ public class JdbcMealplanDao implements MealplanDao{
     @Override
     public List<Mealplan> getMyTrackedMealplans(int userId) {
         List<Mealplan> mealplan = new ArrayList<>();
-        String sql = "SELECT * FROM mealplan WHERE mealplan_id = (SELECT mealplan_id FROM user_tracked_mealplan WHERE user_id = ? );";
+        String sql = "SELECT * FROM mealplan WHERE mealplan_id = (SELECT mealplan_id FROM user_tracked_mealplan WHERE user_id = ? ) ORDER BY mealplan_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -40,7 +40,7 @@ public class JdbcMealplanDao implements MealplanDao{
     @Override
     public List<Mealplan> getMyCreatedMealplans(int userId) {
         List<Mealplan> mealplan = new ArrayList<>();
-        String sql = "SELECT * FROM mealplan WHERE created_by_user_id = ?;";
+        String sql = "SELECT * FROM mealplan WHERE created_by_user_id = ? ORDER BY mealplan_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -56,7 +56,7 @@ public class JdbcMealplanDao implements MealplanDao{
     @Override
     public List<Mealplan> getAllMealplans() {
         List<Mealplan> mealplan = new ArrayList<>();
-        String sql = "SELECT * FROM mealplan;";
+        String sql = "SELECT * FROM mealplan ORDER BY mealplan_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -72,7 +72,7 @@ public class JdbcMealplanDao implements MealplanDao{
     @Override
     public Mealplan getMealplanByMealplanId(int mealplanId) {
         Mealplan mealplans = null;
-        String sql = "SELECT * FROM mealplan WHERE mealplan_id = ?";
+        String sql = "SELECT * FROM mealplan WHERE mealplan_id = ? ORDER BY mealplan_name ASC ;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, mealplanId);
             while (results.next()) {
@@ -90,7 +90,7 @@ public class JdbcMealplanDao implements MealplanDao{
         MealplanDto mealplanDto = null;
         List<MealplanScheduleDto> schedule = new ArrayList<>();
 
-        String msql = "SELECT * FROM mealplan WHERE mealplan_id = ?";
+        String msql = "SELECT * FROM mealplan WHERE mealplan_id = ? ORDER BY mealplan_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(msql, mealplanId);
             while (results.next()) {
