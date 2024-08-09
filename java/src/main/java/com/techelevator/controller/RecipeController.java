@@ -78,9 +78,11 @@ public class RecipeController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{recipeId}")
-    public void updateRecipe(@RequestBody RecipeDto recipeDto, @PathVariable int recipeId) {
+    public void updateRecipe(@RequestBody RecipeDto recipeDto, @PathVariable int recipeId, Principal principal) {
         try {
-            recipeDao.updateRecipe(recipeDto, recipeId);
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            recipeDao.updateRecipe(recipeDto, recipeId, currentUser.getId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
