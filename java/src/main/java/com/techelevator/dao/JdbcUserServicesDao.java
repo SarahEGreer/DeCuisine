@@ -15,7 +15,7 @@ public class JdbcUserServicesDao implements UserServicesDao {
     }
     @Override
     public void trackMealplan(UserServicesDto userServicesDto, int userId) {
-        String sql = "INSERT INTO user_tracked_mealplan (mealplan_id ,start_date, user_id) VALUES ( ?,'?',? );";
+        String sql = "INSERT INTO user_tracked_mealplan (mealplan_id ,start_date, user_id) VALUES ( ?,?,? );";
         try {
             jdbcTemplate.update(sql, userServicesDto.getMealplanId(), userServicesDto.getStartDate(), userId);
         } catch (CannotGetJdbcConnectionException e) {

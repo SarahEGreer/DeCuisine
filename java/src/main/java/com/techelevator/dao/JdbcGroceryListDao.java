@@ -47,7 +47,8 @@ public class JdbcGroceryListDao implements GroceryListDao {
                 "OR mr.lunch_recipe_id = ri.recipe_id\n" +
                 "OR mr.dinner_recipe_id = ri.recipe_id\n" +
                 "JOIN ingredients i ON ri.ingredient_id = i.ingredient_id\n" +
-                "WHERE mr.mealplan_id = ?;";
+                "WHERE mr.mealplan_id = ?" +
+                "ORDER BY ingredient_name ASC;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(grocerySql, mealplanId);
@@ -64,7 +65,6 @@ public class JdbcGroceryListDao implements GroceryListDao {
 
         groceryListDto.setIngredients(groceryItems);
         return groceryListDto;
-
     }
 
 }

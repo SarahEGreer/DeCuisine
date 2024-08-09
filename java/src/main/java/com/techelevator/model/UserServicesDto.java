@@ -1,10 +1,12 @@
 package com.techelevator.model;
 
+import java.time.LocalDate;
+
 public class UserServicesDto {
     private int mealplanId;
-    private int startDate;
+    private LocalDate startDate;
 
-    public UserServicesDto(int mealplanId, int startDate) {
+    public UserServicesDto(int mealplanId, LocalDate startDate) {
         this.mealplanId = mealplanId;
         this.startDate = startDate;
     }
@@ -17,11 +19,11 @@ public class UserServicesDto {
         this.mealplanId = mealplanId;
     }
 
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 }

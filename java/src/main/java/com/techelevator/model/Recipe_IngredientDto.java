@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Recipe_IngredientDto {
     private String name;
     private double amount;
