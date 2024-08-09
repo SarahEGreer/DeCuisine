@@ -6,6 +6,8 @@ public class Recipe_IngredientDto {
     private String unit;
     private String systemOfMeasurement;
 
+    Recipe_IngredientDto() {}
+
 
     public Recipe_IngredientDto(String name, double amount, String unit, String systemOfMeasurement) {
         this.name = name;
