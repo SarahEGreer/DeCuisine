@@ -95,6 +95,7 @@ public class JdbcMealplanDao implements MealplanDao{
             SqlRowSet results = jdbcTemplate.queryForRowSet(msql, mealplanId);
             while (results.next()) {
                 mealplanDto = mapRowToMealplanDto(results);
+                mealplanDto.setMealplanId(mealplanId);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -244,6 +245,9 @@ public class JdbcMealplanDao implements MealplanDao{
             }
         }
     }
+
+
+
 
 
 

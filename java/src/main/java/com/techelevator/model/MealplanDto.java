@@ -4,6 +4,8 @@ import java.util.List;
 
 public class MealplanDto {
 
+
+    private int mealplanId;
     private String name;
     private String description;
     private int userId;
@@ -14,11 +16,20 @@ public class MealplanDto {
 
     public MealplanDto() {}
 
-    public MealplanDto(String name, String description, int userId, List<MealplanScheduleDto> schedule) {
+    public MealplanDto(int mealplanId, String name, String description, int userId, List<MealplanScheduleDto> schedule) {
+        this.mealplanId = mealplanId;
         this.name = name;
         this.description = description;
         this.userId = userId;
         this.schedule = schedule;
+    }
+
+    public int getMealplanId() {
+        return mealplanId;
+    }
+
+    public void setMealplanId(int mealplanId) {
+        this.mealplanId = mealplanId;
     }
 
     public String getName() {
