@@ -1,4 +1,6 @@
-<template>
+<!-- FOR REFERENCE ONLY, DELETE BEFORE DEPLOYMENT -->
+
+<!-- <template>
     <h1>Edit Recipe</h1>
     <recipe-form v-bind:recipe="recipe" />
 
@@ -45,7 +47,7 @@ export default {
         }
     }
 
-}
+} -->
 
 
 
@@ -53,4 +55,4 @@ export default {
 
 
 
-</script>
+<!-- </script> -->
