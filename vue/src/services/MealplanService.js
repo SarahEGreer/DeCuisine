@@ -19,20 +19,28 @@ http.interceptors.request.use(config => {
 
 export default {
 
-    getRecipes() {
-        return http.get('/recipes')
+    getMealplans(){
+        return http.get('/mealplan')
     },
 
-    submitRecipe(recipe) {
-        return http.post('/recipes', recipe)
+    getMealplanBasicsById(mealplanId){
+        return http.get(`/mealplan/${mealplanId}`)
     },
 
-    getRecipeDetails(recipeId){
-        return http.get(`/recipes/details/${recipeId}`)
+    getMealplanDetailsById(mealplanId){
+        return http.get(`/mealplan/details/${mealplanId}`)
     },
 
-    updateRecipe(recipeId, recipe){
-        return http.put(`/recipes/${recipeId}`, recipe)
-    },
+    submitMealplan(mealplan){
+        return http.post('/mealplan', mealplan)
+    }, 
+
+    updateMealplan(mealplanId, mealplan){
+        return http.put(`/mealplan/${mealplanId}`, mealplan)
+    }, 
+
+    deleteMealplan(mealplanId){
+        return http.delete(`/mealplan/${mealplanId}`)
+    }
 
 }
