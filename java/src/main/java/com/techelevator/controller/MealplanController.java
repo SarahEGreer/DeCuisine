@@ -74,9 +74,11 @@ public class MealplanController {
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{mealplanId}")
-    public  void updateMealplan(@RequestBody MealplanDto mealplanDto, @PathVariable int mealplanId) {
+    public  void updateMealplan(@RequestBody MealplanDto mealplanDto, @PathVariable int mealplanId, Principal principal) {
         try{
-            mealplanDao.updateMealplan(mealplanDto, mealplanId);
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            mealplanDao.updateMealplan(mealplanDto, mealplanId, currentUser.getId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -84,13 +86,41 @@ public class MealplanController {
         }
     }
     @DeleteMapping("/{mealplanId}")
-    public void deleteMealplan (@PathVariable int mealplanId) {
+    public void deleteMealplan (@PathVariable int mealplanId, Principal principal) {
         try{
-            mealplanDao.deleteMealplan(mealplanId);
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            mealplanDao.deleteMealplan(mealplanId, currentUser.getId());
         }catch (CannotGetJdbcConnectionException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
+        }
+    }
+    @GetMapping(path = "/tracked")
+    public List<Mealplan> getMyTrackedMealplans(Principal principal) {
+        try{
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            return mealplanDao.getMyTrackedMealplans(currentUser.getId());
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+    }
+
+    @GetMapping(path = "/created")
+    public List<Mealplan> getMyCreatedMealplans(Principal principal) {
+        try{
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            return mealplanDao.getMyCreatedMealplans(currentUser.getId());
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
         }
     }
 

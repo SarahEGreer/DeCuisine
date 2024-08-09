@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface MealplanDao {
 
+    List<Mealplan> getMyTrackedMealplans(int userId);
+
+    List<Mealplan> getMyCreatedMealplans(int userId);
+
     List<Mealplan> getAllMealplans();
 
     Mealplan getMealplanByMealplanId(int mealplanId);
@@ -15,11 +19,11 @@ public interface MealplanDao {
     MealplanDto getMealplanDetailsWithSchedule(int mealplanId);
 
 
-    void createMealplan (MealplanDto mealplanDto, int mealplanId);
+    void createMealplan (MealplanDto mealplanDto, int userId);
 
-    void updateMealplan (MealplanDto mealplanDto, int userId);
+    void updateMealplan (MealplanDto mealplanDto, int mealplanId, int userId);
 
-    void deleteMealplan (int mealplanId);
+    void deleteMealplan (int mealplanId, int userId);
 
 
 
