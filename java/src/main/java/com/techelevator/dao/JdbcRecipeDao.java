@@ -168,55 +168,66 @@ public class JdbcRecipeDao implements RecipeDao {
 
 
     @Override
-    public void updateRecipe(RecipeDto recipeDto, int recipeId) {
-        String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ? WHERE recipe_id = ?";
-        try {
-            jdbcTemplate.update(updateRecipeSql,
-                    recipeDto.getName(),
-                    recipeDto.getDescription(),
-                    recipeDto.getInstructions(),
-                    recipeDto.getPrepTime(),
-                    recipeDto.getCookTime(),
-                    recipeDto.getServings(),
-                    recipeId);
-        } catch (CannotGetJdbcConnectionException e) {
+    public void updateRecipe(RecipeDto recipeDto, int recipeId, int userId) {
+        int createdUserId = 0;
+        try{
+            String findUserSql = "SELECT created_by_user_id FROM mealplan WHERE mealplan_id = ? ;";
+            createdUserId = jdbcTemplate.queryForObject(findUserSql, int.class, userId);
+        }catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
-        List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
-        String deleteIngredientsSql = "DELETE FROM recipes_ingredients WHERE recipe_id = ?";
-        jdbcTemplate.update(deleteIngredientsSql, recipeId);
-
-
-        for (Recipe_IngredientDto i : ingredients) {
-            Integer ingredientId = null;
+        if(userId == createdUserId) {
+            String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ? WHERE recipe_id = ?";
             try {
-
-                //checks to see if ingredient exists
-                String selectSql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?";
-                List<Integer> existingIds = jdbcTemplate.queryForList(selectSql, Integer.class, i.getName().toLowerCase());
-
-                //if ingredient does not exist (returns empty) then insert new ingredient
-                if (existingIds.isEmpty()) {
-                    String insertIngredientSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) ON CONFLICT (ingredient_name) DO NOTHING RETURNING ingredient_id";
-                    ingredientId = jdbcTemplate.queryForObject(insertIngredientSql, Integer.class, i.getName().toLowerCase());
-
-                } else {
-                    ingredientId = existingIds.get(0);
-                }
-
-                // insert into recipes_ingredients table
-                String insertRecipeIngredientSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?, ?, ?, ?, ?)";
-                jdbcTemplate.update(insertRecipeIngredientSql, recipeId, ingredientId, i.getAmount(), i.getUnit(), i.getSystemOfMeasurement());
-
+                jdbcTemplate.update(updateRecipeSql,
+                        recipeDto.getName(),
+                        recipeDto.getDescription(),
+                        recipeDto.getInstructions(),
+                        recipeDto.getPrepTime(),
+                        recipeDto.getCookTime(),
+                        recipeDto.getServings(),
+                        recipeId);
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
                 throw new DaoException("Data integrity violation", e);
             }
 
+            List<Recipe_IngredientDto> ingredients = recipeDto.getIngredients();
+            String deleteIngredientsSql = "DELETE FROM recipes_ingredients WHERE recipe_id = ?";
+            jdbcTemplate.update(deleteIngredientsSql, recipeId);
+
+
+            for (Recipe_IngredientDto i : ingredients) {
+                Integer ingredientId = null;
+                try {
+
+                    //checks to see if ingredient exists
+                    String selectSql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?";
+                    List<Integer> existingIds = jdbcTemplate.queryForList(selectSql, Integer.class, i.getName().toLowerCase());
+
+                    //if ingredient does not exist (returns empty) then insert new ingredient
+                    if (existingIds.isEmpty()) {
+                        String insertIngredientSql = "INSERT INTO ingredients (ingredient_name) VALUES (?) ON CONFLICT (ingredient_name) DO NOTHING RETURNING ingredient_id";
+                        ingredientId = jdbcTemplate.queryForObject(insertIngredientSql, Integer.class, i.getName().toLowerCase());
+
+                    } else {
+                        ingredientId = existingIds.get(0);
+                    }
+
+                    // insert into recipes_ingredients table
+                    String insertRecipeIngredientSql = "INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES (?, ?, ?, ?, ?)";
+                    jdbcTemplate.update(insertRecipeIngredientSql, recipeId, ingredientId, i.getAmount(), i.getUnit(), i.getSystemOfMeasurement());
+
+                } catch (CannotGetJdbcConnectionException e) {
+                    throw new DaoException("Unable to connect to server or database", e);
+                } catch (DataIntegrityViolationException e) {
+                    throw new DaoException("Data integrity violation", e);
+                }
+
+            }
         }
     }
 
