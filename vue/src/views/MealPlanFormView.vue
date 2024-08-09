@@ -33,8 +33,9 @@ FAVORITE RECIPES? (view favorite recipes button) LATER FUNCTIONALITY
 
 
 <script>
-import MealplanForm from '../components/MealplanForm.vue'
-import RecipeService from '../services/RecipeService.js'
+import MealplanForm from '../components/MealplanForm.vue';
+import RecipeService from '../services/RecipeService.js';
+import MealplanService from '../services/MealplanService.js';
 // create meal plan service
 
 export default {
@@ -54,19 +55,28 @@ export default {
       }
    },
    methods: {
-      getRecipeDetails(recipeId) {
-         RecipeService.getRecipeDetails(recipeId)
+      // getRecipeDetails(recipeId) {
+      //    RecipeService.getRecipeDetails(recipeId)
+      //       .then((response) => {
+      //          this.recipe = response.data;
+      //          this.recipe = this.recipe.recipe;
+      //          this.isEdit = true;
+      //       })
+
+      // }
+      getMealplanDetails(mealplanId) {
+         MealplanService.getMealplanDetailsById(mealplanId)
             .then((response) => {
-               this.recipe = response.data;
-               this.recipe = this.recipe.recipe;
+               this.mealplan = response.data;
+               // this.recipe = this.recipe.recipe;
                this.isEdit = true;
             })
 
       }
    },
    created() {
-      if (this.$route.params.recipeId) {
-         this.getRecipeDetails(this.$route.params.recipeId);
+      if (this.$route.params.mealplanId) {
+         this.getMealplanDetails(this.$route.params.mealplanId);
          // } else {
          //     this.isEdit = false;
          //     this.recipe = {

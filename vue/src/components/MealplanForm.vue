@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <h1>meal plan form has loaded</h1>
         <form v-on:submit.prevent="submitForm">
             <label for="name">Meal Plan Name: </label>
             <input type="text" id="name" name="name" v-model="newMealplan.name" required>
@@ -11,25 +11,27 @@
 
             <h3>Schedule:</h3>
 
-            <div v-for="(schedule, index) in newMealPlan.schedule" :key="index">
+            <div v-for="(schedule, index) in newMealplan.schedule" :key="index">
                 <h4>Day {{ calculateDayNumber(index) }}</h4>
 
 
                 <label for="breakfast">Breakfast:</label>
                 <!-- search for recipe name  -->
-                <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfastId"
-                    :suggestions="filteredRecipes" @complete="searchRecipes" dropdown />
+                <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfast"
+                    :suggestions="filteredRecipes" @complete="searchRecipes" dropdown
+                    @select="updateMeal(schedule, 'breakfastId', $event)" field="name" />
                 <!-- make id dynamically change -->
 
 
                 <label for="lunch">Lunch: </label>
-                <AutoComplete name="lunch" id="lunch" v-model="recipe.name" :suggestions="filteredRecipes"
-                    @complete="searchRecipes" dropdown />
+                <AutoComplete name="lunch" id="lunch" v-model="schedule.lunch" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" @select="updateMeal(schedule, 'lunchId', $event)" field="name" dropdown />
 
 
                 <label for="dinner">Dinner: </label>
-                <AutoComplete name="dinner" id="dinner" v-model="schedule.dinnerId" :suggestions="filteredRecipes"
-                    @complete="searchRecipes" dropdown />
+                <AutoComplete name="dinner" id="dinner" v-model="schedule.dinner" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" @select="updateMeal(schedule, 'dinnerId', $event)" field="name"
+                    dropdown />
 
 
                 <button type="button" v-on:click="removeDay(index)">Remove Ingredient</button>
@@ -51,6 +53,7 @@
 <script>
 import AutoComplete from 'primevue/autocomplete';
 import RecipeService from '../services/RecipeService.js';
+import MealplanService from '../services/MealplanService.js';
 
 export default {
 
@@ -59,7 +62,7 @@ export default {
     },
 
     props: {
-        mealPlan: {
+        mealplan: {
             type: Object,
             required: true,
         },
@@ -104,7 +107,7 @@ export default {
 
         //ADD DAY FUNCTION
         addDay() {
-            this.newMealplan.schedule.push({ day: 0, breakfastId: 0, lunchId: 0, dinnerId: 0 });
+            this.newMealplan.schedule.push({ day: 0, breakfastId: null, lunchId: null, dinnerId: null });
         },
 
         removeDay(index) {
@@ -118,12 +121,18 @@ export default {
         //SEARCH RECIPES FUNCTION
         searchRecipes(event) {
             this.filteredRecipes = this.recipeOptions.filter((recipe) => {
-                return recipe.toLowerCase().includes(event.query.toLowerCase());
+                return recipe.name.toLowerCase().includes(event.query.toLowerCase());
             });
         },
 
+
+
         calculateDayNumber(index) {
             return index + 1;
+        },
+
+        updateMeal(schedule, mealType, selectedRecipe) {
+            schedule[mealType] = selectedRecipe.recipeId;
         },
 
 
@@ -143,42 +152,36 @@ export default {
 
         //CHANGE TO MEALPLAN FORM DEFAULTS
         resetForm() {
-            this.newRecipe = {
-                recipeId: 0,
+            this.newMealplan = {
+                mealplanId: 0,
                 name: '',
-                prepTime: '',
-                cookTime: '',
                 description: '',
-                servings: '',
-                ingredients: [],
-                instructions: ''
+                userId: 0,
+                schedule: [],
             };
-            this.newIngredients = [];
-            this.prepTimeHours = 0;
-            this.prepTimeMinutes = 0;
-            this.cookTimeHours = 0;
-            this.cookTimeMinutes = 0;
+            this.recipeOptions = [];
+            this.filteredRecipes = [];
         },
 
         //UPDATE ALL LOGIC TO MEALPLAN
         submitForm() {
-            this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
-            this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-            if (this.hasDuplicates(this.newRecipe.ingredients)) {
-                console.log("your recipe has a duplicate");
-                throw new Error('Your recipe must not have duplicate ingredients');
-            }
+            // this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
+            // this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
+            // if (this.hasDuplicates(this.newRecipe.ingredients)) {
+            //     console.log("your recipe has a duplicate");
+            //     throw new Error('Your recipe must not have duplicate ingredients');
+            // }
             if (this.isEdit) {
-                RecipeService.updateRecipe(this.newRecipe.recipeId, this.newRecipe).then(response => {
+                MealplanService.updateMealplan(this.newMealplan.mealplanId, this.newMealplan).then(response => {
                     console.log("This is our update response data", response.status);
                     this.resetForm();
-                    this.$router.push({ name: 'recipe-list' });
+                    // this.$router.push({ name: 'recipe-list' });
                 });
             } else {
-                RecipeService.submitRecipe(this.newRecipe).then(response => {
+                MealplanService.submitMealplan(this.newMealplan).then(response => {
                     console.log("This is our submit response data", response.status);
                     this.resetForm();
-                    this.$router.push({ name: 'recipe-list' });
+                    // this.$router.push({ name: 'recipe-list' });
                 });
             }
         }
@@ -187,6 +190,7 @@ export default {
     created() {
         RecipeService.getRecipes().then(response => {
             this.recipeOptions = response.data;
+            console.log(this.recipeOptions);
         })
     },
 
