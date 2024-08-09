@@ -65,8 +65,6 @@
 
             <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
 
-            <button type="button" @click="deleteRecipe"> Delete </button>
-
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
 
 
@@ -211,17 +209,6 @@ export default {
             return array.length !== new Set(array).size;
         },
 
-        deleteRecipe() {
-            if (confirm("Are you sure you want to delete this recipe? This action cannot be undone.")) {
-                RecipeService.delete(this.recipe.recipeId) //double check this line
-                    .then(() => {
-                        this.$router.push({ name: 'recipe-list' });
-                    })
-                    .catch(error => {
-                        this.handleErrorResponse(error, 'deleting');
-                    });
-            }
-        },
         cancelForm() {
             this.$router.back();
         }, 
@@ -307,3 +294,6 @@ textarea {
     resize: none;
 }
 </style>
+
+
+
