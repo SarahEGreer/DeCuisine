@@ -5,64 +5,39 @@
             <label for="name">Meal Plan Name: </label>
             <input type="text" id="name" name="name" v-model="newMealplan.name" required>
 
-            <!-- <div>
-
-                <label for="prep-time-hours">Prep Time:</label>
-                <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
-                    v-model.number="prepTimeHours">
-                <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
-                    placeholder="Minutes" v-model.number="prepTimeMinutes">
-
-            </div> -->
-
-            <!-- <div>
-                <label for="cook-time-hours">Cook Time:</label>
-                <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
-                    v-model.number="cookTimeHours">
-                <input type="number" id="cook-time-minutes" name="cook-time-minutes" min="0" max="59"
-                    placeholder="Minutes" v-model.number="cookTimeMinutes">
-            </div> -->
-
 
             <label for="description">Description: </label>
             <textarea id="description" name="description" v-model="newMealplan.description"></textarea>
 
-            <!-- <label for="servings">Servings: </label>
-            <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings"> -->
-
-
-            <!-- <label for="ingredients">Ingredients: </label> -->
             <h3>Schedule:</h3>
 
-            <div v-for="(ingredient, index) in newRecipe.schedule" :key="index">
-                <label for="ingredient">Day: </label>
+            <div v-for="(schedule, index) in newMealPlan.schedule" :key="index">
+                <h4>Day {{ calculateDayNumber(index) }}</h4>
+                
+                
+                <label for="breakfast">Breakfast:</label> 
+                <!-- search for recipe name  -->
+                <AutoComplete name="breakfast" id="breakfast" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
+                    dropdown />
+                    <!-- make id dynamically change -->
 
-                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
+
+                <label for="lunch">Lunch: </label>
+                <AutoComplete name="lunch" id="lunch" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
                     dropdown />
 
 
-                <label for="amount">Amount: </label>
-                <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required>
+                <label for="dinner">Dinner: </label>
+                <AutoComplete name="dinner" id="dinner" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
+                    dropdown />
 
 
-                <label for="unit">Unit: </label>
-
-                <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
-
-                <!-- <select id="unit" name="unit" v-model="ingredient.unit" required>
-                    <option v-for="option in unitOptions" :key="option" :value="option">{{ option }}</option>
-                </select> -->
-
-                <button type="button" v-on:click="removeIngredient(index)">Remove Ingredient</button>
+                <button type="button" v-on:click="removeDay(index)">Remove Ingredient</button>
             </div>
 
-            <button type="button" v-on:click="addIngredient">Add Ingredient</button>
+            <button type="button" v-on:click="addDay">Add Day</button>
 
-            <label for="instructions">Instructions: </label>
-            <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required></textarea>
-
-            <!-- <button type="submit">Submit Recipe</button> -->
-
+           
             <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
 
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
@@ -99,50 +74,17 @@ export default {
     data() {
         return {
             newMealplan: {
-                // mealplanId: this.mealplan.mealplanId //TO COME
+                mealplanId: this.mealplan.mealplanId,
                 userId: this.mealplan.Id,
                 name: this.mealplan.name,
                 description: this.mealplan.description,
                 schedule: this.mealplan.schedule,
                 
             },
-            ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
-            filteredIngredients: [],
-            unitOptions: [
-                'tsp',  // teaspoon
-                'tbsp', // tablespoon
-                'cup',  // cup
-                'oz',   // ounce
-                'lb',   // pound
-                'g',    // gram
-                'kg',   // kilogram
-                'ml',   // milliliter
-                'l',    // liter
-                'pinch',// pinch
-                'dash', // dash
-                'quart',// quart
-                'pint', // pint
-                'fl oz',// fluid ounce
-                'gal',  // gallon
-                'mg',   // milligram
-                'cm',   // centimeter
-                'inch', // inch
-                'dozen', // dozen
-                'whole', // whole
-                'piece', // piece
-                'slice', // slice
-                'stick', // stick
-                'bunch', // bunch
-                'can',   // can
-                'jar',   // jar
-                'box',   // box
-                'bag',   // bag
-                'leaf',  // leaf
-                'clove', // clove
-                'head',  // head
-                'stalk', // stalk
-            ], 
-            filteredUnits: [],
+            recipeOptions: [], 
+            filteredRecipes: [],
+            
+            
             prepTimeHours: 0,
             prepTimeMinutes: 0,
             cookTimeHours: 0,
@@ -172,8 +114,8 @@ export default {
             this.newMealplan.schedule.push({ name: '', amount: 0, unit: '' });
         },
 
-        removeIngredient(index) {
-            this.newRecipe.ingredients.splice(index, 1);
+        removeDay(index) {
+            this.newMealplan.schedule.splice(index, 1);
         },
 
         // convertToMinutes(hours, minutes) {
@@ -181,10 +123,14 @@ export default {
         // },
 
             //SEARCH RECIPES FUNCTION
-        searchIngredients(event) {
-            this.filteredIngredients = this.ingredientOptions.filter((ingredient) => {
-                return ingredient.toLowerCase().includes(event.query.toLowerCase());
+        searchRecipes(event) {
+            this.filteredRecipes = this.recipeOptions.filter((recipe) => {
+                return recipe.toLowerCase().includes(event.query.toLowerCase());
             });
+        },
+
+        calculateDayNumber(index) {
+            return index + 1;
         },
 
 
@@ -202,6 +148,7 @@ export default {
             this.$router.back();
         }, 
 
+        //CHANGE TO MEALPLAN FORM DEFAULTS
         resetForm() {
             this.newRecipe = {
                 recipeId: 0,
@@ -220,6 +167,7 @@ export default {
             this.cookTimeMinutes = 0;
         },
 
+        //UPDATE ALL LOGIC TO MEALPLAN
         submitForm() {
             this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
             this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
@@ -243,33 +191,9 @@ export default {
         }
     },
 
-    // submitForm() {
-    //     this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
-    //     this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-    //     //check ingredients for duplicates and give error (try catch? something like that?)
-    //     //if throw error, don't submit form
-    //     if (this.hasDuplicates(this.newRecipe.ingredients)) {
-    //         console.log("your recipe has a duplicate")
-    //         throw new Error('Your recipe must not have duplicate ingredients')
-    //     }
-    //     // this is not working^
-    //     console.log("You made it past the error");
-    //     RecipeService.submitRecipe(this.newRecipe).then(response => {
-    //         console.log("This is our submit response data" + response.status);
-    //         // ^ check for response status and add user success message for created - 201, updated 200 in App view
-    //         // route to recipe list 
-
-    //         this.resetForm();
-    //         this.$router.push({ name: 'recipe-list' });
-    //         // add try catch block
-    //     })
-
-    // }
-    // },
-
     created() {
-        IngredientService.getIngredients().then(response => {
-            this.ingredientOptions = response.data;
+        RecipeService.getRecipes().then(response => {
+            this.recipeOptions = response.data;
         })
     },
 
@@ -285,4 +209,4 @@ textarea {
 </style>
 
 
-./MealplanForm.vue/index.js
+<!-- ./MealplanForm.vue/index.js -->
