@@ -13,23 +13,23 @@
 
             <div v-for="(schedule, index) in newMealPlan.schedule" :key="index">
                 <h4>Day {{ calculateDayNumber(index) }}</h4>
-                
-                
-                <label for="breakfast">Breakfast:</label> 
+
+
+                <label for="breakfast">Breakfast:</label>
                 <!-- search for recipe name  -->
-                <AutoComplete name="breakfast" id="breakfast" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
-                    dropdown />
-                    <!-- make id dynamically change -->
+                <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfastId"
+                    :suggestions="filteredRecipes" @complete="searchRecipes" dropdown />
+                <!-- make id dynamically change -->
 
 
                 <label for="lunch">Lunch: </label>
-                <AutoComplete name="lunch" id="lunch" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
-                    dropdown />
+                <AutoComplete name="lunch" id="lunch" v-model="recipe.name" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" dropdown />
 
 
                 <label for="dinner">Dinner: </label>
-                <AutoComplete name="dinner" id="dinner" v-model="recipe.name" :suggestions="filteredRecipes" @complete="searchRecipes"
-                    dropdown />
+                <AutoComplete name="dinner" id="dinner" v-model="schedule.dinnerId" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" dropdown />
 
 
                 <button type="button" v-on:click="removeDay(index)">Remove Ingredient</button>
@@ -37,8 +37,8 @@
 
             <button type="button" v-on:click="addDay">Add Day</button>
 
-           
-            <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
+
+            <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Meal Plan' }}</button>
 
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
 
@@ -51,7 +51,6 @@
 <script>
 import AutoComplete from 'primevue/autocomplete';
 import RecipeService from '../services/RecipeService.js';
-import IngredientService from '../services/IngredientService.js';
 
 export default {
 
@@ -79,16 +78,10 @@ export default {
                 name: this.mealplan.name,
                 description: this.mealplan.description,
                 schedule: this.mealplan.schedule,
-                
+
             },
-            recipeOptions: [], 
+            recipeOptions: [],
             filteredRecipes: [],
-            
-            
-            prepTimeHours: 0,
-            prepTimeMinutes: 0,
-            cookTimeHours: 0,
-            cookTimeMinutes: 0
         };
 
     },
@@ -111,7 +104,7 @@ export default {
 
         //ADD DAY FUNCTION
         addDay() {
-            this.newMealplan.schedule.push({ name: '', amount: 0, unit: '' });
+            this.newMealplan.schedule.push({ day: 0, breakfastId: 0, lunchId: 0, dinnerId: 0 });
         },
 
         removeDay(index) {
@@ -122,7 +115,7 @@ export default {
         //     return (hours * 60) + minutes;
         // },
 
-            //SEARCH RECIPES FUNCTION
+        //SEARCH RECIPES FUNCTION
         searchRecipes(event) {
             this.filteredRecipes = this.recipeOptions.filter((recipe) => {
                 return recipe.toLowerCase().includes(event.query.toLowerCase());
@@ -146,7 +139,7 @@ export default {
 
         cancelForm() {
             this.$router.back();
-        }, 
+        },
 
         //CHANGE TO MEALPLAN FORM DEFAULTS
         resetForm() {
