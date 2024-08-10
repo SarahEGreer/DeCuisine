@@ -12,12 +12,13 @@ public class Recipe {
     private int prepTime;
     private int cookTime;
     private int servings;
+    private String photoUrl;
 //    private List<String> ingredientsList;
     private List<Recipe_detailDto.IngredientDetail> ingredients;
 
     public Recipe(){};
 
-    public Recipe(int recipeId, int userId, String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_detailDto.IngredientDetail> ingredients) {
+    public Recipe(int recipeId, int userId, String name, String description, String instructions, int prepTime, int cookTime, int servings, String photoUrl, List<Recipe_detailDto.IngredientDetail> ingredients) {
         this.recipeId = recipeId;
         this.userId = userId;
         this.name = name;
@@ -26,6 +27,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
+        this.photoUrl = photoUrl;
         this.ingredients = ingredients;
     }
 
@@ -100,5 +102,13 @@ public class Recipe {
 
     public void setIngredients(List<Recipe_detailDto.IngredientDetail> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

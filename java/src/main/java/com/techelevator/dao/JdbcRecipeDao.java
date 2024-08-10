@@ -122,12 +122,12 @@ public class JdbcRecipeDao implements RecipeDao {
 
     public void createRecipe(RecipeDto recipeDto, int userId) {
         int newRecipeId = 0;
-        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings) VALUES (?,?,?,?,?,?,?) RETURNING recipe_id;";
+        String recipeSql = "INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, prep_time, cook_time, servings, photo_url) VALUES (?,?,?,?,?,?,?,?) RETURNING recipe_id;";
         try {
             newRecipeId = jdbcTemplate.queryForObject(recipeSql, int.class,
                     userId, recipeDto.getName(), recipeDto.getDescription(),
                     recipeDto.getInstructions(), recipeDto.getPrepTime(), recipeDto.getCookTime(),
-                    recipeDto.getServings());
+                    recipeDto.getServings(), recipeDto.getPhotoUrl());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -188,6 +188,7 @@ public class JdbcRecipeDao implements RecipeDao {
                         recipeDto.getPrepTime(),
                         recipeDto.getCookTime(),
                         recipeDto.getServings(),
+                        recipeDto.getPhotoUrl(),
                         recipeId);
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
@@ -244,6 +245,7 @@ public class JdbcRecipeDao implements RecipeDao {
         recipe.setPrepTime(rs.getInt("prep_time"));
         recipe.setCookTime(rs.getInt("cook_time"));
         recipe.setServings(rs.getInt("servings"));
+        recipe.setPhotoUrl(rs.getString("photo_url"));
         return recipe;
     }
 

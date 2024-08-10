@@ -13,16 +13,18 @@ public class RecipeDto {
     private int prepTime;
     private int cookTime;
     private int servings;
+    private String photoUrl;
 
     private List<Recipe_IngredientDto> ingredients;
 
-    public RecipeDto(String name, String description, String instructions, int prepTime, int cookTime, int servings, List<Recipe_IngredientDto> ingredients) {
+    public RecipeDto(String name, String description, String instructions, int prepTime, int cookTime, int servings, String photoUrl, List<Recipe_IngredientDto> ingredients) {
         this.name = name;
         this.description = description;
         this.instructions = instructions;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
+        this.photoUrl = photoUrl;
         this.ingredients = ingredients;
     }
 
@@ -80,5 +82,13 @@ public class RecipeDto {
 
     public void setIngredients(List<Recipe_IngredientDto> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }
