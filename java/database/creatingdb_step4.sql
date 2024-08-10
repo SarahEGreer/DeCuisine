@@ -29,6 +29,7 @@ CREATE TABLE recipe
     prep_time NUMERIC,
     cook_time NUMERIC,
     servings NUMERIC,
+	photo_url VARCHAR(100),
     CONSTRAINT fk_recipe_users FOREIGN KEY (created_by_user_id) REFERENCES users(user_id)
 );
 
