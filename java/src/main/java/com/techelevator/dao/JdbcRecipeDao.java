@@ -27,7 +27,7 @@ public class JdbcRecipeDao implements RecipeDao {
     public List<RecipeSummary> getAllRecipes() {
         List<RecipeSummary> recipeSummary = new ArrayList<>();
         //                           add picture when time comes\/
-        String sql = "SELECT recipe_id, recipe_name, description  FROM recipe ORDER BY recipe_name ASC;";
+        String sql = "SELECT recipe_id, recipe_name, description, photo_url  FROM recipe ORDER BY recipe_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -45,7 +45,7 @@ public class JdbcRecipeDao implements RecipeDao {
   @Override
     public RecipeSummary getRecipeSummaryByRecipeId (int recipeId) {
         RecipeSummary recipeSummary = null;
-        String sql = "SELECT recipe_id, recipe_name FROM recipe WHERE recipe_id = ?";
+        String sql = "SELECT recipe_id, recipe_name, photo_url FROM recipe WHERE recipe_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
             while (results.next()) {
@@ -253,6 +253,7 @@ public class JdbcRecipeDao implements RecipeDao {
         RecipeSummary recipe = new RecipeSummary();
         recipe.setRecipeId(rs.getInt("recipe_id"));
         recipe.setName(rs.getString("recipe_name"));
+        recipe.setPhotoUrl(rs.getString("photo_url"));
         return recipe;
 
     }
