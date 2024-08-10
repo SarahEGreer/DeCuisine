@@ -179,7 +179,7 @@ public class JdbcRecipeDao implements RecipeDao {
             throw new DaoException("Data integrity violation", e);
         }
         if(userId == createdUserId) {
-            String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ? WHERE recipe_id = ?";
+            String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ?, photo_url = ? WHERE recipe_id = ?";
             try {
                 jdbcTemplate.update(updateRecipeSql,
                         recipeDto.getName(),
