@@ -102,6 +102,9 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/grocerylist",
+  }
 ];
 
 // Create the router
