@@ -96,7 +96,7 @@ const routes = [
   },
   {
     path: "/mealplans/:mealplanId/edit",
-    name: "mealplan-form",
+    name: "mealplan-edit",
     component: MealPlanFormView,
     meta: {
       requiresAuth: true,

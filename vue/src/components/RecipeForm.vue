@@ -2,6 +2,9 @@
     <div>
 
         <form v-on:submit.prevent="submitForm">
+            <label for="photo">Recipe Photo Link</label>
+            <input type="text" id="photo" name="photo" v-model="newRecipe.photoUrl">
+
             <label for="name">Recipe Name: </label>
             <input type="text" id="name" name="name" v-model="newRecipe.name" required>
 
@@ -111,6 +114,7 @@ export default {
     data() {
         return {
             newRecipe: {
+                photoUrl: this.recipe.photoUrl,
                 recipeId: this.recipe.recipeId,
                 name: this.recipe.name,
                 prepTime: this.recipe.prepTime,
@@ -155,7 +159,7 @@ export default {
                 'clove', // clove
                 'head',  // head
                 'stalk', // stalk
-            ], 
+            ],
             filteredUnits: [],
             prepTimeHours: 0,
             prepTimeMinutes: 0,
@@ -211,10 +215,11 @@ export default {
 
         cancelForm() {
             this.$router.back();
-        }, 
+        },
 
         resetForm() {
             this.newRecipe = {
+                photoUrl: '',
                 recipeId: 0,
                 name: '',
                 prepTime: '',
@@ -294,6 +299,3 @@ textarea {
     resize: none;
 }
 </style>
-
-
-
