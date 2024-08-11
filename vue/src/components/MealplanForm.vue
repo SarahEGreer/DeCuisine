@@ -87,6 +87,20 @@ export default {
 
     },
 
+    watch: {
+        mealplan: {
+            handler(newVal) {
+                this.newMealplan = { ...newVal };
+                // Populate hours and minutes fields based on prepTime and cookTime
+                // this.prepTimeHours = Math.floor(this.newRecipe.prepTime / 60);
+                // this.prepTimeMinutes = this.newRecipe.prepTime % 60;
+                // this.cookTimeHours = Math.floor(this.newRecipe.cookTime / 60);
+                // this.cookTimeMinutes = this.newRecipe.cookTime % 60;
+            },
+            immediate: true
+        }
+    },
+
     methods: {
 
         //ADD DAY FUNCTION
@@ -183,8 +197,11 @@ export default {
                 ...this.newMealplan,
                 schedule: this.prepareSchedule()
             };
+            // not sure if we need this^
+
 
             console.log(this.newMealplan);
+            console.log(this.mealplan);
             if (this.isEdit) {
                 MealplanService.updateMealplan(this.newMealplan.mealplanId, this.newMealplan).then(response => {
                     console.log("This is our update response data", response.status);
@@ -204,7 +221,7 @@ export default {
     created() {
         RecipeService.getRecipes().then(response => {
             this.recipeOptions = response.data;
-            console.log(this.recipeOptions);
+            // console.log(this.recipeOptions);
         })
     },
 

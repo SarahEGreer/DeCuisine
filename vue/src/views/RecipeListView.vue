@@ -37,6 +37,7 @@ export default {
             .then(response => {
                 // console.log('Recipes fetched:', response.data); // Log the fetched data
                 this.recipes = response.data;
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('Error fetching recipes:', error); // Log any error

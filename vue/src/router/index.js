@@ -94,6 +94,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/mealplans/:mealplanId/edit",
+    name: "mealplan-form",
+    component: MealPlanFormView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 // Create the router
