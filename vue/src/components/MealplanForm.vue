@@ -17,21 +17,19 @@
 
                 <label for="breakfast">Breakfast:</label>
                 <!-- search for recipe name  -->
-                <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfast"
-                    :suggestions="filteredRecipes" @complete="searchRecipes" dropdown
-                    @select="updateMeal(schedule, 'breakfastId', $event)" field="name" />
+                <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfastId"
+                    :suggestions="filteredRecipes" @complete="searchRecipes" dropdown optionLabel="name" />
                 <!-- make id dynamically change -->
 
 
                 <label for="lunch">Lunch: </label>
-                <AutoComplete name="lunch" id="lunch" v-model="schedule.lunch" :suggestions="filteredRecipes"
-                    @complete="searchRecipes" @select="updateMeal(schedule, 'lunchId', $event)" field="name" dropdown />
+                <AutoComplete name="lunch" id="lunch" v-model="schedule.lunchId" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" optionLabel="name" dropdown />
 
 
                 <label for="dinner">Dinner: </label>
-                <AutoComplete name="dinner" id="dinner" v-model="schedule.dinner" :suggestions="filteredRecipes"
-                    @complete="searchRecipes" @select="updateMeal(schedule, 'dinnerId', $event)" field="name"
-                    dropdown />
+                <AutoComplete name="dinner" id="dinner" v-model="schedule.dinnerId" :suggestions="filteredRecipes"
+                    @complete="searchRecipes" optionLabel="name" dropdown />
 
 
                 <button type="button" v-on:click="removeDay(index)">Remove Ingredient</button>
@@ -77,7 +75,7 @@ export default {
         return {
             newMealplan: {
                 mealplanId: this.mealplan.mealplanId,
-                userId: this.mealplan.Id,
+                // userId: this.mealplan.Id,
                 name: this.mealplan.name,
                 description: this.mealplan.description,
                 schedule: this.mealplan.schedule,
@@ -89,25 +87,33 @@ export default {
 
     },
 
-    // watch: {
-    //     recipe: {
-    //         handler(newVal) {
-    //             this.newRecipe = { ...newVal };
-    //             // Populate hours and minutes fields based on prepTime and cookTime
-    //             this.prepTimeHours = Math.floor(this.newRecipe.prepTime / 60);
-    //             this.prepTimeMinutes = this.newRecipe.prepTime % 60;
-    //             this.cookTimeHours = Math.floor(this.newRecipe.cookTime / 60);
-    //             this.cookTimeMinutes = this.newRecipe.cookTime % 60;
-    //         },
-    //         immediate: true
-    //     }
-    // },
-
     methods: {
 
         //ADD DAY FUNCTION
         addDay() {
-            this.newMealplan.schedule.push({ day: 0, breakfastId: null, lunchId: null, dinnerId: null });
+            const dayIndex = this.newMealplan.schedule.length + 1; // Calculate the day based on the current length
+            this.newMealplan.schedule.push({
+                day: dayIndex,  // Set day to be the next index (1-based)
+                breakfastId: null,
+                breakfastName: '',
+                lunchId: null,
+                lunchName: '',
+                dinnerId: null,
+                dinnerName: ''
+            });
+        },
+
+        prepareSchedule() {
+            this.newMealplan.schedule = this.newMealplan.schedule.map(day => ({
+                day: day.day,
+                breakfastId: day.breakfastId.recipeId,  // Extract only the recipeId
+                breakfastName: day.breakfastId.name,
+                lunchId: day.lunchId.recipeId,  // Extract only the recipeId
+                lunchName: day.lunchId.name,
+                dinnerId: day.dinnerId.recipeId,  // Extract only the recipeId
+                dinnerName: day.dinnerId.name
+            }));
+            return this.newMealplan.schedule;
         },
 
         removeDay(index) {
@@ -131,9 +137,9 @@ export default {
             return index + 1;
         },
 
-        updateMeal(schedule, mealType, selectedRecipe) {
-            schedule[mealType] = selectedRecipe.recipeId;
-        },
+        // updateMeal(schedule, mealType, selectedRecipe) {
+        //     schedule[mealType] = selectedRecipe.recipeId;
+        // },
 
 
         // searchUnits(event) {
@@ -156,7 +162,7 @@ export default {
                 mealplanId: 0,
                 name: '',
                 description: '',
-                userId: 0,
+                // userId: 0,
                 schedule: [],
             };
             this.recipeOptions = [];
@@ -170,7 +176,15 @@ export default {
             // if (this.hasDuplicates(this.newRecipe.ingredients)) {
             //     console.log("your recipe has a duplicate");
             //     throw new Error('Your recipe must not have duplicate ingredients');
+
             // }
+
+            const preparedMealplan = {
+                ...this.newMealplan,
+                schedule: this.prepareSchedule()
+            };
+
+            console.log(this.newMealplan);
             if (this.isEdit) {
                 MealplanService.updateMealplan(this.newMealplan.mealplanId, this.newMealplan).then(response => {
                     console.log("This is our update response data", response.status);
