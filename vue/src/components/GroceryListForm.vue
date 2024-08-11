@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <form v-on:submit.prevent="submitForm">
+        <form v-on:submit.prevent="saveForm">
             <label for="name">Grocery List Name: </label>
             <input type="text" id="name" name="name" v-model="newGroceryList.name" required>
 
