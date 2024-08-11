@@ -1,5 +1,6 @@
 <template>
     <div>
+        <img :src="recipe.photoUrl" alt="">
         <h1>{{ recipe.name }}</h1>
         <span>Prep time: {{ prepTimeHours }} hours, {{ prepTimeMinutes }} minutes</span>
         <span>Cook time: {{ cookTimeHours }} hours, {{ cookTimeMinutes }} minutes</span>
@@ -24,7 +25,7 @@ export default {
             required: true
         }
     },
-    
+
     computed: {
         // Computed property to convert prep time from minutes to hours and minutes
         prepTimeHours() {
