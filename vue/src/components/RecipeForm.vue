@@ -77,6 +77,7 @@
             <div class="form-group">
                 <label for="photo" class="form-label">Recipe Photo Link</label>
                 <input type="text" id="photo" name="photo" v-model="newRecipe.photoUrl" class="form-input">
+                <a href="https://postimg.cc/" target="_blank">Upload an image and grab a direct link! (.jpg, .png)</a>
             </div>
 
             <div class="form-group">
