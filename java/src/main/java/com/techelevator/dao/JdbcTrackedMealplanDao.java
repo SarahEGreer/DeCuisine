@@ -52,7 +52,6 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
 
     @Override
     public void updateTrackedMealplans(TrackedMealplanDto mealplan){
-        public void updateTrackedMealplans (TrackedMealplanDto mealplan) {
             String sql = "UPDATE user_tracked_mealplan SET start_date = ? WHERE event_id = ?";
 
             try {
@@ -63,7 +62,7 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
                 throw new DaoException("Data integrity violation", e);
             }
         }
-    }
+
 
     @Override
     public void deleteTrackedMealplan(int eventId){
