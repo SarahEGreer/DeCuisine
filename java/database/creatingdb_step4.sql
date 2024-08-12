@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS user_tracked_recipes, recipe_tags, recipes_ingredients, ingredients, recipe, tag_id CASCADE;
+DROP TABLE IF EXISTS user_tracked_recipes, recipe_tags, recipes_ingredients, ingredients, recipe, tag_id, user_grocery_list CASCADE;
 DROP SEQUENCE IF EXISTS sec_ingredient_id, sec_recipe_id, sec_tag_id;
 
 CREATE SEQUENCE sec_recipe_id
@@ -16,8 +16,8 @@ CREATE SEQUENCE sec_ingredient_id
 CREATE SEQUENCE sec_tag_id
   INCREMENT BY 1
   START WITH 50
-  NO MAXVALUE;    
-
+  NO MAXVALUE;
+  
 
 CREATE TABLE recipe
 (
@@ -73,6 +73,16 @@ CREATE TABLE user_tracked_recipes
     CONSTRAINT fk_user_tracked_recipes_recipe FOREIGN KEY (recipes_id) REFERENCES recipe(recipe_id),
     CONSTRAINT fk_user_tracked_recipes_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+CREATE TABLE user_grocery_list
+(
+	user_id int NOT NULL,
+	ingredient_id int NOT NULL,
+	amount NUMERIC NOT NULL,
+	unit_type VARCHAR(100) NOT NULL,
+	system_of_measurement VARCHAR(100),
+	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+	CONSTRAINT fk_ingredient_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 
 --test data
@@ -99,6 +109,22 @@ ON CONFLICT (ingredient_name) DO NOTHING;
 
 -- Recipes_Ingredients Table
 INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 4, 'pieces', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 100, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Pancetta'), 150, 'grams', 'Metric'),
+(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Black Pepper'), 5, 'grams', 'Metric'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Butter'), 1, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Sugar'), 0.5, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Brown Sugar'), 0.5, 'cup', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 2, 'pieces', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Vanilla Extract'), 1, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Flour'), 2.5, 'cups', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Baking Soda'), 1, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Salt'), 0.5, 'tsp', 'Imperial'),
+(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial');
+
+INSERT INTO user_grocery_list (user_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
 (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
 (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 4, 'pieces', 'Metric'),
 (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 100, 'grams', 'Metric'),
