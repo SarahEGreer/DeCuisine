@@ -10,3 +10,8 @@
     <router-view />
   </div>
 </template>
+<style>
+img {
+  width: 500px;
+}
+</style>
