@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>GROCERY LIST</h1>
         <ul>
             <li v-for="(ingredient, index) in groceryList.ingredients" :key="index">name: {{ ingredient.name }}
                 amount: {{ ingredient.amount }} unit: {{ ingredient.unit }}</li> 

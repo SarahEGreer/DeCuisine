@@ -85,9 +85,11 @@
             </div>
 
             <div class="form-group">
-                <label for="prep-time-hours" class="form-label">Prep Time</label>
+                <h4>Prep Time</h4>
+                <label for="prep-time-hours" class="form-sublabel">Hours:</label> 
                 <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
                     v-model.number="prepTimeHours" class="form-input">
+                <label for="prep-time-minutes" class="form-sublabel">Minutes:</label>
                 <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
                     placeholder="Minutes" v-model.number="prepTimeMinutes" class="form-input">
             </div>
@@ -102,12 +104,14 @@
 
             <div class="form-group">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" name="description" v-model="newRecipe.description" class="form-textarea"></textarea>
+                <textarea id="description" name="description" v-model="newRecipe.description"
+                    class="form-textarea"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="servings" class="form-label">Servings</label>
-                <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings" class="form-input">
+                <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings"
+                    class="form-input">
             </div>
 
             <h3 class="section-title">Ingredients</h3>
@@ -115,28 +119,32 @@
             <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index" class="ingredient-group">
                 <div class="form-group">
                     <label for="ingredient" class="form-label">Ingredient</label>
-                    <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
-                        dropdown class="form-input"/>
+                    <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients"
+                        @complete="searchIngredients" dropdown class="form-input" />
                 </div>
-                
+
                 <div class="form-group">
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required class="form-input">
+                    <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required
+                        class="form-input">
                 </div>
 
                 <div class="form-group">
                     <label for="unit" class="form-label">Unit</label>
-                    <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown class="form-input"/>
+                    <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits"
+                        dropdown class="form-input" />
                 </div>
 
-                <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-button">Remove Ingredient</button>
+                <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-button">Remove
+                    Ingredient</button>
             </div>
 
             <button type="button" v-on:click="addIngredient" class="add-ingredient-button">Add Ingredient</button>
 
             <div class="form-group">
                 <label for="instructions" class="form-label">Instructions</label>
-                <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required class="form-textarea"></textarea>
+                <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required
+                    class="form-textarea"></textarea>
             </div>
 
             <div class="form-buttons">
@@ -232,10 +240,10 @@ export default {
                 'stalk', // stalk
             ],
             filteredUnits: [],
-            prepTimeHours: 0,
-            prepTimeMinutes: 0,
-            cookTimeHours: 0,
-            cookTimeMinutes: 0
+            prepTimeHours: null,
+            prepTimeMinutes: null,
+            cookTimeHours: null,
+            cookTimeMinutes: null
         };
 
     },
@@ -301,10 +309,10 @@ export default {
                 instructions: ''
             };
             this.newIngredients = [];
-            this.prepTimeHours = 0;
-            this.prepTimeMinutes = 0;
-            this.cookTimeHours = 0;
-            this.cookTimeMinutes = 0;
+            this.prepTimeHours = null;
+            this.prepTimeMinutes = null;
+            this.cookTimeHours = null;
+            this.cookTimeMinutes = null;
         },
 
         submitForm() {
@@ -360,6 +368,13 @@ export default {
 .form-label {
     display: block;
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-sublabel {
+    display: block;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px;
 }

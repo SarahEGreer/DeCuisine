@@ -1,9 +1,10 @@
 <template>
     <div>
+        <h1>GROCERY LIST FORM</h1>
 
         <form v-on:submit.prevent="saveForm">
-            <label for="name">Grocery List Name: </label>
-            <input type="text" id="name" name="name" v-model="newGroceryList.name" required>
+            <!-- <label for="name">Grocery List Name: </label>
+            <input type="text" id="name" name="name" v-model="newGroceryList.name" required> -->
 
             <!-- <label for="ingredients">Ingredients: </label> -->
             <h3>Ingredients:</h3>
@@ -131,9 +132,9 @@ export default {
             });
         },
 
-        hasDuplicates(array) {
-            return array.length !== new Set(array).size;
-        },
+        // hasDuplicates(array) {
+        //     return array.length !== new Set(array).size;
+        // },
 
         cancelForm() {
             this.$router.back();

@@ -19,16 +19,21 @@ http.interceptors.request.use(config => {
 
 export default {
 
+  //backend has indicated that the grocery list is accessed by user token rather than needing to send user ID or GL id
+
     getGroceryList() {
         return http.get('/grocerylist') //by userID, tracked by token?
     },
 
-    saveGroceryList(groceryList) { //by userID?
-        return http.post('/grocerylist', groceryList)
-    },
+    updateGroceryList(groceryList){ //by userID?
+        return http.put(`/grocerylist/`, groceryList)
+    }, 
+    //^^^^^^^^^^^handles adding or removal of GL items via overwrite from front end information. 
+    //To add or delete items, items are removed or added to front end array, 
+    //and front end array overwrites the database array.
 
-    updateGroceryList(groceryListId, groceryList){ //by userID?
-        return http.put(`/grocerylist/${groceryListId}`, groceryList)
-    },
+    // addIngredientsToGroceryListBasedOnMealPlanId(mealPlanId){
+    //     return http.post(`/grocerylist/${mealPlanId}`)
+    // },
 
 }
