@@ -95,6 +95,16 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
 //        trackedMealplan.setStartDate(rs.getString("start_date"));
 //        return trackedMealplan;
 //    }
-
+    @Override
+    public void createTrackedMealplan(TrackedMealplanDto mealplan, int userId) {
+        String sql = "INSERT INTO user_tracked_mealplan (mealplan_id, user_id, start_date) VALUES (?,?,?);";
+        try{
+            jdbcTemplate.update(sql, mealplan.getMealplanId(), userId, mealplan.getStartDate());
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+    }
 
 }
