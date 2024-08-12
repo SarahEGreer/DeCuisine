@@ -91,11 +91,6 @@ export default {
         mealplan: {
             handler(newVal) {
                 this.newMealplan = { ...newVal };
-                // Populate hours and minutes fields based on prepTime and cookTime
-                // this.prepTimeHours = Math.floor(this.newRecipe.prepTime / 60);
-                // this.prepTimeMinutes = this.newRecipe.prepTime % 60;
-                // this.cookTimeHours = Math.floor(this.newRecipe.cookTime / 60);
-                // this.cookTimeMinutes = this.newRecipe.cookTime % 60;
             },
             immediate: true
         }
