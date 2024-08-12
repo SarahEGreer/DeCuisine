@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface GroceryListDao {
 
-    List<Recipe_IngredientDto> getGroceryListByMealPlan(int mealplanId);
+//    List<Recipe_IngredientDto> getGroceryListByMealPlan(int mealplanId, int userId);
+    List<Recipe_IngredientDto> getGroceryListByUserId(int userId);
 
-    void updateGroceryList(int mealplanId, List<Recipe_IngredientDto> ingredients);
+    void updateGroceryList(List<Recipe_IngredientDto> groceryItems, int userId);
 
 
 
