@@ -52,16 +52,16 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
 
     @Override
     public void updateTrackedMealplans(TrackedMealplanDto mealplan){
-            String sql = "UPDATE user_tracked_mealplan SET start_date = ? WHERE event_id = ?";
+        String sql = "UPDATE user_tracked_mealplan SET start_date = ? WHERE event_id = ?";
 
-            try {
-                jdbcTemplate.update(sql, mealplan.getStartDate(), mealplan.getEventId());
-            } catch (CannotGetJdbcConnectionException e) {
-                throw new DaoException("Unable to connect to server or database", e);
-            } catch (DataIntegrityViolationException e) {
-                throw new DaoException("Data integrity violation", e);
-            }
+        try {
+            jdbcTemplate.update(sql, mealplan.getStartDate(), mealplan.getEventId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
         }
+    }
 
 
     @Override
