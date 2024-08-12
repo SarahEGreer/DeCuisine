@@ -10,6 +10,7 @@ import RecipeFormView from "../views/RecipeFormView.vue";
 import RecipeListView from "../views/RecipeListView.vue";
 import RecipeDetailsView from "../views/RecipeDetailsView.vue";
 import MealPlanFormView from "../views/MealPlanFormView.vue";
+import GroceryListView from "../views/GroceryListView.vue";
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -104,7 +105,20 @@ const routes = [
   },
   {
     path: "/grocerylist",
-  }
+    name: "grocery-list",
+    component: () => import("../views/GroceryListView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/grocerylist/edit",
+    name: "grocery-list-edit",
+    component: () => import("../views/GroceryListEditView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 // Create the router

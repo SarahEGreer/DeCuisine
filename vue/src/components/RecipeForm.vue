@@ -232,10 +232,10 @@ export default {
                 'stalk', // stalk
             ],
             filteredUnits: [],
-            prepTimeHours: 0,
-            prepTimeMinutes: 0,
-            cookTimeHours: 0,
-            cookTimeMinutes: 0
+            prepTimeHours: null,
+            prepTimeMinutes: null,
+            cookTimeHours: null,
+            cookTimeMinutes: null
         };
 
     },
@@ -301,10 +301,10 @@ export default {
                 instructions: ''
             };
             this.newIngredients = [];
-            this.prepTimeHours = 0;
-            this.prepTimeMinutes = 0;
-            this.cookTimeHours = 0;
-            this.cookTimeMinutes = 0;
+            this.prepTimeHours = null;
+            this.prepTimeMinutes = null;
+            this.cookTimeHours = null;
+            this.cookTimeMinutes = null;
         },
 
         submitForm() {
