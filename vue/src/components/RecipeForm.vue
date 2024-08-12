@@ -1,10 +1,9 @@
-<template>
+<!-- <template>
     <div>
 
         <form v-on:submit.prevent="submitForm">
             <label for="photo">Recipe Photo Link</label>
             <input type="text" id="photo" name="photo" v-model="newRecipe.photoUrl">
-            <!-- <input type="file" id="photo" name="photo" /> -->
             <label for="name">Recipe Name: </label>
             <input type="text" id="name" name="name" v-model="newRecipe.name" required>
 
@@ -34,7 +33,7 @@
             <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings">
 
 
-            <!-- <label for="ingredients">Ingredients: </label> -->
+            
             <h3>Ingredients:</h3>
 
             <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
@@ -52,10 +51,6 @@
 
                 <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
 
-                <!-- <select id="unit" name="unit" v-model="ingredient.unit" required>
-                    <option v-for="option in unitOptions" :key="option" :value="option">{{ option }}</option>
-                </select> -->
-
                 <button type="button" v-on:click="removeIngredient(index)">Remove Ingredient</button>
             </div>
 
@@ -64,7 +59,7 @@
             <label for="instructions">Instructions: </label>
             <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required></textarea>
 
-            <!-- <button type="submit">Submit Recipe</button> -->
+       
 
             <button type="submit">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
 
@@ -73,6 +68,82 @@
 
         </form>
 
+    </div>
+</template> -->
+
+<template>
+    <div class="recipe-form-container">
+        <form v-on:submit.prevent="submitForm" class="recipe-form">
+            <div class="form-group">
+                <label for="photo" class="form-label">Recipe Photo Link</label>
+                <input type="text" id="photo" name="photo" v-model="newRecipe.photoUrl" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="name" class="form-label">Recipe Name</label>
+                <input type="text" id="name" name="name" v-model="newRecipe.name" required class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="prep-time-hours" class="form-label">Prep Time</label>
+                <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
+                    v-model.number="prepTimeHours" class="form-input">
+                <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
+                    placeholder="Minutes" v-model.number="prepTimeMinutes" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="cook-time-hours" class="form-label">Cook Time</label>
+                <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
+                    v-model.number="cookTimeHours" class="form-input">
+                <input type="number" id="cook-time-minutes" name="cook-time-minutes" min="0" max="59"
+                    placeholder="Minutes" v-model.number="cookTimeMinutes" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" v-model="newRecipe.description" class="form-textarea"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="servings" class="form-label">Servings</label>
+                <input type="number" id="servings" name="servings" min="0" v-model="newRecipe.servings" class="form-input">
+            </div>
+
+            <h3 class="section-title">Ingredients</h3>
+
+            <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index" class="ingredient-group">
+                <div class="form-group">
+                    <label for="ingredient" class="form-label">Ingredient</label>
+                    <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
+                        dropdown class="form-input"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="unit" class="form-label">Unit</label>
+                    <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown class="form-input"/>
+                </div>
+
+                <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-button">Remove Ingredient</button>
+            </div>
+
+            <button type="button" v-on:click="addIngredient" class="add-ingredient-button">Add Ingredient</button>
+
+            <div class="form-group">
+                <label for="instructions" class="form-label">Instructions</label>
+                <textarea id="instructions" name="instructions" v-model="newRecipe.instructions" required class="form-textarea"></textarea>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="submit-button">{{ isEdit ? 'Save Changes' : 'Submit Recipe' }}</button>
+                <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -261,30 +332,6 @@ export default {
         }
     },
 
-    // submitForm() {
-    //     this.newRecipe.prepTime = this.convertToMinutes(this.prepTimeHours, this.prepTimeMinutes);
-    //     this.newRecipe.cookTime = this.convertToMinutes(this.cookTimeHours, this.cookTimeMinutes);
-    //     //check ingredients for duplicates and give error (try catch? something like that?)
-    //     //if throw error, don't submit form
-    //     if (this.hasDuplicates(this.newRecipe.ingredients)) {
-    //         console.log("your recipe has a duplicate")
-    //         throw new Error('Your recipe must not have duplicate ingredients')
-    //     }
-    //     // this is not working^
-    //     console.log("You made it past the error");
-    //     RecipeService.submitRecipe(this.newRecipe).then(response => {
-    //         console.log("This is our submit response data" + response.status);
-    //         // ^ check for response status and add user success message for created - 201, updated 200 in App view
-    //         // route to recipe list 
-
-    //         this.resetForm();
-    //         this.$router.push({ name: 'recipe-list' });
-    //         // add try catch block
-    //     })
-
-    // }
-    // },
-
     created() {
         IngredientService.getIngredients().then(response => {
             this.ingredientOptions = response.data;
@@ -297,7 +344,96 @@ export default {
 
 
 <style scoped>
-textarea {
+.recipe-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.form-textarea {
+    height: 100px;
     resize: none;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.ingredient-group {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+.remove-ingredient-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.add-ingredient-button {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>

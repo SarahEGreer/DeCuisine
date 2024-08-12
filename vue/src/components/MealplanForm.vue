@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <h1>meal plan form has loaded</h1>
         <form v-on:submit.prevent="submitForm">
@@ -16,11 +16,10 @@
 
 
                 <label for="breakfast">Breakfast:</label>
-                <!-- search for recipe name  -->
+                
                 <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfastId"
                     :suggestions="filteredRecipes" @complete="searchRecipes" dropdown optionLabel="name" />
-                <!-- make id dynamically change -->
-
+                
 
                 <label for="lunch">Lunch: </label>
                 <AutoComplete name="lunch" id="lunch" v-model="schedule.lunchId" :suggestions="filteredRecipes"
@@ -45,6 +44,56 @@
 
         </form>
 
+    </div>
+</template> -->
+
+<template>
+    <div class="mealplan-form-container">
+        <h1>{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h1>
+        <form v-on:submit.prevent="submitForm" class="mealplan-form">
+            <div class="form-group">
+                <label for="name" class="form-label">Meal Plan Name:</label>
+                <input type="text" id="name" name="name" v-model="newMealplan.name" required class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="form-label">Description:</label>
+                <textarea id="description" name="description" v-model="newMealplan.description" class="form-textarea"></textarea>
+            </div>
+
+            <h3 class="section-title">Schedule:</h3>
+
+            <div v-for="(schedule, index) in newMealplan.schedule" :key="index" class="schedule-group">
+                <h4>Day {{ calculateDayNumber(index) }}</h4>
+
+                <div class="form-group">
+                    <label for="breakfast" class="form-label">Breakfast:</label>
+                    <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfastId"
+                        :suggestions="filteredRecipes" @complete="searchRecipes" dropdown optionLabel="name" class="form-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="lunch" class="form-label">Lunch:</label>
+                    <AutoComplete name="lunch" id="lunch" v-model="schedule.lunchId" :suggestions="filteredRecipes"
+                        @complete="searchRecipes" optionLabel="name" dropdown class="form-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="dinner" class="form-label">Dinner:</label>
+                    <AutoComplete name="dinner" id="dinner" v-model="schedule.dinnerId" :suggestions="filteredRecipes"
+                        @complete="searchRecipes" optionLabel="name" dropdown class="form-input"/>
+                </div>
+
+                <button type="button" v-on:click="removeDay(index)" class="remove-day-button">Remove Day</button>
+            </div>
+
+            <button type="button" v-on:click="addDay" class="add-day-button">Add Day</button>
+
+            <div class="form-buttons">
+                <button type="submit" class="submit-button">{{ isEdit ? 'Save Changes' : 'Submit Meal Plan' }}</button>
+                <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -226,10 +275,105 @@ export default {
 
 
 <style scoped>
-textarea {
+.mealplan-form-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; 
+}
+
+.mealplan-form {
+    max-height: calc(100vh - 200px); 
+    overflow-y: auto;
+    padding: 75px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.form-textarea {
+    height: 100px;
     resize: none;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.schedule-group {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+.remove-day-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.add-day-button {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>
 
 
-<!-- ./MealplanForm.vue/index.js -->

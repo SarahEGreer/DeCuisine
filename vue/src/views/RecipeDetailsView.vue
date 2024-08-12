@@ -1,9 +1,19 @@
-<template>
+<!-- <template>
     <h1>Recipe Details</h1>
     <recipe-card v-bind:recipe="recipe" />
     <button @click="editRecipe">Edit Recipe</button>
     
 
+</template> -->
+
+<template>
+    <div class="recipe-details-container">
+        <h1 class="page-title">Recipe Details</h1>
+        <div class="recipe-card-container">
+            <recipe-card v-if="recipe" :recipe="recipe" />
+            <button v-if="recipe" @click="editRecipe" class="edit-button">Edit Recipe</button>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -52,3 +62,34 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.recipe-details-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.recipe-card-container {
+    position: relative;
+}
+
+.edit-button {
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    z-index: 10; 
+}
+</style>
