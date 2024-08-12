@@ -66,6 +66,7 @@ export default {
          MealplanService.getMealplanDetailsById(mealplanId)
             .then((response) => {
                this.mealplan = response.data;
+               // console.log(response.data.mealplan);
                // this.recipe = this.recipe.recipe;
                this.isEdit = true;
             })

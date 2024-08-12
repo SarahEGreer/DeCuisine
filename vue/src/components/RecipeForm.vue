@@ -86,7 +86,7 @@
 
             <div class="form-group">
                 <h4>Prep Time</h4>
-                <label for="prep-time-hours" class="form-sublabel">Hours:</label> 
+                <label for="prep-time-hours" class="form-sublabel">Hours:</label>
                 <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
                     v-model.number="prepTimeHours" class="form-input">
                 <label for="prep-time-minutes" class="form-sublabel">Minutes:</label>
@@ -95,11 +95,15 @@
             </div>
 
             <div class="form-group">
-                <label for="cook-time-hours" class="form-label">Cook Time</label>
-                <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
-                    v-model.number="cookTimeHours" class="form-input">
-                <input type="number" id="cook-time-minutes" name="cook-time-minutes" min="0" max="59"
-                    placeholder="Minutes" v-model.number="cookTimeMinutes" class="form-input">
+                <h4>Cook Time</h4>
+                <div class="form-group-flex">
+                    <label for="cook-time-hours" class="form-sublabel">Hours:</label>
+                    <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
+                        v-model.number="cookTimeHours" class="form-input">
+                    <label for="cook-time-minutes" class="form-sublabel">Minutes:</label>
+                    <input type="number" id="cook-time-minutes" name="cook-time-minutes" min="0" max="59"
+                        placeholder="Minutes" v-model.number="cookTimeMinutes" class="form-input">
+                </div>
             </div>
 
             <div class="form-group">
@@ -379,7 +383,8 @@ export default {
     margin-bottom: 5px;
 }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
     width: 100%;
     padding: 10px;
     border-radius: 5px;

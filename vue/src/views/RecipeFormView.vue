@@ -38,6 +38,7 @@ export default {
             RecipeService.getRecipeDetails(recipeId)
                 .then((response) => {
                     this.recipe = response.data;
+                    // console.log(response.data);
                     this.recipe = this.recipe.recipe;
                     this.isEdit = true;
                 })
@@ -80,6 +81,7 @@ export default {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
-    text-align: left; /* Align text to the left to match Recipe Details */
+    text-align: left;
+    /* Align text to the left to match Recipe Details */
 }
 </style>
