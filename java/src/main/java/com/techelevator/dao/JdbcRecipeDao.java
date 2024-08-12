@@ -171,8 +171,8 @@ public class JdbcRecipeDao implements RecipeDao {
     public void updateRecipe(RecipeDto recipeDto, int recipeId, int userId) {
         int createdUserId = 0;
         try{
-            String findUserSql = "SELECT created_by_user_id FROM mealplan WHERE mealplan_id = ? ;";
-            createdUserId = jdbcTemplate.queryForObject(findUserSql, int.class, userId);
+            String findUserSql = "SELECT created_by_user_id FROM recipe WHERE recipe_id = ? ;";
+            createdUserId = jdbcTemplate.queryForObject(findUserSql, int.class, recipeId);
         }catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
