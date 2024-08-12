@@ -1,12 +1,17 @@
 START TRANSACTION;
 DROP TABLE IF EXISTS mealplan, user_tracked_mealplan, mealplan_recipe CASCADE;
 
-DROP SEQUENCE IF EXISTS sec_mealplan_id;
+DROP SEQUENCE IF EXISTS sec_mealplan_id, sec_event_id;
 CREATE SEQUENCE sec_mealplan_id
 	INCREMENT BY 1
 	START WITH 100
 	NO MAXVALUE;
 	
+CREATE SEQUENCE  sec_event_id
+	INCREMENT BY 1
+	START WITH 100
+	NO MAXVALUE;
+		
 CREATE TABLE mealplan (
 	mealplan_id int PRIMARY KEY DEFAULT nextval('sec_mealplan_id'),
 	mealplan_name VARCHAR(50) UNIQUE NOT NULL,
@@ -16,6 +21,7 @@ CREATE TABLE mealplan (
 );
 
 CREATE TABLE user_tracked_mealplan (
+	event_id int PRIMARY KEY DEFAULT nextval('sec_event_id'),
 	mealplan_id INT NOT NULL,
 	start_date DATE NOT NULL,
 	user_id INT NOT NULL,

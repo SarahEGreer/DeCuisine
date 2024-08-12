@@ -108,8 +108,8 @@ public class MealplanController {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
     }
+   
 
     @GetMapping(path = "/created")
     public List<Mealplan> getMyCreatedMealplans(Principal principal) {
