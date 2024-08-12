@@ -26,8 +26,6 @@ FAVORITE RECIPES? (view favorite recipes button) LATER FUNCTIONALITY
 -->
 
 <template>
-   <!-- <h1>Create Mealplan</h1> -->
-   <h1>{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h1>
    <mealplan-form v-bind:mealplan="mealplan" v-bind:isEdit="isEdit" />
 </template>
 
