@@ -26,15 +26,15 @@ public class GroceryListController {
         this.groceryListDao = groceryListDao;
     }
 
-    @GetMapping (path = "/{mealplanId}")
-    public GroceryListDto getGroceryListByMealPlan(@PathVariable int mealplanId) {
-        try {
-            return groceryListDao.getGroceryListByMealPlan(mealplanId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-    }
+//    @GetMapping (path = "/{mealplanId}")
+//    public GroceryListDto getGroceryListByMealPlan(@PathVariable int mealplanId) {
+//        try {
+//            return groceryListDao.getGroceryListByMealPlan(mealplanId);
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+//        } catch (Exception e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+//        }
+//    }
 
 }

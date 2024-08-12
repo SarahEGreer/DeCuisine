@@ -168,7 +168,7 @@ public class JdbcMealplanDao implements MealplanDao{
         int createdUserId = 0;
         try{
             String findUserSql = "SELECT created_by_user_id FROM mealplan WHERE mealplan_id = ? ;";
-            createdUserId = jdbcTemplate.queryForObject(findUserSql, int.class, userId);
+            createdUserId = jdbcTemplate.queryForObject(findUserSql, int.class, mealplanId);
         }catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -258,12 +258,6 @@ public class JdbcMealplanDao implements MealplanDao{
             }
         }
     }
-
-
-
-
-
-
 
 
 
