@@ -24,11 +24,11 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
     @Override
     public List<TrackedMealplanDto> getTrackedMealPlans (int userId){
         List<TrackedMealplanDto> trackedMealplans = new ArrayList<>();
-        String sql  = "SELECT utm.event_id, utm.mealplan_id, m.mealplan_name, utm.start_date, utm.user_id\n" +
-                "(SELECT COUNT(*) FROM mealplan_recipe mr WHERE mr.mealplan_id = utm.mealplan_id) AS days\n" +
-                "FROM user_tracked_mealplan utm\n" +
-                "JOIN mealplan m ON utm.mealplan_id = m.mealplan_id\n" +
-                "WHERE utm.user_id = ?\n" +
+        String sql  = "SELECT utm.event_id, utm.mealplan_id, m.mealplan_name, utm.start_date, utm.user_id, " +
+                "(SELECT COUNT(*) FROM mealplan_recipe mr WHERE mr.mealplan_id = utm.mealplan_id) AS days " +
+                "FROM user_tracked_mealplan utm " +
+                "JOIN mealplan m ON utm.mealplan_id = m.mealplan_id " +
+                "WHERE utm.user_id = ? " +
                 "ORDER BY m.mealplan_name ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -37,7 +37,7 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
                 mealplan.setEventId(results.getInt("event_id"));
                 mealplan.setMealplanId(results.getInt("mealplan_id"));
                 mealplan.setName(results.getString("mealplan_name"));
-                mealplan.setStartDate(results.getString("start_date"));
+                mealplan.setStartDate(results.getDate("start_date").toLocalDate());
                 mealplan.setUserId(results.getInt("user_id"));
                 mealplan.setDays(results.getInt("days"));
                 trackedMealplans.add(mealplan);

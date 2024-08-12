@@ -3,19 +3,21 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.time.LocalDate;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
     public class TrackedMealplanDto {
 
         private int eventId;
         private int mealplanId;
         private String name;
-        private String startDate;
+        private LocalDate startDate;
         private int days;
         private int userId;
 
         public TrackedMealplanDto() {}
 
-    public TrackedMealplanDto(int eventId, int mealplanId, String name, String startDate, int days, int userId) {
+    public TrackedMealplanDto(int eventId, int mealplanId, String name, LocalDate startDate, int days, int userId) {
         this.eventId = eventId;
         this.mealplanId = mealplanId;
         this.name = name;
@@ -23,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
         this.days = days;
         this.userId = userId;
     }
-
 
     public int getEventId() {
         return eventId;
@@ -49,11 +50,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
         this.name = name;
     }
 
-    public String getStartDate() {
+
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
