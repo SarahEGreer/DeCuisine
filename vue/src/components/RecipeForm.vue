@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="submitForm">
             <label for="photo">Recipe Photo Link</label>
             <input type="text" id="photo" name="photo" v-model="newRecipe.photoUrl">
-
+            <!-- <input type="file" id="photo" name="photo" /> -->
             <label for="name">Recipe Name: </label>
             <input type="text" id="name" name="name" v-model="newRecipe.name" required>
 
@@ -243,6 +243,8 @@ export default {
                 console.log("your recipe has a duplicate");
                 throw new Error('Your recipe must not have duplicate ingredients');
             }
+
+            console.log(this.newRecipe);
             if (this.isEdit) {
                 RecipeService.updateRecipe(this.newRecipe.recipeId, this.newRecipe).then(response => {
                     console.log("This is our update response data", response.status);

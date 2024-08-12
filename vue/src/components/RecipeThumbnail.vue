@@ -1,6 +1,7 @@
 <template>
     <div v-on:click="$router.push({ name: 'RecipeDetailsView', params: { recipeId: recipe.recipeId } })">
         <h1>{{ recipe.name }}</h1>
+        <img :src="recipe.photoUrl" alt="">
     </div>
 </template>
 
