@@ -11,6 +11,7 @@ import RecipeListView from "../views/RecipeListView.vue";
 import RecipeDetailsView from "../views/RecipeDetailsView.vue";
 import MealPlanFormView from "../views/MealPlanFormView.vue";
 import GroceryListView from "../views/GroceryListView.vue";
+import MealplanSchedulerView from "../views/MealplanSchedulerView.vue";
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -103,6 +104,14 @@ const routes = [
       requiresAuth: true,
     },
   },
+  { 
+    path: "/mealplans/scheduler",
+    name: "mealplan-scheduler",
+    component: MealplanSchedulerView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   {
     path: "/grocerylist",
     name: "grocery-list",
@@ -119,6 +128,7 @@ const routes = [
       requiresAuth: true,
     },
   },
+
 ];
 
 // Create the router
