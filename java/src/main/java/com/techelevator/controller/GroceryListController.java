@@ -47,6 +47,14 @@ public class GroceryListController {
     }
 
 
+    //update grocery list based on mealplan
+    @PostMapping
+
+
+
+
+
+
 
 //    @GetMapping
 //    public List<Recipe_IngredientDto> getGroceryListByMealPlan(Principal principal) {
@@ -62,7 +70,7 @@ public class GroceryListController {
 //        }
 //    }
 
-    // Update the grocery list
+    // Update the grocery list based on ingredients
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateGroceryList(@RequestBody List<Recipe_IngredientDto> groceryItems, Principal principal) {

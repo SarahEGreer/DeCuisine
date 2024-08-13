@@ -24,6 +24,7 @@ public class JdbcGroceryListDao implements GroceryListDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
 //    @Override
 //    public GroceryListDto getGroceryListByMealPlan(int mealplanId) {
 //        GroceryListDto groceryListDto = new GroceryListDto();
@@ -136,8 +137,10 @@ public class JdbcGroceryListDao implements GroceryListDao {
 
         return groceryItems;
     }
+    
 
 
+    //Edit view change from ingredient_id to ingredient_name- if ingredient doesn't exist you still can add it in it
     @Override
     public void updateGroceryList(List<Recipe_IngredientDto> groceryItems, int userId) {
         // deleting existing ingredients for grocery list
