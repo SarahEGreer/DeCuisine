@@ -2,18 +2,19 @@
   <div class="mealplan-sidebar" ref="sidebarContainer">
     <div 
       v-for="mealplan in mealplans" 
-      :key="mealplan.id" 
+      :key="mealplan.mealplanId" 
       class="mealplan-card" 
-      :data-id="mealplan.id"
-      draggable="true"
-      @dragstart="handleDragStart(mealplan)"
+      :data-id="mealplan.mealplanId"
+      :data-event="JSON.stringify({ title: mealplan.name, id: mealplan.mealplanId })"
+      @mousedown="emitDraggedMealplan(mealplan)" 
     >
-      {{ mealplan.name }} ({{ mealplan.days }} days)
+      {{ mealplan.name }}
     </div>
   </div>
 </template>
 
 <script>
+import { Draggable } from '@fullcalendar/interaction';
 import MealplanService from '@/services/MealplanService.js';
 
 export default {
@@ -23,9 +24,6 @@ export default {
     };
   },
   methods: {
-    handleDragStart(mealplan) {
-      this.$emit('mealplan-dragged', mealplan);
-    },
     async loadMealplans() {
       try {
         const response = await MealplanService.getMealplans();
@@ -34,29 +32,19 @@ export default {
         console.error('Error loading meal plans:', error);
       }
     },
+    emitDraggedMealplan(mealplan) {
+      this.$emit('mealplan-dragged', mealplan); // Emit the meal plan being dragged
+    },
   },
   mounted() {
     this.loadMealplans();
+    
+    new Draggable(this.$refs.sidebarContainer, {
+      itemSelector: '.mealplan-card',
+      eventData: function(eventEl) {
+        return JSON.parse(eventEl.getAttribute('data-event'));
+      }
+    });
   },
 };
 </script>
-
-<style scoped>
-.mealplan-sidebar {
-  width: 300px; /* Set the width of the sidebar */
-  border: 1px solid #ddd; /* Add a border for separation */
-  padding: 10px; /* Add some padding inside the sidebar */
-}
-
-.mealplan-card {
-  margin-bottom: 10px; /* Space between cards */
-  padding: 10px; /* Padding inside each card */
-  background-color: #f9f9f9; /* Background color for the cards */
-  border-radius: 5px; /* Rounded corners */
-  cursor: grab; /* Change cursor to indicate draggable */
-}
-</style>
-
-
-
-

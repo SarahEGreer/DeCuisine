@@ -1,8 +1,5 @@
 <template>
-  <FullCalendar
-    ref="fullCalendar"
-    :options="calendarOptions"
-  />
+  <FullCalendar ref="fullCalendar" :options="calendarOptions" />
 </template>
 
 <script>
@@ -25,11 +22,10 @@ export default {
         initialView: 'dayGridMonth',
         editable: true,
         droppable: true,
-        events: [], // This will be populated by the tracked meal plans from the database
+        events: [], // Will be populated by loadTrackedEvents
         eventReceive: this.handleEventReceive,
         eventDrop: this.handleEventDrop,
         eventClick: this.handleEventClick,
-        eventRemove: this.handleEventRemove,
       },
     };
   },
@@ -43,8 +39,7 @@ export default {
           start: event.startDate,
           end: new Date(new Date(event.startDate).setDate(new Date(event.startDate).getDate() + event.days)),
           extendedProps: {
-            mealPlanId: event.mealplanId,
-            eventId: event.eventId,
+            mealplanId: event.mealplanId,
           },
         }));
         this.calendarOptions.events = events;
@@ -52,35 +47,44 @@ export default {
         console.error('Error loading tracked events:', error);
       }
     },
-    handleEventReceive(eventInfo) {
-      console.log('Event received:', eventInfo);
-      const mealPlanId = eventInfo.event.id; // Get ID from draggable
+    async handleEventReceive(eventInfo) {
+      const mealplan = this.draggedMealPlan; // Use the prop draggedMealPlan
 
-      const mealPlan = this.$parent.mealPlans.find(plan => plan.id == mealPlanId);
+      if (!mealplan) {
+        console.error('No meal plan dragged');
+        return;
+      }
 
-      if (mealPlan) {
-        const durationInDays = mealPlan.days; // Updated to use mealPlan.days
-        const startDate = eventInfo.event.start;
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + durationInDays);
+      const startDate = eventInfo.event.start.toISOString().split('T')[0];
 
-        eventInfo.event.setProp('title', mealPlan.name); // Updated title with just the meal plan name
-        eventInfo.event.setExtendedProp('mealPlanId', mealPlanId);
-        eventInfo.event.setDates(startDate, endDate);
+      try {
+        const response = await MealplanService.createMealplanEvent({
+          mealplanId: mealplan.mealplanId,
+          startDate: startDate,
+        });
+
+        eventInfo.event.setExtendedProp('mealplanId', mealplan.mealplanId);
+        eventInfo.event.setExtendedProp('eventId', response.data.eventId);
+        eventInfo.event.setProp('title', mealplan.name);
+      } catch (error) {
+        console.error('Error creating event:', error);
+        eventInfo.revert();
       }
     },
-    handleEventDrop(eventInfo) {
-      this.$emit('eventDrop', eventInfo);
+    async handleEventDrop(eventInfo) {
+      try {
+        const updatedEvent = {
+          eventId: eventInfo.event.extendedProps.eventId,
+          startDate: eventInfo.event.start.toISOString().split('T')[0],
+        };
+        await MealplanService.updateMealplanEvent(updatedEvent.eventId, updatedEvent);
+      } catch (error) {
+        console.error('Error updating event date:', error);
+        eventInfo.revert();
+      }
     },
     handleEventClick(info) {
-      this.$emit('eventClick', info.event.extendedProps.mealPlanId);
-    },
-    async handleEventRemove(eventInfo) {
-      try {
-        await MealplanService.deleteMealplanEvent(eventInfo.event.id);
-      } catch (error) {
-        console.error('Error deleting event:', error);
-      }
+      this.$emit('eventClick', info.event.extendedProps.mealplanId);
     },
   },
   created() {
@@ -88,7 +92,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* Add any necessary styling here */
-</style>
