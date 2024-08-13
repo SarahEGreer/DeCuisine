@@ -1,44 +1,101 @@
 <template>
-    <div class="mealplan-view">
-      <!-- Sidebar component containing meal plan cards for dragging -->
-      <MealplanSidebar 
-        @mealplan-dragged="handleMealplanDragged"
-      />
-      
-      <!-- Calendar component where meal plans can be scheduled -->
-      <MealplanCalendar 
-        :draggedMealPlan="draggedMealPlan" 
-      />
-    </div>
-  </template>
-  
-  <script>
-  import MealplanSidebar from '@/components/MealplanSidebar.vue'; // Import the sidebar component
-  import MealplanCalendar from '@/components/MealplanCalendar.vue'; // Import the calendar component
-  
-  export default {
-    components: {
-      MealplanSidebar, // Register the sidebar component
-      MealplanCalendar, // Register the calendar component
+  <div class="meal-planner">
+    <!-- Pass the ref directly to the component -->
+    <MealplanSidebar 
+      ref="sidebarContainer"
+      @prepareForDrag="prepareForDrag" 
+      :mealPlans="mealPlans" 
+    />
+    <MealplanCalendar 
+      :draggedMealPlan="draggedMealPlan" 
+      @eventClick="showMealPlanDetails" 
+      @eventDrop="updateEventDate"
+      @eventRemove="removeEvent" 
+    />
+    <MealplanTrashbin @dropEvent="removeEvent" />
+  </div>
+</template>
+
+<script>
+import MealplanSidebar from '@/components/MealplanSidebar.vue';
+import MealplanCalendar from '@/components/MealplanCalendar.vue';
+import MealplanTrashbin from '@/components/MealplanTrashbin.vue';
+import MealplanService from '@/services/MealplanService.js';
+import { Draggable } from '@fullcalendar/interaction';
+
+export default {
+  components: {
+    MealplanSidebar,
+    MealplanCalendar,
+    MealplanTrashbin,
+  },
+  data() {
+    return {
+      mealPlans: [], // Initially empty, will be populated from the database
+      draggedMealPlan: null,
+    };
+  },
+  methods: {
+    async loadMealPlans() {
+      try {
+        const response = await MealplanService.getMealplans();
+        this.mealPlans = response.data;
+      } catch (error) {
+        console.error('Error loading meal plans:', error);
+      }
     },
-    data() {
-      return {
-        draggedMealPlan: null, // Stores the meal plan currently being dragged
-      };
+    prepareForDrag(mealPlan) {
+      this.draggedMealPlan = { ...mealPlan };
     },
-    methods: {
-      // Method to handle the event when a meal plan is dragged from the sidebar
-      handleMealplanDragged(mealplan) {
-        this.draggedMealPlan = mealplan; // Set the dragged meal plan to be passed to the calendar
-      },
+    async showMealPlanDetails(mealPlanId) {
+      this.$router.push({ name: 'mealplan-details', params: { mealPlanId } });
     },
-  };
-  </script>
-  
-  <style scoped>
-  .mealplan-view {
-    display: flex; /* Display the sidebar and calendar side by side */
-    flex-direction: row; /* Align sidebar and calendar in a row */
-    gap: 20px; /* Space between the sidebar and calendar */
-  }
-  </style>
+    async updateEventDate(eventInfo) {
+      try {
+        const updatedEvent = {
+          eventId: eventInfo.event.extendedProps.eventId,
+          startDate: eventInfo.event.start,
+        };
+        await MealplanService.updateMealplanEvent(updatedEvent.eventId, updatedEvent);
+      } catch (error) {
+        console.error('Error updating event date:', error);
+      }
+    },
+    async removeEvent(eventId) {
+      try {
+        await MealplanService.deleteMealplanEvent(eventId);
+      } catch (error) {
+        console.error('Error deleting event:', error);
+      }
+    },
+    initializeDraggable() {
+      const containerEl = this.$refs.sidebarContainer.$el; // Reference the sidebar element correctly
+      if (containerEl) {
+        new Draggable(containerEl, {
+          itemSelector: '.mealplan-card',
+          eventData: (eventEl) => {
+            return {
+              title: eventEl.innerText,
+              id: eventEl.dataset.id,
+            };
+          },
+        });
+      } else {
+        console.error('Sidebar container element not found.');
+      }
+    },
+  },
+  mounted() {
+    this.loadMealPlans();
+    this.$nextTick(() => {
+      this.initializeDraggable();
+    });
+  },
+};
+</script>
+
+<style>
+.meal-planner {
+  display: flex;
+}
+</style>
