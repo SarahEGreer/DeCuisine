@@ -66,23 +66,38 @@ export default {
         eventInfo.event.setExtendedProp('mealplanId', mealplan.mealplanId);
         eventInfo.event.setExtendedProp('eventId', response.data.eventId);
         eventInfo.event.setProp('title', mealplan.name);
+
+        // Refresh the calendar to display the new event properly
+        this.loadTrackedEvents();
       } catch (error) {
         console.error('Error creating event:', error);
         eventInfo.revert();
       }
     },
+    
     async handleEventDrop(eventInfo) {
+      console.log('Event dropped:', eventInfo);
       try {
-        const updatedEvent = {
-          eventId: eventInfo.event.extendedProps.eventId,
+        let updatedEvent = {
+          // test1: eventInfo.event, 
+          // test2: eventInfo.event.extendedProps.id, 
+    
+          
+          eventId: eventInfo.event.id,
+          mealplanId: eventInfo.event.extendedProps.mealplanId,
           startDate: eventInfo.event.start.toISOString().split('T')[0],
         };
-        await MealplanService.updateMealplanEvent(updatedEvent.eventId, updatedEvent);
+
+        await MealplanService.updateMealplanEvent(updatedEvent);
+
+        // Optionally, you can reload events here to reflect the change immediately
+        this.loadTrackedEvents();
       } catch (error) {
         console.error('Error updating event date:', error);
         eventInfo.revert();
       }
     },
+
     handleEventClick(info) {
       this.$emit('eventClick', info.event.extendedProps.mealplanId);
     },
