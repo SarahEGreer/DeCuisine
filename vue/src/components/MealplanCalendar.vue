@@ -74,15 +74,15 @@ export default {
         eventInfo.revert();
       }
     },
-    
+
     async handleEventDrop(eventInfo) {
       console.log('Event dropped:', eventInfo);
       try {
         let updatedEvent = {
           // test1: eventInfo.event, 
           // test2: eventInfo.event.extendedProps.id, 
-    
-          
+
+
           eventId: eventInfo.event.id,
           mealplanId: eventInfo.event.extendedProps.mealplanId,
           startDate: eventInfo.event.start.toISOString().split('T')[0],
@@ -98,9 +98,28 @@ export default {
       }
     },
 
+
     handleEventClick(info) {
-      this.$emit('eventClick', info.event.extendedProps.mealplanId);
+      // Prevent default context menu
+      info.jsEvent.preventDefault();
+
+      // Check if the right mouse button was clicked
+      if (info.jsEvent.button === 0) { // 0 is for left-click
+        if (this.clickTimeout) {
+          clearTimeout(this.clickTimeout); // Clear existing timeout if it's already set
+          this.clickTimeout = null; // Reset the timeout
+          // This is a double-click
+          this.$emit('eventClick', info.event.id); // Emit for deletion
+        } else {
+          // This is a single-click, set a timeout
+          this.clickTimeout = setTimeout(() => {
+            this.$emit('showDetails', info.event.extendedProps.mealplanId); // Emit to show details
+            this.clickTimeout = null; // Reset the timeout after executing
+          }, 250); // Adjust the timeout duration as needed
+        }
+      }
     },
+
   },
   created() {
     this.loadTrackedEvents();

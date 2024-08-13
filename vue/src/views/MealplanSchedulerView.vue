@@ -6,7 +6,8 @@
     />
     <MealplanCalendar 
       :draggedMealPlan="draggedMealPlan" 
-      @eventClick="showMealPlanDetails" 
+      @eventClick="deleteEvent" 
+      @showDetails = "showMealplanDetails"
     />
   </div>
 </template>
@@ -14,6 +15,7 @@
 <script>
 import MealplanSidebar from '@/components/MealplanSidebar.vue';
 import MealplanCalendar from '@/components/MealplanCalendar.vue';
+import MealplanService from '@/services/MealplanService.js';
 
 export default {
   components: {
@@ -29,8 +31,19 @@ export default {
     prepareForDrag(mealPlan) {
       this.draggedMealPlan = { ...mealPlan };
     },
-    showMealPlanDetails(mealplanId) {
+    showMealplanDetails(mealplanId) {
       this.$router.push({ name: 'mealplan-details', params: { mealplanId } });
+    },
+    deleteEvent(eventId) {
+      console.log('Delete event:', eventId);
+      MealplanService.deleteMealplanEvent(eventId)
+      location.reload();
+        // .then(() => {
+        //   this.$refs.calendar.loadTrackedEvents();
+        // })
+        // .catch(error => {
+        //   console.error('Error deleting event:', error);
+        // });
     },
   },
 };
