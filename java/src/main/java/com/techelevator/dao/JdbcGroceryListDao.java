@@ -105,7 +105,7 @@ public class JdbcGroceryListDao implements GroceryListDao {
     @Override
     public void addToGroceryListByMealPlan(int mealplanId, int userId) {
 
-        // Check if the user is authorized to view this meal plan
+        //check if the user is authorized to view this meal plan
         String userCheckSql = "SELECT created_by_user_id FROM mealplan WHERE mealplan_id = ?";
         Integer createdUserId = jdbcTemplate.queryForObject(userCheckSql, Integer.class, mealplanId);
 
@@ -113,10 +113,10 @@ public class JdbcGroceryListDao implements GroceryListDao {
             throw new DaoException("User is not authorized to view this meal plan.");
         }
 
-        // Execute the SQL query to get the aggregated ingredients
+        //get the aggregated ingredients
         List<Recipe_IngredientDto> groceryItems = new ArrayList<>();
 
-        // Aggregated SQL Query with CTE to get all ingredients for the meal plan
+        //aggregated SQL Query to get all ingredients in meal plan
         String sql = "SELECT i.ingredient_name, SUM(ri.amount) AS total_amount, ri.unit_type \n" +
                 "FROM ingredients i \n" +
                 "JOIN recipes_ingredients ri ON i.ingredient_id = ri.ingredient_id \n" +
@@ -143,7 +143,7 @@ public class JdbcGroceryListDao implements GroceryListDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
 
-        // Now, we need to merge this list with the existing grocery list for the user
+        //merge list with existing grocery list
         String selectSql = "SELECT amount FROM user_grocery_list " +
                 "WHERE user_id = ? AND item_name = ? AND unit_type = ?";
 
@@ -157,20 +157,20 @@ public class JdbcGroceryListDao implements GroceryListDao {
             for (Recipe_IngredientDto item : groceryItems) {
                 Double existingAmount = null;
                 try {
-                    // Check if the item already exists in the grocery list
+                    //check if the item already exists in the grocery list
                     existingAmount = jdbcTemplate.queryForObject(
                             selectSql,
                             new Object[]{userId, item.getName(), item.getUnit()},
                             Double.class
                     );
                 } catch (EmptyResultDataAccessException e) {
-                    // If the ingredient doesn't exist, insert it
+                    //if the ingredient doesn't exist, insert it
                     jdbcTemplate.update(insertSql, userId, item.getName(), item.getAmount(), item.getUnit());
                     continue;
                 }
 
                 if (existingAmount != null) {
-                    // If the ingredient exists, add the amounts together and update
+                    //if the ingredient exists, add the amounts together and update
                     double newAmount = existingAmount + item.getAmount();
                     jdbcTemplate.update(updateSql, newAmount, userId, item.getName(), item.getUnit());
                 }
