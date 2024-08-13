@@ -8,6 +8,7 @@
       <router-link v-bind:to="{ name: 'mealplan-form' }">Create Mealplan</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plan Scheduler</router-link>&nbsp;|&nbsp;
     </div>
     <router-view />
 
