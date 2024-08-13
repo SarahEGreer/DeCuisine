@@ -142,13 +142,51 @@ public class JdbcGroceryListDao implements GroceryListDao {
 
 //        update existing ingredients in list if ingredient name and unit type are the same (add together)
         // Process and update the user's grocery list
+//        String insertSql = "INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type) " +
+//                "VALUES (?, ?, ?, ?);";
+//
+//        try {
+//            for (Recipe_IngredientDto item : groceryItems) {
+//                // Insert each ingredient into the user's grocery list
+//                jdbcTemplate.update(insertSql, userId, item.getName(), item.getAmount(), item.getUnit());
+//            }
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DaoException("Data integrity violation", e);
+//        }
+
+        // if item exists and the item_name and unit_type match, add additional amount to existing amount
+        String selectSql = "SELECT SUM(amount) FROM user_grocery_list " +
+                "WHERE user_id = ? AND item_name = ? AND unit_type = ?";
+
+        String updateSql = "UPDATE user_grocery_list SET amount = ? " +
+                "WHERE user_id = ? AND item_name = ? AND unit_type = ?";
+
         String insertSql = "INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type) " +
-                "VALUES (?, ?, ?, ?);";
+                "VALUES (?, ?, ?, ?)";
 
         try {
             for (Recipe_IngredientDto item : groceryItems) {
-                // Insert each ingredient into the user's grocery list
-                jdbcTemplate.update(insertSql, userId, item.getName(), item.getAmount(), item.getUnit());
+                Double existingAmount = null;
+                try {
+                    // Check if the item already exists in the user's grocery list and sum the amounts
+                    existingAmount = jdbcTemplate.queryForObject(
+                            selectSql,
+                            new Object[]{userId, item.getName(), item.getUnit()},
+                            Double.class
+                    );
+                } catch (EmptyResultDataAccessException e) {
+                    // Ingredient doesn't exist, insert it
+                    jdbcTemplate.update(insertSql, userId, item.getName(), item.getAmount(), item.getUnit());
+                    continue;
+                }
+
+                if (existingAmount != null) {
+                    // If the ingredient exists, update it with the new total amount
+                    double newAmount = existingAmount + item.getAmount();
+                    jdbcTemplate.update(updateSql, newAmount, userId, item.getName(), item.getUnit());
+                }
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
