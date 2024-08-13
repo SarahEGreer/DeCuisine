@@ -47,13 +47,21 @@ public class GroceryListController {
     }
 
 
-    //update grocery list based on mealplan
-    @PostMapping
-
-
-
-
-
+    //add mealplan ingredients to grocery list
+    @PostMapping("/mealplan/{mealplanId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addMealPlanToGroceryList(@PathVariable int mealplanId, Principal principal) {
+        try {
+            String username = principal.getName();
+            User currentUser = userDao.getUserByUsername(username);
+            int userId = currentUser.getId();
+            groceryListDao.addToGroceryListByMealPlan(mealplanId, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
+        }
+    }
 
 
 //    @GetMapping
@@ -87,10 +95,5 @@ public class GroceryListController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage(), e);
         }
     }
-
-
-
-
-
 
 }

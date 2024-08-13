@@ -76,7 +76,7 @@ CREATE TABLE user_tracked_recipes
 CREATE TABLE user_grocery_list
 (
 	user_id int NOT NULL,
-	item_name int NOT NULL,
+	item_name VARCHAR(100) NOT NULL,
 	amount NUMERIC NOT NULL,
 	unit_type VARCHAR(100) NOT NULL,
 	system_of_measurement VARCHAR(100),
