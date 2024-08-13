@@ -76,12 +76,12 @@ CREATE TABLE user_tracked_recipes
 CREATE TABLE user_grocery_list
 (
 	user_id int NOT NULL,
-	ingredient_id int NOT NULL,
+	item_name int NOT NULL,
 	amount NUMERIC NOT NULL,
 	unit_type VARCHAR(100) NOT NULL,
 	system_of_measurement VARCHAR(100),
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_ingredient_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+	CONSTRAINT fk_item_name FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 
@@ -124,21 +124,22 @@ INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, sy
 (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Salt'), 0.5, 'tsp', 'Imperial'),
 (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial');
 
-INSERT INTO user_grocery_list (user_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
-(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
-(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 4, 'pieces', 'Metric'),
-(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 100, 'grams', 'Metric'),
-(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Pancetta'), 150, 'grams', 'Metric'),
-(1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Black Pepper'), 5, 'grams', 'Metric'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Butter'), 1, 'cup', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Sugar'), 0.5, 'cup', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Brown Sugar'), 0.5, 'cup', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 2, 'pieces', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Vanilla Extract'), 1, 'tsp', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Flour'), 2.5, 'cups', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Baking Soda'), 1, 'tsp', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Salt'), 0.5, 'tsp', 'Imperial'),
-(2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial');
+-- INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type, system_of_measurement) VALUES
+--need to change to just ingredient_name
+-- (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
+-- (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 4, 'pieces', 'Metric'),
+-- (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 100, 'grams', 'Metric'),
+-- (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Pancetta'), 150, 'grams', 'Metric'),
+-- (1, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Black Pepper'), 5, 'grams', 'Metric'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Butter'), 1, 'cup', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Sugar'), 0.5, 'cup', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Brown Sugar'), 0.5, 'cup', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 2, 'pieces', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Vanilla Extract'), 1, 'tsp', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Flour'), 2.5, 'cups', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Baking Soda'), 1, 'tsp', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Salt'), 0.5, 'tsp', 'Imperial'),
+-- (2, (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial');
 
 -- Recipe_Tags Table
 -- INSERT INTO recipe_tags (recipe_id, tag_id) VALUES
