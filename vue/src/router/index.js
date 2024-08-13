@@ -12,6 +12,7 @@ import RecipeDetailsView from "../views/RecipeDetailsView.vue";
 import MealPlanFormView from "../views/MealPlanFormView.vue";
 import GroceryListView from "../views/GroceryListView.vue";
 import MealplanSchedulerView from "../views/MealplanSchedulerView.vue";
+import MealplanDetailsView from "../views/MealplanDetailsView.vue";
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -97,6 +98,14 @@ const routes = [
     },
   },
   {
+    path: "/mealplans/:mealplanId",
+    name: "mealplan-details",
+    component: MealplanDetailsView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/mealplans/:mealplanId/edit",
     name: "mealplan-edit",
     component: MealPlanFormView,
@@ -104,7 +113,7 @@ const routes = [
       requiresAuth: true,
     },
   },
-  { 
+  {
     path: "/mealplans/scheduler",
     name: "mealplan-scheduler",
     component: MealplanSchedulerView,
@@ -128,7 +137,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-
 ];
 
 // Create the router

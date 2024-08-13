@@ -9,27 +9,32 @@
             <!-- <label for="ingredients">Ingredients: </label> -->
             <h3>Ingredients:</h3>
 
-            <div v-for="(ingredient, index) in newGroceryList.ingredients" :key="index">
-                <label for="ingredient">Ingredient: </label>
+            <div v-for="(item, index) in newGroceryList" :key="index">
+                <!-- called item_name -->
+                <div>
+                    <label for="item-name">Item: </label>
 
-                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
-                    dropdown />
+                    <AutoComplete v-model="item.name" :suggestions="filteredIngredients" @complete="searchIngredients"
+                        id="item-name" name="item-name" dropdown />
+                    <!-- can I do required with autocomplete^ -->
+                </div>
+                <div>
+                    <label for="amount">Amount: </label>
+                    <input type="number" name="amount" min="0" v-model="item.amount" step=".01" required id="amount">
+                </div>
+                <div>
+                    <label for="unit">Unit: </label>
 
+                    <AutoComplete v-model="item.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
+                </div>
 
-                <label for="amount">Amount: </label>
-                <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required>
-
-
-                <label for="unit">Unit: </label>
-
-                <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
-
-                <button type="button" v-on:click="removeIngredient(index)">Remove Ingredient</button>
+                <button type="button" v-on:click="removeIngredient(index)">Remove Item</button>
+                <!-- change to item -->
             </div>
 
             <button type="button" v-on:click="addIngredient">Add Ingredient</button>
 
-            <button type="submit">{{ isEdit ? 'Save Changes' : 'Save Grocery List' }}</button>
+            <button type="submit" id="submit-button">Save Changes</button>
 
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
 
@@ -53,20 +58,16 @@ export default {
 
     props: {
         groceryList: {
-            type: Object,
+            type: Array,
             required: true,
         },
-        
+
     },
 
 
     data() {
         return {
-            newGroceryList: {
-                groceryListId: this.groceryList.groceryListId,
-                name: this.groceryList.name,
-                ingredients: this.groceryList.ingredients,
-            },
+            newGroceryList: [...this.groceryList],
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
             unitOptions: [
@@ -102,22 +103,31 @@ export default {
                 'clove', // clove
                 'head',  // head
                 'stalk', // stalk
-            ], 
+            ],
             filteredUnits: [],
         };
 
     },
 
+    // Do we need a watch?
+    watch: {
+        groceryList: {
+            handler(newVal) {
+                this.newGroceryList = [...newVal]; // Ensure it's a new array
+            },
+            immediate: true
+        }
+    },
 
 
     methods: {
 
         addIngredient() {
-            this.newGroceryList.ingredients.push({ name: '', amount: 0, unit: '' });
+            this.newGroceryList.push({ name: '', amount: 0, unit: '' });
         },
 
         removeIngredient(index) {
-            this.newGroceryList.ingredients.splice(index, 1);
+            this.newGroceryList.splice(index, 1);
         },
 
         searchIngredients(event) {
@@ -138,24 +148,19 @@ export default {
 
         cancelForm() {
             this.$router.back();
-        }, 
+        },
 
         resetForm() {
-            this.newGroceryList = {
-                groceryListId: 0,
-                name: '',
-                ingredients: [],
-            };
-            this.newIngredients = [];
+            this.newGroceryList = [];
         },
 
         saveForm() {
-                GroceryService.updateGroceryList(this.newGroceryList.groceryListId, this.newGroceryList).then(response => {
-                    console.log("This is our update response data", response.status);
-                    this.resetForm();
-                    this.$router.push({ name: 'grocery-list' });
-                });
-            
+            GroceryService.updateGroceryList(this.newGroceryList).then(response => {
+                console.log("This is our update response data", response.status);
+                this.resetForm();
+                this.$router.push({ name: 'grocery-list' });
+            });
+
         }
     },
 
@@ -166,6 +171,7 @@ export default {
         })
     },
 
+
 }
 
 </script>
@@ -174,5 +180,14 @@ export default {
 <style scoped>
 textarea {
     resize: none;
+}
+
+#amount {
+    display: inline-block;
+    width: 50%;
+}
+
+#submit-button {
+    margin-bottom: 5em;
 }
 </style>

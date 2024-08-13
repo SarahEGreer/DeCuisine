@@ -1,14 +1,15 @@
 <template>
     <div class="grocery-list-form-container">
         <h2>Edit Grocery List</h2>
-        <grocery-list-form v-bind:groceryList="groceryList"/>
+        <grocery-list-form v-bind:groceryList="groceryList" />
     </div>
 </template>
 
 
 <script>
-import GroceryListForm from '../components/GroceryListForm.vue'
-import RecipeService from '../services/RecipeService.js'
+import GroceryListForm from '../components/GroceryListForm.vue';
+import GroceryService from '../services/GroceryService.js';
+// import RecipeService from '../services/RecipeService.js';
 
 export default {
     components: {
@@ -17,28 +18,25 @@ export default {
     data() {
         return {
 
-            groceryList: {
-                ingredients: [],
-            },
-            
+            groceryList: [],
+
         }
     },
-    // methods: {
-    //     getGroceryList(recipeId) {
-    //         GroceryService.getGroceryList
-    //             .then((response) => {
-    //                 this.groceryList = response.data;
-    //                 this.groceryList = this.recipe.recipe;
-                    
-    //             })
+    methods: {
+        getGroceryList() {
+            GroceryService.getGroceryList()
+                .then((response) => {
+                    this.groceryList = response.data;
+                })
+                .catch((error) => {
+                    console.error("Error fetching grocery list:", error);
+                });
+        }
+    },
 
-    //     }
-    // },
-    // created() {
-    //     if (this.$route.params.recipeId) {
-    //         this.getGroceryList(this.$route.params.recipeId);
-    //     }
-    // }
+    created() {
+        this.getGroceryList();
+    }
 }
 
 </script>
@@ -54,6 +52,7 @@ export default {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
-    text-align: left; /* Align text to the left to match Recipe Details */
+    text-align: left;
+    /* Align text to the left to match Recipe Details */
 }
 </style>
