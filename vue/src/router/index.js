@@ -2,7 +2,7 @@ import { createRouter as createRouter, createWebHistory } from "vue-router";
 import { useStore } from "vuex";
 
 // Import components
-import HomeView from "../views/HomeView.vue";
+import AboutView from "../views/AboutView.vue";
 import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
 import RegisterView from "../views/RegisterView.vue";
@@ -25,12 +25,14 @@ import MealplanDetailsView from "../views/MealplanDetailsView.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "about",
+    component: AboutView,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
     },
   },
+
+
   {
     path: "/login",
     name: "login",

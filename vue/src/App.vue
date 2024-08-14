@@ -9,8 +9,10 @@
       <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>
 
       <div class="nav-right">
+        <router-link v-bind:to="{ name: 'about' }">About</router-link>&nbsp;|&nbsp;
         <!-- <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp; -->
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-else v-bind:to="{ name: 'login' }">Login</router-link>
       </div>
     </div>
     <router-view />
