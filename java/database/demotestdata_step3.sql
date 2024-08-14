@@ -189,22 +189,22 @@ INSERT INTO ingredients (ingredient_name) VALUES
 
 -- Insert recipes_ingredients for the new recipes
 INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Lettuce'), 1, 'head', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Croutons'), 0.5, 'cup', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Parmesan Cheese'), 0.25, 'cup', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Grilled Chicken'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chicken Breast'), 2, 'pieces', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Flour'), 2, 'cups', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Milk'), 1.5, 'cups', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Eggs'), 2, 'pieces', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Butter'), 1, 'cup', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Sugar'), 0.5, 'cup', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Chocolate Chips'), 2, 'cups', 'Imperial'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Spaghetti'), 400, 'grams', 'Metric'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Pancetta'), 150, 'grams', 'Metric'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Black Pepper'), 5, 'grams', 'Metric'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Beef'), 500, 'grams', 'Metric'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Tortillas'), 8, 'pieces', 'Metric'),
-((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'Cheese'), 100, 'grams', 'Metric');
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'lettuce'), 1, 'head', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'croutons'), 0.5, 'cup', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'parmesan cheese'), 0.25, 'cup', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Grilled Chicken'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'chicken breast'), 2, 'pieces', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'flour'), 2, 'cups', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'milk'), 1.5, 'cups', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'eggs'), 2, 'pieces', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'butter'), 1, 'cup', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'sugar'), 0.5, 'cup', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'chocolate chips'), 2, 'cups', 'Imperial'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'spaghetti'), 400, 'grams', 'Metric'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'pancetta'), 150, 'grams', 'Metric'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'black pepper'), 5, 'grams', 'Metric'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'beef'), 500, 'grams', 'Metric'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'tortillas'), 8, 'pieces', 'Metric'),
+((SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), (SELECT ingredient_id FROM ingredients WHERE ingredient_name = 'cheese'), 100, 'grams', 'Metric');
 
 -- Create 3 meal plans, including one that is tracked
 INSERT INTO mealplan (mealplan_name, mealplan_description, created_by_user_id) VALUES 
@@ -228,13 +228,13 @@ SELECT recipe_id, 3 FROM recipe WHERE recipe_name IN ('Chocolate Chip Cookies', 
 
 -- Add a meal plan to the grocery list
 INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type, system_of_measurement) 
-SELECT 3, 'Lettuce', 1, 'head', 'Imperial' 
+SELECT 3, 'lettuce', 1, 'head', 'Imperial' 
 UNION ALL
-SELECT 3, 'Chicken Breast', 2, 'pieces', 'Imperial'
+SELECT 3, 'chicken breast', 2, 'pieces', 'Imperial'
 UNION ALL
-SELECT 3, 'Spaghetti', 400, 'grams', 'Metric'
+SELECT 3, 'spaghetti', 400, 'grams', 'Metric'
 UNION ALL
-SELECT 3, 'Beef', 500, 'grams', 'Metric';
+SELECT 3, 'beef', 500, 'grams', 'Metric';
 
 COMMIT TRANSACTION;
 
