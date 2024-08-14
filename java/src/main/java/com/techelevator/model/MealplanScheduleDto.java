@@ -6,21 +6,27 @@ public class MealplanScheduleDto {
     private int day;
     private int breakfastId;
     private String breakfastName;
+    private String breakfastPhotoUrl;
     private int lunchId;
     private String lunchName;
+    private String lunchPhotoUrl;
     private int dinnerId;
     private String dinnerName;
+    private String dinnerPhotoUrl;
 
     public MealplanScheduleDto() {}
 
-    public MealplanScheduleDto(int day, int breakfastId, String breakfastName, int lunchId, String lunchName, int dinnerId, String dinnerName) {
+    public MealplanScheduleDto(int day, int breakfastId, String breakfastName, String breakfastPhotoUrl, int lunchId, String lunchName, String lunchPhotoUrl, int dinnerId, String dinnerName, String dinnerPhotoUrl) {
         this.day = day;
         this.breakfastId = breakfastId;
         this.breakfastName = breakfastName;
+        this.breakfastPhotoUrl = breakfastPhotoUrl;
         this.lunchId = lunchId;
         this.lunchName = lunchName;
+        this.lunchPhotoUrl = lunchPhotoUrl;
         this.dinnerId = dinnerId;
         this.dinnerName = dinnerName;
+        this.dinnerPhotoUrl = dinnerPhotoUrl;
     }
 
     public int getDay() {
@@ -79,4 +85,27 @@ public class MealplanScheduleDto {
         this.dinnerName = dinnerName;
     }
 
+    public String getBreakfastPhotoUrl() {
+        return breakfastPhotoUrl;
+    }
+
+    public void setBreakfastPhotoUrl(String breakfastPhotoUrl) {
+        this.breakfastPhotoUrl = breakfastPhotoUrl;
+    }
+
+    public String getLunchPhotoUrl() {
+        return lunchPhotoUrl;
+    }
+
+    public void setLunchPhotoUrl(String lunchPhotoUrl) {
+        this.lunchPhotoUrl = lunchPhotoUrl;
+    }
+
+    public String getDinnerPhotoUrl() {
+        return dinnerPhotoUrl;
+    }
+
+    public void setDinnerPhotoUrl(String dinnerPhotoUrl) {
+        this.dinnerPhotoUrl = dinnerPhotoUrl;
+    }
 }

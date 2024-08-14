@@ -104,15 +104,26 @@ public class JdbcMealplanDao implements MealplanDao{
 //        String mpsql =  "SELECT *" +
 //                "FROM mealplan_recipe WHERE mealplan_id = ?";
 
-        String mpsql = "SELECT mr.mealplan_day_count, \n" +
-                "mr.breakfast_recipe_id, br.recipe_name AS breakfast_name, \n" +
-                "mr.lunch_recipe_id, lr.recipe_name AS lunch_name, \n" +
-                "mr.dinner_recipe_id, dr.recipe_name AS dinner_name\n" +
-                "FROM mealplan_recipe mr\n" +
-                "LEFT JOIN recipe br ON mr.breakfast_recipe_id = br.recipe_id\n" +
-                "LEFT JOIN recipe lr ON mr.lunch_recipe_id = lr.recipe_id\n" +
-                "LEFT JOIN recipe dr ON mr.dinner_recipe_id = dr.recipe_id\n" +
+//        String mpsql = "SELECT mr.mealplan_day_count, \n" +
+//                "mr.breakfast_recipe_id, br.recipe_name AS breakfast_name, \n" +
+//                "mr.lunch_recipe_id, lr.recipe_name AS lunch_name, \n" +
+//                "mr.dinner_recipe_id, dr.recipe_name AS dinner_name\n" +
+//                "FROM mealplan_recipe mr\n" +
+//                "LEFT JOIN recipe br ON mr.breakfast_recipe_id = br.recipe_id\n" +
+//                "LEFT JOIN recipe lr ON mr.lunch_recipe_id = lr.recipe_id\n" +
+//                "LEFT JOIN recipe dr ON mr.dinner_recipe_id = dr.recipe_id\n" +
+//                "WHERE mr.mealplan_id = ?;";
+
+        String mpsql = "SELECT mr.mealplan_day_count,\n" +
+                "mr.breakfast_recipe_id, br.recipe_name AS breakfast_name, br.photo_url AS breakfast_url, \n" +
+                "mr.lunch_recipe_id, lr.recipe_name AS lunch_name, lr.photo_url AS lunch_url, \n" +
+                "mr.dinner_recipe_id, dr.recipe_name AS dinner_name, dr.photo_url AS dinner_url \n" +
+                "FROM mealplan_recipe mr \n" +
+                "LEFT JOIN recipe br ON mr.breakfast_recipe_id = br.recipe_id \n" +
+                "LEFT JOIN recipe lr ON mr.lunch_recipe_id = lr.recipe_id \n" +
+                "LEFT JOIN recipe dr ON mr.dinner_recipe_id = dr.recipe_id \n" +
                 "WHERE mr.mealplan_id = ?;";
+
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(mpsql, mealplanId);
             while (results.next()) {
@@ -120,10 +131,13 @@ public class JdbcMealplanDao implements MealplanDao{
                 mealplanScheduleDto.setDay(results.getInt("mealplan_day_count"));
                 mealplanScheduleDto.setBreakfastId(results.getInt("breakfast_recipe_id"));
                 mealplanScheduleDto.setBreakfastName(results.getString("breakfast_name"));
+                mealplanScheduleDto.setBreakfastPhotoUrl(results.getString("breakfast_url"));
                 mealplanScheduleDto.setLunchId(results.getInt("lunch_recipe_id"));
                 mealplanScheduleDto.setLunchName(results.getString("lunch_name"));
+                mealplanScheduleDto.setLunchPhotoUrl(results.getString("lunch_url"));
                 mealplanScheduleDto.setDinnerId(results.getInt("dinner_recipe_id"));
                 mealplanScheduleDto.setDinnerName(results.getString("dinner_name"));
+                mealplanScheduleDto.setDinnerPhotoUrl(results.getString("dinner_url"));
                 schedule.add(mealplanScheduleDto);
             }
         } catch (CannotGetJdbcConnectionException e) {
