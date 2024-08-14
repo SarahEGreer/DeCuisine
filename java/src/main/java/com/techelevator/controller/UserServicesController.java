@@ -26,7 +26,6 @@ public class UserServicesController {
         this.userDao = userDao;
     }
 
-
     @PostMapping
     public void trackMealplan (@RequestBody UserServicesDto userServicesDto, Principal principal) {
         try {

@@ -78,23 +78,6 @@ public class JdbcTrackedMealplanDao implements TrackedMealplanDao{
     }
 
 
-//    private TrackedMealplanDto mapRowToStartDate(SqlRowSet rs) {
-//        TrackedMealplanDto startDate = new TrackedMealplanDto();
-//        startDate.setEventId(rs.getInt("event_id"));
-//        startDate.setMealplanId(rs.getInt("mealplan_id"));
-//        startDate.setName(rs.getInt("mealplan_name"));
-//        startDate.setStartDate(rs.getString("start_date"));
-//        startDate.setDays(rs.getInt("days"));
-//        startDate.setUserId(rs.getInt("user_id"));
-//        return startDate;
-//    }
-//
-//    private TrackedMealplanDto mapRowToTrackedMealplans(SqlRowSet rs) {
-//        TrackedMealplanDto trackedMealplan = new TrackedMealplanDto();
-//        trackedMealplan.setEventId(rs.getInt("event_id"));
-//        trackedMealplan.setStartDate(rs.getString("start_date"));
-//        return trackedMealplan;
-//    }
     @Override
     public void createTrackedMealplan(TrackedMealplanDto mealplan, int userId) {
         String sql = "INSERT INTO user_tracked_mealplan (mealplan_id, user_id, start_date) VALUES (?,?,?);";

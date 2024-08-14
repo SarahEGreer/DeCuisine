@@ -41,7 +41,6 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipeSummary;
     }
 
-
   @Override
     public RecipeSummary getRecipeSummaryByRecipeId (int recipeId) {
         RecipeSummary recipeSummary = null;
@@ -58,8 +57,6 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipeSummary;
 
     }
-
-
 
     //get recipe details
     @Override
@@ -257,25 +254,5 @@ public class JdbcRecipeDao implements RecipeDao {
         return recipe;
 
     }
-
-//    private Recipe_Ingredients mapRowToIngredients(SqlRowSet rs) {
-//        Recipe_Ingredients ingredient = new Recipe_Ingredients();
-//        ingredient.setRecipeId(rs.getInt("recipe_id"));
-//        ingredient.setIngredientId(rs.getInt("ingredient_id"));
-//        ingredient.setIngredientAmount(rs.getDouble("amount"));
-//        ingredient.setIngredientUnitType(rs.getString("unit_type"));
-//        ingredient.setIngredientSystemOfMeasurement(rs.getString("system_of_measurement"));
-//        return ingredient;
-//    }
-//
-//    private Recipe_Ingredients mapRowToIngredient(SqlRowSet rs) {
-//        Recipe_Ingredients ingredient = new Recipe_Ingredients();
-//        ingredient.setIngredientId(rs.getInt("ingredient_id"));
-//        ingredient.setIngredientName(rs.getString("ingredient_name"));
-//        return ingredient;
-//    }
-
-
-
 
 }
