@@ -170,22 +170,22 @@ INSERT INTO recipe (created_by_user_id, recipe_name, description, instructions, 
 
 -- Insert ingredients for the new recipes
 INSERT INTO ingredients (ingredient_name) VALUES 
-('Lettuce'), 
-('Croutons'), 
-('Parmesan Cheese'), 
-('Chicken Breast'), 
-('Flour'), 
-('Milk'), 
-('Eggs'), 
-('Butter'), 
-('Sugar'),
-('Chocolate Chips'),
-('Spaghetti'),
-('Pancetta'),
-('Black Pepper'),
-('Beef'),
-('Tortillas'),
-('Cheese');
+('lettuce'), 
+('croutons'), 
+('parmesan cheese'), 
+('chicken breast'), 
+('flour'), 
+('milk'), 
+('eggs'), 
+('butter'), 
+('sugar'),
+('chocolate chips'),
+('spaghetti'),
+('pancetta'),
+('black pepper'),
+('beef'),
+('tortillas'),
+('cheese');
 
 -- Insert recipes_ingredients for the new recipes
 INSERT INTO recipes_ingredients (recipe_id, ingredient_id, amount, unit_type, system_of_measurement) VALUES
