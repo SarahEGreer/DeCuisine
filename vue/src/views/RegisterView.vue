@@ -82,7 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('C:\Users\Student\workspace\final-capstone-team-4\vue\src\assets\pexels-photo-1640777.jpeg'); /* Replace with your image path */
+  background-image: url('C:\Users\Student\workspace\final-capstone-team-4\vue\src\assets\pexels-photo-1640777.jpeg'); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

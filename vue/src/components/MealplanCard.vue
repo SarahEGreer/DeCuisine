@@ -76,22 +76,22 @@ export default {
 .mealplan-card {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center all child elements */
+    align-items: center; 
     margin: 1em;
     padding: 1em;
     border: 1px solid black;
     border-radius: 5px;
-    text-align: center; /* Center all text within the card */
+    text-align: center;
 }
 
 .mealplan-header,
 .mealplanSchedule {
-    width: 100%; /* Full width for these sections */
-    text-align: center; /* Center all text within these sections */
+    width: 100%; 
+    text-align: center; 
 }
 
 .mealplanSchedule div {
-    margin-top: 1em; /* Space between days */
+    margin-top: 1em; 
 }
 
 button {
@@ -102,7 +102,7 @@ button {
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    text-align: center; /* Center text in the button */
+    text-align: center; 
 }
 
 button:hover {
