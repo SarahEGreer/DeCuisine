@@ -1,19 +1,18 @@
 <template>
-
   <div class="mealplan-sidebar" ref="sidebarContainer">
+
+    <h3>My Meal Plans</h3>
+
     <div class="tutorial">
-      <p>Drag a meal plan to the calendar to schedule it.</p>      
+      <p>Click a meal plan to see more details </p>
+      <p>Drag a meal plan to the calendar to schedule it</p>
     </div>
-    <div 
-      v-for="mealplan in mealplans" 
-      :key="mealplan.mealplanId" 
-      class="mealplan-card" 
-      :data-id="mealplan.mealplanId"
+    <div v-for="mealplan in mealplans" :key="mealplan.mealplanId" class="mealplan-card" :data-id="mealplan.mealplanId"
       :data-event="JSON.stringify({ title: mealplan.name, id: mealplan.mealplanId })"
-      @mousedown="emitDraggedMealplan(mealplan)" 
-    >
+      @mousedown="emitDraggedMealplan(mealplan)" @click="goToMealplanDetails(mealplan.mealplanId)">
       {{ mealplan.name }}
     </div>
+    <button @click="goToCreateMealplan">Create New Meal Plan</button>
   </div>
 </template>
 
@@ -39,13 +38,19 @@ export default {
     emitDraggedMealplan(mealplan) {
       this.$emit('mealplan-dragged', mealplan); // Emit the meal plan being dragged
     },
+    goToMealplanDetails(mealplanId) {
+      this.$router.push({ name: 'mealplan-details', params: { mealplanId } });
+    },
+    goToCreateMealplan() {
+      this.$router.push({ name: 'mealplan-form' });
+    }
   },
   mounted() {
     this.loadMealplans();
-    
+
     new Draggable(this.$refs.sidebarContainer, {
       itemSelector: '.mealplan-card',
-      eventData: function(eventEl) {
+      eventData: function (eventEl) {
         return JSON.parse(eventEl.getAttribute('data-event'));
       }
     });
@@ -58,10 +63,35 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  /* background-color: #f0f0f0; */
-  border-right: 1px solid #ccc;
-  /* height: 100%; */
+  height: 100%;
+
 }
+
+h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.tutorial {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: auto;
+  margin-bottom: 100px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
 .mealplan-card {
   padding: 10px;
   margin: 5px 0;
@@ -74,7 +104,7 @@ export default {
 }
 
 .mealplan-card:hover {
-  background-color: #f0f0f0;
+  background-color: #4CAF50;
   cursor: grab;
 }
 
@@ -82,7 +112,4 @@ export default {
   background-color: #ccc;
   cursor: grabbing;
 }
-
-
-
 </style>

@@ -1,8 +1,9 @@
 <template>
-   <div class="tutorial">
-      <p>Click a scheduled meal plan to see its details. Click and drag to change its start date. Double click to delete.</p>      
+  <div class="tutorial">
+    <p>Click a scheduled meal plan to see its details. Click and drag to change its start date. Double click to delete.
+    </p>
 
-    </div>
+  </div>
   <FullCalendar ref="fullCalendar" :options="calendarOptions" />
 </template>
 
@@ -30,6 +31,13 @@ export default {
         eventReceive: this.handleEventReceive,
         eventDrop: this.handleEventDrop,
         eventClick: this.handleEventClick,
+        eventTimeFormat: {},
+        eventDateFormat: {},
+        eventContent: function (info) {
+          return {
+            html: `<div class="fc-event-title">${info.event.title}</div>`
+          };
+        },
       },
     };
   },

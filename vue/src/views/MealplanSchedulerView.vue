@@ -61,14 +61,16 @@ export default {
 
 .sidebar-wrapper {
  width: 20%;
+ height: 100vh;
  /* height:calc(100vh-50px); */
  background-color: #f0f0f0;
  overflow-y: auto;
+ border-right: 1px solid #ccc;
 }
 
 .calendar-wrapper {
 width: 80%;
-height:calc(100vh-50px); 
+height: 100vh;
 margin-top: 1.25vh;
 margin-left: 5vh;
 margin-right: 5vh;
