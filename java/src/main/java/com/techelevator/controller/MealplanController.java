@@ -64,11 +64,12 @@ public class MealplanController {
     //Returns all details for a mealplan based on its Id
     //References mealplan_recipe and mealplan
     //Formatted:
-    //private int mealplanId;
+    //    private int mealplanId;
     //    private String name;
     //    private String description;
     //    private int userId;
-    //    private
+    //    private List<MealplanScheduleDto> schedule;
+    //      {
     //      private int day;
     //      private int breakfastId;
     //      private String breakfastName;
@@ -79,6 +80,7 @@ public class MealplanController {
     //      private int dinnerId;
     //      private String dinnerName;
     //      private String dinnerPhotoUrl;
+    //      }
     @GetMapping( path = "/details/{mealplanId}")
     public MealplanDto getMealplanDetailsWithSchedule(@PathVariable int mealplanId) {
         try{
@@ -87,6 +89,7 @@ public class MealplanController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
     }
+    //create a new mealplan and adds recipe references in mealplan_recipe following the above format.
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void createMealplan(@RequestBody MealplanDto mealplanDto, Principal principal){
@@ -100,6 +103,7 @@ public class MealplanController {
             throw new DaoException("Data integrity violation", e);
         }
     }
+    // updates a mealplan in table mealplan and then deletes connections and adds new one in mealplan_recipe
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{mealplanId}")
     public  void updateMealplan(@RequestBody MealplanDto mealplanDto, @PathVariable int mealplanId, Principal principal) {
@@ -113,6 +117,7 @@ public class MealplanController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
         }
     }
+    //Deletes mealplan from mealplan and cascade deletes from mealplan_recipe
     @DeleteMapping("/{mealplanId}")
     public void deleteMealplan (@PathVariable int mealplanId, Principal principal) {
         try{
@@ -125,6 +130,7 @@ public class MealplanController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
         }
     }
+    // Returns all the mealplans a user had in their calendar. Created for testing.
     @GetMapping(path = "/tracked")
     public List<Mealplan> getMyTrackedMealplans(Principal principal) {
         try{
@@ -137,7 +143,7 @@ public class MealplanController {
             throw new DaoException("Data integrity violation", e);
         }
     }
-
+    // Returns all mealplans a user has created
     @GetMapping(path = "/created")
     public List<Mealplan> getMyCreatedMealplans(Principal principal) {
         try{
