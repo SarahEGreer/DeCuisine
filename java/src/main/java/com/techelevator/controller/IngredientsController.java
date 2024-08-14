@@ -21,13 +21,13 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 
 public class IngredientsController {
-
+//Handles api requests for the ingredients table
     private final IngredientsDao ingredientsDao;
 
     public IngredientsController(IngredientsDao ingredientsDao) {
         this.ingredientsDao = ingredientsDao;
     }
-
+    // returns the name of all ingredients
     @RequestMapping(method = RequestMethod.GET)
     public List<String> getAllIngredients() {
         try {
@@ -36,7 +36,11 @@ public class IngredientsController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
     }
-
+    // References the recipe_ingredients table to return ingredients formatted:
+    //   String name;
+    //   double amount;
+    //   String unit;
+    //   String systemOfMeasurement;
     @RequestMapping(path = "/{recipeId}", method = RequestMethod.GET)
     public ResponseEntity<List<Recipe_Ingredients>> getIngredientsByRecipe(@PathVariable int recipeId) {
         List<Recipe_Ingredients> ingredientsByRecipe = null;
@@ -47,7 +51,7 @@ public class IngredientsController {
         }
         return new ResponseEntity<>(ingredientsByRecipe, HttpStatus.OK);
     }
-
+    // Mainly for testing. Adding ingredients to done via adding a recipe.
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createIngredientsForIngredientTable(@Valid @RequestBody List<Recipe_Ingredients> recipeIngredientsList) {
         if (recipeIngredientsList == null || recipeIngredientsList.isEmpty()) {

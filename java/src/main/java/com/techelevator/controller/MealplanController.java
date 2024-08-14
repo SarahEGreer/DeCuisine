@@ -27,11 +27,14 @@ import java.util.List;
 public class MealplanController {
     private final MealplanDao mealplanDao;
     private final UserDao userDao;
+    //Handles api requests for the tables: mealplan, mealplan_recipe
 
     public MealplanController(MealplanDao mealplanDao, UserDao userDao) {
         this.mealplanDao = mealplanDao;
         this.userDao = userDao;
     }
+    //Returns basic details for all mealplans in table mealplan
+    //
     @GetMapping
     public List<Mealplan> getAllMealplans() {
         List<Mealplan> mealplans = new ArrayList<>();

@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/grocerylist")
 @PreAuthorize("isAuthenticated()")
 public class GroceryListController {
-
+// Handles api calls for anything related to the user_grocery_list
     private final GroceryListDao groceryListDao;
     private final UserDao userDao;
 
@@ -33,7 +33,12 @@ public class GroceryListController {
     }
 
 
-    // View the grocery list
+    // View the users grocery list
+    // Returns the values:
+    //      String name;
+    //      double amount;
+    //      String unit;
+    //      String systemOfMeasurement;
     @GetMapping
     public List<Recipe_IngredientDto> viewGroceryList(Principal principal) {
         try {
@@ -47,7 +52,12 @@ public class GroceryListController {
     }
 
 
-    //add mealplan ingredients to grocery list
+    //references mealplan_recipe and recipe_ingredients to find ingredients via mealplan_id from mealplan
+    //and adds them in the following format:
+    //      String name;
+    //      double amount;
+    //      String unit;
+    //      String systemOfMeasurement;
     @PostMapping("/mealplan/{mealplanId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void addMealPlanToGroceryList(@PathVariable int mealplanId, Principal principal) {
@@ -63,7 +73,8 @@ public class GroceryListController {
         }
     }
 
-    // Update the grocery list based on ingredients
+    // Due do timing constraints we decided to override the users current this with a new list.
+    // Deletes the users current  grocery list and adds in the new grocery list.
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateGroceryList(@RequestBody List<Recipe_IngredientDto> groceryItems, Principal principal) {

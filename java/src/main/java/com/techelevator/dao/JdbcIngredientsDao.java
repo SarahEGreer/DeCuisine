@@ -63,7 +63,7 @@ public class JdbcIngredientsDao implements IngredientsDao {
         }
         return ingredientsByRecipe;
 
-
+    }
     //inserts a list of ingredients from an array of ingredients into the ingredient table
     public void createIngredientsForIngredientTable(List<Recipe_Ingredients> recipeIngredientsList) {
         String sql = "INSERT INTO ingredients (ingredient_name) VALUES (?)";

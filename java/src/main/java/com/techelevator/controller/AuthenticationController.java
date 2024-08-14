@@ -21,6 +21,7 @@ import com.techelevator.security.jwt.TokenProvider;
 @RestController
 @CrossOrigin
 public class AuthenticationController {
+    //Was provided to us and handles the requests for login and registration
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
