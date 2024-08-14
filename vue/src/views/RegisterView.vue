@@ -82,7 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('C:\Users\Student\workspace\final-capstone-team-4\vue\src\assets\pexels-photo-1640777.jpeg'); 
+  background-image: url('@/assets/pexels-photo-1640777.jpeg'); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -150,5 +150,17 @@ p {
   color: red;
   font-weight: bold;
   margin-bottom: 1rem;
+}
+
+form input,
+form textarea,
+form select {
+  font-size: 16px;
+  color: #555;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 </style>
