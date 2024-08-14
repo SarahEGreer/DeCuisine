@@ -48,22 +48,6 @@ public class IngredientsController {
         return new ResponseEntity<>(ingredientsByRecipe, HttpStatus.OK);
     }
 
-
-//    @RequestMapping(path = "/create", method = RequestMethod.POST)
-//    public ResponseEntity<Recipe_Ingredients> createIngredientByRecipe(@Valid @RequestBody Recipe_Ingredients recipeIngredients) {
-//        if (recipeIngredients == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ingredient is null.");
-//        }
-//
-//        Recipe_Ingredients createdIngredient;
-//        try {
-//            createdIngredient = ingredientsDao.createIngredientByRecipe(recipeIngredients);
-//        } catch (DaoException e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Ingredient creation failed.", e);
-//        }
-//        return new ResponseEntity<>(createdIngredient, HttpStatus.CREATED);
-//    }
-
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createIngredientsForIngredientTable(@Valid @RequestBody List<Recipe_Ingredients> recipeIngredientsList) {
         if (recipeIngredientsList == null || recipeIngredientsList.isEmpty()) {

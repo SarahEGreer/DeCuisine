@@ -63,21 +63,6 @@ public class GroceryListController {
         }
     }
 
-
-//    @GetMapping
-//    public List<Recipe_IngredientDto> getGroceryListByMealPlan(Principal principal) {
-//        try {
-//            String userName = principal.getName();
-//            User currentUser = userDao.getUserByUsername(userName);
-//            int userId = currentUser.getId();
-//            return groceryListDao.getGroceryListByUserId(userId);
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
-//        } catch (Exception e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-//        }
-//    }
-
     // Update the grocery list based on ingredients
     @PutMapping
     @ResponseStatus(HttpStatus.OK)

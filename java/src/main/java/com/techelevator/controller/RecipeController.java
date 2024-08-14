@@ -40,7 +40,6 @@ public class RecipeController {
         return recipes;
     }
 
-
     @GetMapping(path = "/{recipeId}")
     public RecipeSummary getRecipeSummaryByRecipeId(@PathVariable int recipeId) {
         try {
@@ -49,8 +48,6 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
     }
-
-
 
     @GetMapping(path = "/details/{recipeId}")
     public Recipe_detailDto getRecipeDetails(@PathVariable int recipeId){
@@ -89,12 +86,6 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
         }
     }
-
-
-
-
-
-
 
 
 }

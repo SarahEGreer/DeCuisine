@@ -27,7 +27,6 @@ public class TrackedMealplanController {
         this.userDao = userDao;
     }
 
-
     @GetMapping
     public List<TrackedMealplanDto> getTrackedMealPlans(Principal principal) {
         String userName = principal.getName();

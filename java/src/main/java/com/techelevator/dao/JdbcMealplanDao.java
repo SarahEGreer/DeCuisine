@@ -101,19 +101,6 @@ public class JdbcMealplanDao implements MealplanDao{
             throw new DaoException("Unable to connect to server or database", e);
         }
 
-//        String mpsql =  "SELECT *" +
-//                "FROM mealplan_recipe WHERE mealplan_id = ?";
-
-//        String mpsql = "SELECT mr.mealplan_day_count, \n" +
-//                "mr.breakfast_recipe_id, br.recipe_name AS breakfast_name, \n" +
-//                "mr.lunch_recipe_id, lr.recipe_name AS lunch_name, \n" +
-//                "mr.dinner_recipe_id, dr.recipe_name AS dinner_name\n" +
-//                "FROM mealplan_recipe mr\n" +
-//                "LEFT JOIN recipe br ON mr.breakfast_recipe_id = br.recipe_id\n" +
-//                "LEFT JOIN recipe lr ON mr.lunch_recipe_id = lr.recipe_id\n" +
-//                "LEFT JOIN recipe dr ON mr.dinner_recipe_id = dr.recipe_id\n" +
-//                "WHERE mr.mealplan_id = ?;";
-
         String mpsql = "SELECT mr.mealplan_day_count,\n" +
                 "mr.breakfast_recipe_id, br.recipe_name AS breakfast_name, br.photo_url AS breakfast_url, \n" +
                 "mr.lunch_recipe_id, lr.recipe_name AS lunch_name, lr.photo_url AS lunch_url, \n" +
@@ -227,7 +214,6 @@ public class JdbcMealplanDao implements MealplanDao{
 
     }
 
-
     @Override
     public void deleteMealplan (int mealplanId, int userId) {
         int createdUserId = 0;
@@ -272,9 +258,6 @@ public class JdbcMealplanDao implements MealplanDao{
             }
         }
     }
-
-
-
 
     private Mealplan mapRowToMealplan(SqlRowSet rs) {
         Mealplan mealplan = new Mealplan();
