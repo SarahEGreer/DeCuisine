@@ -1,18 +1,24 @@
 <template>
     <div class="recipe-list-container">
-      <h1>Recipe List</h1>
-      <div v-if="recipes.length" class="recipe-grid">
-        <recipe-thumbnail v-for="recipe in recipes" :key="recipe.recipeId" :recipe="recipe" />
-      </div>
-      <div v-else>
-        <p>No recipes available.</p>
-      </div>
+        <h1>Recipe List</h1>
+        <input 
+            type="text" 
+            v-model="searchQuery" 
+            placeholder="Search for a recipe..." 
+            class="recipe-search-bar"
+        />
+        <div v-if="filteredRecipes.length" class="recipe-grid">
+            <recipe-thumbnail v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe" />
+        </div>
+        <div v-else>
+            <p>No recipes available.</p>
+        </div>
     </div>
-  </template>
+</template>
 
 <script>
 import RecipeService from '../services/RecipeService';
-import RecipeThumbnail from '../components/RecipeThumbnail.vue'
+import RecipeThumbnail from '../components/RecipeThumbnail.vue';
 
 export default {
     components: {
@@ -20,24 +26,27 @@ export default {
     },
     data() {
         return {
-            recipes: [
-            ],
+            recipes: [],
+            searchQuery: '',
+        };
+    },
+    computed: {
+        filteredRecipes() {
+            return this.recipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
         }
     },
     created() {
         RecipeService.getRecipes()
             .then(response => {
-                // console.log('Recipes fetched:', response.data); // Log the fetched data
                 this.recipes = response.data;
-                console.log(response.data);
             })
             .catch(error => {
-                console.error('Error fetching recipes:', error); // Log any error
+                console.error('Error fetching recipes:', error);
             });
-    }
-
-
-}
+    },
+};
 
 </script>
 
@@ -46,6 +55,15 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+}
+
+.recipe-search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .recipe-grid {
@@ -57,5 +75,4 @@ export default {
 .recipe-thumbnail {
     width: 100%; 
 }
-
 </style>
