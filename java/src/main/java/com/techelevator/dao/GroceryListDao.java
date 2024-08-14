@@ -12,6 +12,8 @@ public interface GroceryListDao {
 
     void addToGroceryListByMealPlan(int mealplanId, int userId);
 
+    void addIngredientsToGroceryListByRecipeId(int recipeId, int userId);
+
     void updateGroceryList(List<Recipe_IngredientDto> groceryItems, int userId);
 
 

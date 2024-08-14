@@ -73,6 +73,26 @@ public class GroceryListController {
         }
     }
 
+    //gives user ability to add recipe ingredients directly from recipe to grocery list
+    @PostMapping("/addIngredients/{recipeId}")
+    public void addIngredientsToGroceryListByRecipeId(@PathVariable int recipeId, Principal principal) {
+        try {
+            // Get the current user based on the logged-in principal
+            String userName = principal.getName();
+            User currentUser = userDao.getUserByUsername(userName);
+            int userId = currentUser.getId();
+
+            // Call the DAO method to add ingredients to the grocery list
+            groceryListDao.addIngredientsToGroceryListByRecipeId(recipeId, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Data integrity violation", e);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage(), e);
+        }
+    }
+
     // Due do timing constraints we decided to override the users current this with a new list.
     // Deletes the users current  grocery list and adds in the new grocery list.
     @PutMapping
