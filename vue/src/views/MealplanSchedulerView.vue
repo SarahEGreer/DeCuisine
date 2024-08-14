@@ -1,15 +1,17 @@
 <template>
-  <div class="meal-plan-scheduler-view">
+    <div class="meal-plan-scheduler-view">
+      <div class="sidebar-wrapper">
     <MealplanSidebar 
       ref="sidebarContainer"
       @mealplan-dragged="prepareForDrag" 
-    />
+    /></div>
+    <div class="calendar-wrapper">
     <MealplanCalendar 
       :draggedMealPlan="draggedMealPlan" 
       @eventClick="deleteEvent" 
       @showDetails = "showMealplanDetails"
     />
-  </div>
+  </div></div>
 </template>
 
 <script>
@@ -52,5 +54,24 @@ export default {
 <style scoped>
 .meal-plan-scheduler-view {
   display: flex;
+  flex-direction: row;
+  height: 100vh;
+   
 }
+
+.sidebar-wrapper {
+ width: 20%;
+ /* height:calc(100vh-50px); */
+ background-color: #f0f0f0;
+ overflow-y: auto;
+}
+
+.calendar-wrapper {
+width: 80%;
+height:calc(100vh-50px); 
+margin-top: 1.25vh;
+margin-left: 5vh;
+margin-right: 5vh;
+}
+
 </style>

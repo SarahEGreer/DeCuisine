@@ -1,38 +1,51 @@
 <template>
-    <div>
-        <h1>GROCERY LIST FORM</h1>
+    <div class="grocery-list-form-container">
+
 
         <form v-on:submit.prevent="saveForm">
             <!-- <label for="name">Grocery List Name: </label>
             <input type="text" id="name" name="name" v-model="newGroceryList.name" required> -->
 
             <!-- <label for="ingredients">Ingredients: </label> -->
-            <h3>Ingredients:</h3>
+            <!-- <h3 class="section-title">Ingredients:</h3> -->
 
-            <div v-for="(ingredient, index) in newGroceryList.ingredients" :key="index">
-                <label for="ingredient">Ingredient: </label>
+            <div v-for="(item, index) in newGroceryList" :key="index">
+                <div class="ingredient-flex-container">
+                    <!-- called item_name -->
+                    <div class="form-group">
+                        <label for="item-name">Item: </label>
 
-                <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients" @complete="searchIngredients"
-                    dropdown />
+                        <AutoComplete v-model="item.name" :suggestions="filteredIngredients"
+                            @complete="searchIngredients" id="item-name" name="item-name" dropdown />
+                        <!-- can I do required with autocomplete^ -->
+                    </div>
+                    <div>
+                        <label for="amount">Amount: </label>
+                        <input type="number" name="amount" min="0" v-model="item.amount" step=".01" required
+                            id="amount">
+                    </div>
+                    <div>
+                        <label for="unit">Unit: </label>
 
+                        <AutoComplete v-model="item.unit" :suggestions="filteredUnits" @complete="searchUnits"
+                            dropdown />
+                    </div>
 
-                <label for="amount">Amount: </label>
-                <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required>
-
-
-                <label for="unit">Unit: </label>
-
-                <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits" dropdown />
-
-                <button type="button" v-on:click="removeIngredient(index)">Remove Ingredient</button>
+                <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-btn">Remove
+                    Item</button>
+                
+                </div>
+                
+                <!-- change to item -->
             </div>
 
-            <button type="button" v-on:click="addIngredient">Add Ingredient</button>
+            <button type="button" v-on:click="addIngredient" class="add-ingredient-btn">Add Ingredient</button>
 
-            <button type="submit">{{ isEdit ? 'Save Changes' : 'Save Grocery List' }}</button>
+            <div class="form-buttons">
+                <button type="submit" id="submit-button">Save Changes</button>
 
-            <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
-
+                <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+            </div>
 
         </form>
 
@@ -53,20 +66,16 @@ export default {
 
     props: {
         groceryList: {
-            type: Object,
+            type: Array,
             required: true,
         },
-        
+
     },
 
 
     data() {
         return {
-            newGroceryList: {
-                groceryListId: this.groceryList.groceryListId,
-                name: this.groceryList.name,
-                ingredients: this.groceryList.ingredients,
-            },
+            newGroceryList: [...this.groceryList],
             ingredientOptions: ['Tomato', 'Onion', 'Garlic', 'Salt', 'Pepper', 'Olive Oil'], //TEMP -> API CALL
             filteredIngredients: [],
             unitOptions: [
@@ -102,22 +111,31 @@ export default {
                 'clove', // clove
                 'head',  // head
                 'stalk', // stalk
-            ], 
+            ],
             filteredUnits: [],
         };
 
     },
 
+    // Do we need a watch?
+    watch: {
+        groceryList: {
+            handler(newVal) {
+                this.newGroceryList = [...newVal]; // Ensure it's a new array
+            },
+            immediate: true
+        }
+    },
 
 
     methods: {
 
         addIngredient() {
-            this.newGroceryList.ingredients.push({ name: '', amount: 0, unit: '' });
+            this.newGroceryList.push({ name: '', amount: 0, unit: '' });
         },
 
         removeIngredient(index) {
-            this.newGroceryList.ingredients.splice(index, 1);
+            this.newGroceryList.splice(index, 1);
         },
 
         searchIngredients(event) {
@@ -138,24 +156,19 @@ export default {
 
         cancelForm() {
             this.$router.back();
-        }, 
+        },
 
         resetForm() {
-            this.newGroceryList = {
-                groceryListId: 0,
-                name: '',
-                ingredients: [],
-            };
-            this.newIngredients = [];
+            this.newGroceryList = [];
         },
 
         saveForm() {
-                GroceryService.updateGroceryList(this.newGroceryList.groceryListId, this.newGroceryList).then(response => {
-                    console.log("This is our update response data", response.status);
-                    this.resetForm();
-                    this.$router.push({ name: 'grocery-list' });
-                });
-            
+            GroceryService.updateGroceryList(this.newGroceryList).then(response => {
+                console.log("This is our update response data", response.status);
+                this.resetForm();
+                this.$router.push({ name: 'grocery-list' });
+            });
+
         }
     },
 
@@ -166,13 +179,119 @@ export default {
         })
     },
 
+
 }
 
 </script>
 
 
 <style scoped>
-textarea {
-    resize: none;
+.grocery-list-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grocery-list-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    color: #333;
+} */
+
+.ingredient-group {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.ingredient-flex-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.remove-ingredient-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: x-small;
+    margin-top: 10px;
+}
+
+.add-ingredient-btn {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>

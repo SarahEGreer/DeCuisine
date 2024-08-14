@@ -1,4 +1,8 @@
 <template>
+   <div class="tutorial">
+      <p>Click a scheduled meal plan to see its details. Click and drag to change its start date. Double click to delete.</p>      
+
+    </div>
   <FullCalendar ref="fullCalendar" :options="calendarOptions" />
 </template>
 
@@ -126,3 +130,5 @@ export default {
   },
 };
 </script>
+
+<style></style>
