@@ -37,7 +37,8 @@
                         {{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}
                     </li>
                 </ul>
-                <button class="grocery-button">Add Ingredients to Grocery List</button>
+                <button class="grocery-button" @click="addToGroceryList($route.params.recipeId)">Add Ingredients to
+                    Grocery List</button>
             </div>
             <div class="recipe-instructions">
                 <h3>Instructions</h3>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-
+import GroceryService from '../services/GroceryService';
 // import RecipeService from '../services/RecipeService.js';
 
 export default {
@@ -56,6 +57,16 @@ export default {
         recipe: {
             type: Object,
             required: true
+        }
+    },
+
+    methods: {
+        addToGroceryList(recipeId) {
+            GroceryService.addRecipeToGroceryList(recipeId).then(response => {
+                console.log("your meal has been added")
+                this.$router.push('/grocerylist')
+                // Decide where to push, later
+            })
         }
     },
 
@@ -88,15 +99,15 @@ export default {
 <style scoped>
 .recipe-card {
     max-width: 900px;
-    min-height: 400px;  
+    min-height: 400px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .recipe-header {

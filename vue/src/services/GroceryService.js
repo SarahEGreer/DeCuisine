@@ -35,6 +35,10 @@ export default {
   addMealplanToGroceryList(mealplanId) {
     return http.post(`/grocerylist/mealplan/${mealplanId}`);
   },
+
+  addRecipeToGroceryList(recipeId) {
+    return http.post(`/grocerylist/addIngredients/${recipeId}`);
+  },
   //^^^^^^^^^^^handles adding or removal of GL items via overwrite from front end information.
   //To add or delete items, items are removed or added to front end array,
   //and front end array overwrites the database array.
