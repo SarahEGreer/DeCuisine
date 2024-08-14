@@ -2,13 +2,10 @@
     <div>
         <form v-on:submit.prevent="submitForm" class="grocery-checklist-form">
             <ul>
-                <li v-for="(item, index) in groceryList" :key="index">
-                    <input type="checkbox" @click="checkOffItem(index)">
-                    {{ item.name }}
-                    amount: {{ item.amount }}
-                    unit: {{ item.unit }}
+                <li v-for="(item, index) in updatedGroceryList" :key="index" class="grocery-item">
+                    <input type="checkbox" v-model="item.checked">
+                    {{ item.name }} amount: {{ item.amount }} unit: {{ item.unit }}
                 </li>
-                <!-- continue making into GL specific to database -->
             </ul>
             <button type="submit" id="submit-btn">Delete Checked Items</button>
         </form>
@@ -18,16 +15,8 @@
 <script>
 
 import GroceryService from '../services/GroceryService.js';
-// import RecipeService from '../services/RecipeService.js';
 
 export default {
-    props: {
-        groceryList: {
-            type: Array,
-            required: true
-        }
-    },
-
     data() {
         return {
             updatedGroceryList: []
@@ -35,29 +24,51 @@ export default {
     },
 
     methods: {
-        checkOffItem(index) {
-            console.log(index)
-            // needs to be index of updatedGroceryList not groceryList
-            this.updatedGroceryList.splice(index, 1);
-            console.log(this.updatedGroceryList)
-        },
         submitForm() {
+            // Filter out checked
+            this.updatedGroceryList = this.updatedGroceryList.filter(item => !item.checked);
+
+            // Update gl with filtered list
             GroceryService.updateGroceryList(this.updatedGroceryList).then(response => {
-                this.$router.push({ name: 'grocery-list' })
-            })
+                this.$router.push({ name: 'grocery-list' });
+            });
         }
     },
 
     created() {
         GroceryService.getGroceryList().then(response => {
-            this.updatedGroceryList = response.data;
-        })
+            
+            this.updatedGroceryList = response.data.map(item => ({
+                ...item,
+                //start with everything unchecked
+                checked: false
+            }));
+        });
     }
 }
 </script>
 
 <style scoped>
 ul {
+    margin-top: 50px;
     list-style: none;
 }
+
+.grocery-item {
+    font-size: 1.2em; 
+    margin-bottom: 10px; 
+}
+
+#submit-btn {
+    display: block;
+    margin: 50px auto 0 auto;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
 </style>

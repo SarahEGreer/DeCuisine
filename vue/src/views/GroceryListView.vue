@@ -1,9 +1,14 @@
 <template>
+    
+    <div class="grocery-list-container">
+       
     <h1 class="gl-title">GROCERY LIST</h1>
+    
+    <button @click="editGroceryList" id="edit-btn">Edit Grocery List</button>
     <!-- Maybe we add a cute icon here -->
     <grocery-list-card v-bind:groceryList="groceryList" />
-    <button @click="editGroceryList" id="edit-btn">Edit Grocery List</button>
-
+    
+</div>
 
 </template>
 
@@ -55,8 +60,14 @@ export default {
 
 </script>
 <style scoped>
+.grocery-list-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
 #edit-btn {
-    margin-bottom: 5em;
+    margin-top: 20px;
 }
 
 .gl-title {
