@@ -73,6 +73,7 @@
 
 <template>
     <div class="recipe-form-container">
+        <h2>{{ isEdit ? 'Edit Recipe' : 'Create Recipe' }}</h2>
         <form v-on:submit.prevent="submitForm" class="recipe-form">
             <div class="form-group">
                 <label for="photo" class="form-label">Recipe Photo Link</label>
@@ -87,17 +88,19 @@
 
             <div class="form-group">
                 <h4>Prep Time</h4>
-                <label for="prep-time-hours" class="form-sublabel">Hours:</label>
-                <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
-                    v-model.number="prepTimeHours" class="form-input">
-                <label for="prep-time-minutes" class="form-sublabel">Minutes:</label>
-                <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
-                    placeholder="Minutes" v-model.number="prepTimeMinutes" class="form-input">
+                <div class="time-flex-container">
+                    <label for="prep-time-hours" class="form-sublabel">Hours:</label>
+                    <input type="number" id="prep-time-hours" name="prep-time-hours" min="0" placeholder="Hours"
+                        v-model.number="prepTimeHours" class="form-input">
+                    <label for="prep-time-minutes" class="form-sublabel">Minutes:</label>
+                    <input type="number" id="prep-time-minutes" name="prep-time-minutes" min="0" max="59"
+                        placeholder="Minutes" v-model.number="prepTimeMinutes" class="form-input">
+                </div>
             </div>
 
             <div class="form-group">
                 <h4>Cook Time</h4>
-                <div class="form-group-flex">
+                <div class="time-flex-container">
                     <label for="cook-time-hours" class="form-sublabel">Hours:</label>
                     <input type="number" id="cook-time-hours" name="cook-time-hours" min="0" placeholder="Hours"
                         v-model.number="cookTimeHours" class="form-input">
@@ -122,22 +125,24 @@
             <h3 class="section-title">Ingredients</h3>
 
             <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index" class="ingredient-group">
-                <div class="form-group">
-                    <label for="ingredient" class="form-label">Ingredient</label>
-                    <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients"
-                        @complete="searchIngredients" dropdown class="form-input" />
-                </div>
+                <div class="ingredient-flex-container">
+                    <div class="form-group">
+                        <label for="ingredient" class="form-label">Ingredient</label>
+                        <AutoComplete v-model="ingredient.name" :suggestions="filteredIngredients"
+                            @complete="searchIngredients" dropdown class="form-input" />
+                    </div>
 
-                <div class="form-group">
-                    <label for="amount" class="form-label">Amount</label>
-                    <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required
-                        class="form-input">
-                </div>
+                    <div class="form-group">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" min="0" v-model="ingredient.amount" step=".01" required
+                            class="form-input">
+                    </div>
 
-                <div class="form-group">
-                    <label for="unit" class="form-label">Unit</label>
-                    <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits"
-                        dropdown class="form-input" />
+                    <div class="form-group">
+                        <label for="unit" class="form-label">Unit</label>
+                        <AutoComplete v-model="ingredient.unit" :suggestions="filteredUnits" @complete="searchUnits"
+                            dropdown class="form-input" />
+                    </div>
                 </div>
 
                 <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-button">Remove
@@ -360,13 +365,16 @@ export default {
 .recipe-form-container {
     max-width: 800px;
     margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
     background-color: #fdfdfd;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    }
 
 .form-group {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -406,11 +414,20 @@ export default {
     color: #333;
 }
 
+.ingredient-flex-container {
+    display: flex;
+    gap: 20px; 
+    align-items: center; 
+}
+
 .ingredient-group {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     background-color: #f4f4f4;
     border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
 }
 
 .remove-ingredient-button {
@@ -420,7 +437,8 @@ export default {
     padding: 8px 10px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 5px;
+    align-self: flex-end; 
+    margin-top: 10px;
 }
 
 .add-ingredient-button {
@@ -431,6 +449,7 @@ export default {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    margin-bottom: 30px;
     display: block;
 }
 
@@ -441,7 +460,7 @@ export default {
 }
 
 .submit-button {
-    background-color: #2c3e50;
+    background-color: #000000;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -456,5 +475,14 @@ export default {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.time-flex-container {
+    display: flex;
+    gap: 20px;
+}
+
+.time-flex-container .form-group {
+    flex: 1;
 }
 </style>

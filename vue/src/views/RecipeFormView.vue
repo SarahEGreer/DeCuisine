@@ -1,8 +1,7 @@
 <template>
-    <div class="recipe-form-container">
-        <h2>{{ isEdit ? 'Edit Recipe' : 'Create Recipe' }}</h2>
+    
         <recipe-form v-bind:recipe="recipe" v-bind:isEdit="isEdit" />
-    </div>
+   
 </template>
 
 
@@ -70,18 +69,3 @@ export default {
 //STEP 4: If getRecipe is called, include a method to change "submit recipe" to "edit recipe"
 </script>
 
-<style scoped>
-.recipe-form-container {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.page-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: left;
-    /* Align text to the left to match Recipe Details */
-}
-</style>

@@ -1,5 +1,9 @@
 <template>
+
   <div class="mealplan-sidebar" ref="sidebarContainer">
+    <div class="tutorial">
+      <p>Drag a meal plan to the calendar to schedule it.</p>      
+    </div>
     <div 
       v-for="mealplan in mealplans" 
       :key="mealplan.mealplanId" 
@@ -48,3 +52,37 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mealplan-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  /* background-color: #f0f0f0; */
+  border-right: 1px solid #ccc;
+  /* height: 100%; */
+}
+.mealplan-card {
+  padding: 10px;
+  margin: 5px 0;
+  margin-left: 1vh;
+  margin-right: 1vh;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: move;
+}
+
+.mealplan-card:hover {
+  background-color: #f0f0f0;
+  cursor: grab;
+}
+
+.mealplan-card:active {
+  background-color: #ccc;
+  cursor: grabbing;
+}
+
+
+
+</style>

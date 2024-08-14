@@ -1,5 +1,5 @@
 <template>
-    <h1>GROCERY LIST</h1>
+    <h1 class="gl-title">GROCERY LIST</h1>
     <!-- Maybe we add a cute icon here -->
     <grocery-list-card v-bind:groceryList="groceryList" />
     <button @click="editGroceryList" id="edit-btn">Edit Grocery List</button>
@@ -57,5 +57,10 @@ export default {
 <style scoped>
 #edit-btn {
     margin-bottom: 5em;
+}
+
+.gl-title {
+    text-align: center;
+    margin-top: 1em;
 }
 </style>

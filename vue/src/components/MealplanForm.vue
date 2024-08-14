@@ -1,6 +1,6 @@
 <template>
     <div class="mealplan-form-container">
-        <h1>{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h1>
+        <h2 class="page-title">{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h2>
         <form v-on:submit.prevent="submitForm" class="mealplan-form">
             <div class="form-group">
                 <label for="name" class="form-label">Meal Plan Name:</label>
@@ -189,6 +189,113 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.mealplan-form-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    background-color: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* height: 500px;
+    overflow-y: auto; */
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.form-textarea {
+    height: 100px;
+    resize: none;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.schedule-group {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.remove-day-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.add-day-button {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
 
 
 

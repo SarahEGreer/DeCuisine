@@ -1,6 +1,6 @@
 <template>
     <div class="grocery-list-form-container">
-        <h2>Edit Grocery List</h2>
+        <h1 class="title">Edit Grocery List</h1>
         <grocery-list-form v-bind:groceryList="groceryList" />
     </div>
 </template>
@@ -54,5 +54,9 @@ export default {
     margin-bottom: 20px;
     text-align: left;
     /* Align text to the left to match Recipe Details */
+}
+
+.title {
+    text-align: center;
 }
 </style>

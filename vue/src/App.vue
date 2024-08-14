@@ -2,30 +2,101 @@
   <div id="capstone-app">
     <header id="site-header"> DE CUISINE</header>
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plans</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'recipe-list' }">Recipes</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'recipe-form' }">Create Recipe</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'recipe-list' }">View All Recipes</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'mealplan-form' }">Create Mealplan</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plan Scheduler</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-      
+      <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>
+
+      <div class="nav-right">
+        <!-- <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp; -->
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      </div>
     </div>
     <router-view />
 
-    <footer id="site-footer"> FOOTER </footer>
+    <!-- <footer id="site-footer"> FOOTER </footer> -->
 
   </div>
 </template>
 
+<!-- <template>
+  <div id="capstone-app">
+    <header id="site-header"> DE CUISINE</header>
+    <div id="nav">
+      <div class="nav-items">
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+        <div class="dropdown">
+          <router-link to="#">Recipes</router-link>
+          <div class="dropdown-content">
+            <router-link v-bind:to="{ name: 'recipe-form' }">Create Recipe</router-link>
+            <router-link v-bind:to="{ name: 'recipe-list' }">View All Recipes</router-link>
+          </div>
+        </div>&nbsp;|&nbsp;
 
+        <div class="dropdown">
+          <router-link to="#">Meal Plans</router-link>
+          <div class="dropdown-content">
+            <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>
+          </div>
+        </div>&nbsp;|&nbsp;
+
+        <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plan Scheduler</router-link>
+      </div>
+
+
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+    </div>
+    <router-view />
+
+    <footer id="site-footer"> FOOTER </footer>
+  </div>
+</template> -->
+
+<!-- <script>
+export default {
+  data() {
+    return {
+      dropdowns: {
+        recipes: false,
+        mealplans: false,
+      }
+    };
+  },
+  methods: {
+    toggleDropdown(dropdown) {
+      this.dropdowns[dropdown] = !this.dropdowns[dropdown];
+    }
+  }
+}
+</script> -->
 
 <style>
+html {
+  color-scheme: light;
+  height: 100%;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  color: #555;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-image: url('C:\Users\Student\sandbox\final-capstone-team-4\vue\src\assets\pexels-photo-1640777.jpeg');
+  /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+#capstone-app {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 #site-header {
@@ -43,6 +114,15 @@ body {
 #nav {
   background-color: #000;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }
 
 #nav a {
@@ -52,18 +132,63 @@ body {
   font-size: 16px;
 }
 
+.nav-right {
+  margin-left: auto;
+}
+
+.logout-link {
+  margin-left: auto;
+}
+
+/* .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #575757;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+} */
+
 #nav a:hover {
   text-decoration: underline;
 }
 
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #333;
   font-weight: bold;
 }
 
 
-p, span, li {
+p,
+span,
+li {
   font-size: 16px;
   color: #555;
 }
@@ -90,7 +215,9 @@ form label {
   font-weight: bold;
 }
 
-form input, form textarea, form select {
+form input,
+form textarea,
+form select {
   font-size: 16px;
   color: #555;
   padding: 8px;
@@ -100,15 +227,18 @@ form input, form textarea, form select {
   margin-bottom: 15px;
 }
 
-#site-footer {
+/* #site-footer {
   text-align: center;
   padding: 20px 0;
   background-color: #000;
   color: #fff;
   font-size: 18px;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   letter-spacing: 1px;
-}
+  margin-top: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+} */
 </style>
