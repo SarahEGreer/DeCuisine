@@ -33,8 +33,11 @@ public class MealplanController {
         this.mealplanDao = mealplanDao;
         this.userDao = userDao;
     }
-    //Returns basic details for all mealplans in table mealplan
-    //
+    //Returns basic info for all mealplans in table mealplan:
+    //    private int mealplanId;
+    //    private String name;
+    //    private String description;
+    //    private int userId;
     @GetMapping
     public List<Mealplan> getAllMealplans() {
         List<Mealplan> mealplans = new ArrayList<>();
@@ -45,6 +48,11 @@ public class MealplanController {
         }
         return mealplans;
     }
+    //Returns basic info for a mealplan in table mealplan:
+    //    private int mealplanId;
+    //    private String name;
+    //    private String description;
+    //    private int userId;
     @GetMapping( path = "/{mealplanId}")
     public Mealplan getMealplanByMealplanId(@PathVariable int mealplanId) {
         try{
@@ -53,7 +61,24 @@ public class MealplanController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to server or database", e);
         }
     }
-
+    //Returns all details for a mealplan based on its Id
+    //References mealplan_recipe and mealplan
+    //Formatted:
+    //private int mealplanId;
+    //    private String name;
+    //    private String description;
+    //    private int userId;
+    //    private
+    //      private int day;
+    //      private int breakfastId;
+    //      private String breakfastName;
+    //      private String breakfastPhotoUrl;
+    //      private int lunchId;
+    //      private String lunchName;
+    //      private String lunchPhotoUrl;
+    //      private int dinnerId;
+    //      private String dinnerName;
+    //      private String dinnerPhotoUrl;
     @GetMapping( path = "/details/{mealplanId}")
     public MealplanDto getMealplanDetailsWithSchedule(@PathVariable int mealplanId) {
         try{
