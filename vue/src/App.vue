@@ -1,6 +1,9 @@
 <template>
   <div id="capstone-app">
-    <header id="site-header"> DE CUISINE</header>
+    <header id="site-header"> DE CUISINE
+      <img src="@\assets\DE_CUISINE_LOGO_WHITE.png" alt="De Cuisine Logo" class="logo-image" />
+
+    </header>
     <div id="nav">
       <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plans</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>&nbsp;|&nbsp;
@@ -97,7 +100,7 @@ body {
   flex-grow: 1;
 }
 
-#site-header {
+/* #site-header {
   background-color: #000;
   color: #fff;
   font-size: 24px;
@@ -107,6 +110,18 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   border-bottom: 2px solid #e9e9e9;
+} */
+
+#site-header {
+  background-color: #000;
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #e9e9e9;
+}
+
+.logo-image {
+  max-width: 300px; 
+  height: auto;
 }
 
 #nav {
