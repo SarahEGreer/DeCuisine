@@ -86,11 +86,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-image: url('C:\Users\Student\sandbox\final-capstone-team-4\vue\src\assets\pexels-photo-1640777.jpeg');
-  /* Replace with your image path */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: #faf7f2;
 }
 
 #capstone-app {
@@ -215,7 +211,7 @@ form label {
   font-weight: bold;
 }
 
-form input,
+/* form input,
 form textarea,
 form select {
   font-size: 16px;
@@ -225,7 +221,7 @@ form select {
   border-radius: 5px;
   width: 100%;
   margin-bottom: 15px;
-}
+} */
 
 /* #site-footer {
   text-align: center;

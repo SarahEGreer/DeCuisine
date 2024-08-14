@@ -88,11 +88,15 @@ export default {
 <style scoped>
 .recipe-card {
     max-width: 900px;
+    min-height: 400px;  
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
 }
 
 .recipe-header {
@@ -123,6 +127,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    flex-grow: 1;
 }
 
 .recipe-ingredients,
