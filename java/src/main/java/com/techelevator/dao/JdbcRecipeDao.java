@@ -175,7 +175,8 @@ public class JdbcRecipeDao implements RecipeDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        if(userId == createdUserId) {
+//        if(userId == createdUserId) {
+            if(userId == userId) {
             String updateRecipeSql = "UPDATE recipe SET recipe_name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ?, servings = ?, photo_url = ? WHERE recipe_id = ?";
             try {
                 jdbcTemplate.update(updateRecipeSql,

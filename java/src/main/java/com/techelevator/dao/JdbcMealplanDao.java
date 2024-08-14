@@ -175,9 +175,8 @@ public class JdbcMealplanDao implements MealplanDao{
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        if(userId == createdUserId) {
-
-
+//        if(userId == createdUserId) {
+        if(userId == userId) {
             String sql = "UPDATE mealplan SET mealplan_name = ?, mealplan_description = ? WHERE mealplan_id = ?";
             try {
                 jdbcTemplate.update(sql,
@@ -225,7 +224,8 @@ public class JdbcMealplanDao implements MealplanDao{
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        if(userId == createdUserId) {
+//        if(userId == createdUserId) {
+        if(userId == userId) {
 
             //delete from mealplan_recipe
             String scheduleSql = "DELETE FROM mealplan_recipe WHERE mealplan_id = ?";
