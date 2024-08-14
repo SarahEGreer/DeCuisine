@@ -41,11 +41,7 @@
             </div>
             <div class="recipe-instructions">
                 <h3>Instructions</h3>
-                <ol>
-                    <li v-for="(step, index) in recipe.instructions.split('.')" :key="index">
-                        {{ step.trim() }}
-                    </li>
-                </ol>
+                <p v-html="formattedInstructions"></p>
             </div>
         </div>
     </div>
@@ -77,7 +73,10 @@ export default {
         },
         cookTimeMinutes() {
             return this.recipe.cookTime % 60;
-        }
+        },
+        formattedInstructions() {
+            return this.recipe.instructions.replace(/\n/g, '<br>');
+        },
     },
 
     created() {
@@ -164,5 +163,4 @@ export default {
     margin-top: 20px;
     cursor: pointer;
 }
-
 </style>
