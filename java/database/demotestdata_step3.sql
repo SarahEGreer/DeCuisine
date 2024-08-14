@@ -2,8 +2,9 @@ START TRANSACTION;
 
 -- Drop tables if they exist and create necessary sequences
 DROP TABLE IF EXISTS user_tracked_recipes, recipe_tags, recipes_ingredients, ingredients, recipe, tag_id, user_grocery_list, mealplan, mealplan_recipe, user_tracked_mealplan CASCADE;
-DROP SEQUENCE IF EXISTS sec_ingredient_id, sec_recipe_id, sec_tag_id, sec_mealplan_id;
+DROP SEQUENCE IF EXISTS sec_ingredient_id, sec_recipe_id, sec_tag_id, sec_mealplan_id, sec_event_id;
 
+-- Create sequences
 CREATE SEQUENCE sec_recipe_id
  INCREMENT BY 1
  START WITH 2001
@@ -20,6 +21,11 @@ CREATE SEQUENCE sec_tag_id
   NO MAXVALUE;
   
 CREATE SEQUENCE sec_mealplan_id
+  INCREMENT BY 1
+  START WITH 1
+  NO MAXVALUE;
+
+CREATE SEQUENCE sec_event_id
   INCREMENT BY 1
   START WITH 1
   NO MAXVALUE;
@@ -109,10 +115,10 @@ CREATE TABLE mealplan_recipe
     CONSTRAINT fk_mealplan_recipe_dinner FOREIGN KEY (dinner_recipe_id) REFERENCES recipe(recipe_id)
 );
 
--- Create the user_tracked_mealplan table
+-- Create the user_tracked_mealplan table with auto-generated event_id
 CREATE TABLE user_tracked_mealplan
 (
-    event_id INT PRIMARY KEY,
+    event_id INT PRIMARY KEY DEFAULT nextval('sec_event_id'),
     mealplan_id INT NOT NULL,
     start_date DATE NOT NULL,
     user_id INT NOT NULL,
@@ -219,8 +225,8 @@ INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_i
 ((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Family Favorites'), 1, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'));
 
 -- Track a meal plan by adding it to user_tracked_mealplan
-INSERT INTO user_tracked_mealplan (event_id, mealplan_id, start_date, user_id) VALUES 
-(1, (SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Healthy Meal Plan'), '2024-08-14', 3);
+INSERT INTO user_tracked_mealplan (mealplan_id, start_date, user_id) VALUES 
+((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Healthy Meal Plan'), '2024-08-14', 3);
 
 -- Add the additional recipes to user_tracked_recipes
 INSERT INTO user_tracked_recipes (recipes_id, user_id) 
