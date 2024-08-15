@@ -68,18 +68,21 @@ export default {
 }
 
 h3 {
+  margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .tutorial {
+  margin-left: 10px;
   margin-top: 0px;
   margin-bottom: 10px;
 }
 
 button {
+  margin-top: 50px;
   padding: 10px;
-  background-color: #360C8C;
+  background-color: #27ae60;
   color: white;
   border: none;
   border-radius: 5px;
@@ -92,12 +95,12 @@ button,
 }
 
 button:hover {
-  background-color: #000;
+  background-color: #1b7440;
 }
 
 .mealplan-card {
   padding: 18px;
-  background-color: #5e17eb;
+  background-color: #df5e24;
   color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -109,7 +112,7 @@ button:hover {
 }
 
 .mealplan-card:hover {
-  background-color: #36039E;
+  background-color: #b92706;
   cursor: grab;
 }
 

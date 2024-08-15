@@ -5,17 +5,17 @@
 
     </header>
     <div id="nav">
-      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Planner</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'recipe-list' }">Recipes</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'recipe-form' }">Create Recipe</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>
+      
+      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">MEAL PLANNER</router-link>
+      <router-link v-bind:to="{ name: 'mealplan-form' }">CREATE MEAL PLAN</router-link>
+      <router-link v-bind:to="{ name: 'recipe-list' }">RECIPES</router-link>
+      <router-link v-bind:to="{ name: 'recipe-form' }">CREATE RECIPE</router-link>
+      <router-link v-bind:to="{ name: 'grocery-list' }">GROCERY LIST</router-link>
 
       <div class="nav-right">
-        <router-link v-bind:to="{ name: 'about' }">About</router-link>&nbsp;|&nbsp;
-        <!-- <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp; -->
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-        <router-link v-else v-bind:to="{ name: 'login' }">Login</router-link>
+        <router-link v-bind:to="{ name: 'about' }">ABOUT</router-link>
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">LOGOUT</router-link>
+        <router-link v-else v-bind:to="{ name: 'login' }">LOGIN</router-link>
       </div>
     </div>
     <router-view />
@@ -37,58 +37,6 @@ export default {
 </script>
 
 
-
-<!-- <template>
-  <div id="capstone-app">
-    <header id="site-header"> DE CUISINE</header>
-    <div id="nav">
-      <div class="nav-items">
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-        <div class="dropdown">
-          <router-link to="#">Recipes</router-link>
-          <div class="dropdown-content">
-            <router-link v-bind:to="{ name: 'recipe-form' }">Create Recipe</router-link>
-            <router-link v-bind:to="{ name: 'recipe-list' }">View All Recipes</router-link>
-          </div>
-        </div>&nbsp;|&nbsp;
-
-        <div class="dropdown">
-          <router-link to="#">Meal Plans</router-link>
-          <div class="dropdown-content">
-            <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>
-          </div>
-        </div>&nbsp;|&nbsp;
-
-        <router-link v-bind:to="{ name: 'grocery-list' }">Grocery List</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plan Scheduler</router-link>
-      </div>
-
-
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
-    <router-view />
-
-    <footer id="site-footer"> FOOTER </footer>
-  </div>
-</template> -->
-
-<!-- <script>
-export default {
-  data() {
-    return {
-      dropdowns: {
-        recipes: false,
-        mealplans: false,
-      }
-    };
-  },
-  methods: {
-    toggleDropdown(dropdown) {
-      this.dropdowns[dropdown] = !this.dropdowns[dropdown];
-    }
-  }
-}
-</script> -->
 
 <style>
 :root {
@@ -143,9 +91,10 @@ body {
 
 #nav {
   background-color: #000;
-  padding: 10px 20px;
+  padding: 0 0 0 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;  
 }
 
 
@@ -155,15 +104,20 @@ body {
   flex-grow: 1;
 }
 
-#nav a {
+/* #nav a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  font-size: 16px;
-}
+  font-size: 23px;
+  margin-left: 18px;
+   
+} */
 
 .nav-right {
+  display: flex;
   margin-left: auto;
+  align-items: center;
+  padding: 0 20px 0 0;
 }
 
 .logout-link {
@@ -200,10 +154,40 @@ body {
   display: block;
 } */
 
-#nav a:hover {
-  text-decoration: underline;
+/* #nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 23px;
+  margin-left: 18px;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+} */
+
+/* #nav a:hover {
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+} */
+
+#nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 23px;
+  padding: 15px 10px; /* Adjusted padding to take up full height */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center; /* Center text within the link */
+  height: 100%; /* Ensure the link takes the full height of the nav bar */
 }
 
+#nav a:hover {
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 0; /* Remove border radius to make edges flush */
+}
 
 h1,
 h2,
@@ -306,7 +290,17 @@ footer {
 .fc .fc-next-button {
   /* Specific styling for previous and next buttons */
   background-color: #27ae60;
-  /* border-color: #27ae60; */
+  border-color: #ffffff;
+  color: #fff;
+}
+
+.fc .fc-prev-button:hover, .fc .fc-next-button:hover {
+  /* Specific styling for previous and next buttons on hover */
+  background-color: #1b7440;
+}
+
+.fc-icon-chevron-left,.fc-icon-chevron-right {
+  /* Specific styling for the chevron icons */
   color: #fff;
 }
 </style>

@@ -61,7 +61,7 @@ const routes = [
     name: "recipe-form",
     component: RecipeFormView,
     meta: {
-      requiresAuth: false, //Set to true when authentication is implemented
+      requiresAuth: true, //Set to true when authentication is implemented
     },
   },
   {
@@ -70,7 +70,7 @@ const routes = [
     // standardize naming conventions
     component: RecipeListView,
     meta: {
-      requiresAuth: false, //Set to true when authentication is implemented
+      requiresAuth: true, //Set to true when authentication is implemented
     },
   },
   {
@@ -78,7 +78,7 @@ const routes = [
     name: "RecipeDetailsView",
     component: RecipeDetailsView,
     meta: {
-      requiresAuth: false, //Set to true when authentication is implemented
+      requiresAuth: true, //Set to true when authentication is implemented
     },
   },
 
