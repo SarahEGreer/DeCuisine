@@ -169,7 +169,7 @@
 
         <div class="team-member">
           <div class="bio-content">
-            <img src="@assets\TeamPics\David_Pic.jpg" alt="Team Member 3" class="team-image">
+            <img src="@\assets\TeamPics\David_Pic.jpg" alt="Team Member 3" class="team-image">
             <div class="bio-text">
               <h3>David Hall</h3>
               <p class="role">Jr. Software Developer</p>
