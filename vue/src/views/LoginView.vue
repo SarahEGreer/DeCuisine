@@ -72,7 +72,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('@/assets/pexels-photo-1640777.jpeg');
+  /* background-image: url('@/assets/pexels-photo-1640777.jpeg'); */
+  background-image: url('src/assets/pexels-micheile-8366815.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -84,7 +85,8 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 400px;
+  max-width: 500px;
+  min-width: 400px;
   width: 100%;
 }
 

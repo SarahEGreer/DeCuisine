@@ -1,9 +1,10 @@
 <template>
   <div class="about-page">
     <div class="about-hero">
-      <img src="@/assets/pexels-photo-1640777.jpeg" alt="About De Cuisine" class="hero-image">
+      <!-- <img src="@/assets/pexels-photo-1640777.jpeg" alt="About De Cuisine" class="hero-image"> -->
+      <img src="src\assets\pexels-micheile-8366815.jpg" alt="About De Cuisine" class="hero-image">
       <div class="hero-overlay">
-        <h1 class="about-title">About De Cuisine</h1>
+        <h1 class="about-title">About <span class="title-brand"> De Cuisine</span></h1>
         <h2 class="about-subtitle">Because Every Meal Deserves A Plan</h2>
       </div>
     </div>
@@ -41,41 +42,49 @@
           </div>
           <div class="feature-card">
             <router-link to="/grocerylist" class="feature-link">
-              <h3>Grocery List</h3>
-              <p>Automatically generate a shopping list based on your meal plans, saving you time and keeping you
-                organized.
-              </p>
-              <video autoplay loop muted>
-                <source src="src\assets\Sceenshots\GroceryList.mp4" type="video/mp4" alt="Grocery List"
-                  class="feature-video">
-              </video>
+              <div class="feature-card-container">
+                <h3>Grocery List</h3>
+                <p>Automatically generate a shopping list based on your meal plans, saving you time and keeping you
+                  organized.
+                </p>
+                <video autoplay loop muted>
+                  <source src="src\assets\Sceenshots\GroceryList.mp4" type="video/mp4" alt="Grocery List"
+                    class="feature-video">
+                </video>
+              </div>
             </router-link>
           </div>
           <div class="feature-card">
             <router-link to="/mealplans/scheduler" class="feature-link">
-              <h3>Meal Plan Scheduler</h3>
-              <p>Schedule balanced meals ahead of time with our user-friendly planning tool.</p>
-              <video autoplay loop muted>
-                <source src="@\assets\Sceenshots\calendar.mp4" type="video/mp4" alt="Meal Plan Scheduler"
-                  class="feature-video">
-              </video>
+              <div class="feature-card-container">
+                <h3>Meal Plan Scheduler</h3>
+                <p>Schedule balanced meals ahead of time with our user-friendly planning tool.</p>
+                <video autoplay loop muted>
+                  <source src="@\assets\Sceenshots\calendar.mp4" type="video/mp4" alt="Meal Plan Scheduler"
+                    class="feature-video">
+                </video>
+              </div>
             </router-link>
           </div>
           <div class="feature-card">
             <router-link to="/recipes/list" class="feature-link">
-              <h3>Recipe Library</h3>
-              <p>Easily access and manage your saved recipes for quick addition to your meal plans.</p>
-              <video autoplay loop muted>
-                <source src="@\assets\Sceenshots\RecipeList.mp4" type="video/mp4" alt="Recipe Library"
-                  class="feature-video">
-              </video>
+              <div class="feature-card-container">
+                <h3>Recipe Library</h3>
+                <p>Easily access and manage your saved recipes for quick addition to your meal plans.</p>
+                <video autoplay loop muted>
+                  <source src="@\assets\Sceenshots\RecipeList.mp4" type="video/mp4" alt="Recipe Library"
+                    class="feature-video">
+                </video>
+              </div>
             </router-link>
           </div>
           <div class="feature-card">
             <router-link to="/register" class="feature-link">
-              <h3>User Friendly</h3>
-              <p>Our clean and intuitive design makes meal planning simple and enjoyable.</p>
-              <img src="@\assets\Stock-Images\UserFriendly.jpg" alt="User Friendly" class="feature-image">
+              <div class="feature-card-container">
+                <h3>User Friendly</h3>
+                <p>Our clean and intuitive design makes meal planning simple and enjoyable.</p>
+                <img src="@\assets\Stock-Images\UserFriendly.jpg" alt="User Friendly" class="feature-image">
+              </div>
             </router-link>
           </div>
         </div>
@@ -91,7 +100,7 @@
           scheduler
           will keep your kitchen running smoothly.
         </p>
-        <a href="/register">Register for an account here!</a>
+        <a href="/register" class="light-link">Register for an account here!</a>
       </div>
 
       <div class="testimonials-section">
@@ -229,12 +238,6 @@ export default {};
 </script>
 
 <style scoped>
-.about-page {
-
-  /* margin: 0 auto; */
-  /* padding: 20px; */
-}
-
 .about-body {
   width: 90%;
   max-width: 1200px;
@@ -247,10 +250,7 @@ export default {};
   text-align: center;
   color: white;
   margin-bottom: 20px;
-  /* width: 100vw; */
   width: 100%;
-  /* left: 50%;
-  transform: translateX(-50%); */
   z-index: 1;
 }
 
@@ -258,7 +258,6 @@ export default {};
   width: 100%;
   height: 400px;
   object-fit: cover;
-  /* margin-top: -20px; */
   margin-bottom: 0;
 }
 
@@ -277,14 +276,22 @@ export default {};
   color: white;
 }
 
+.title-brand {
+  font-size: 6rem;
+  color: white;
+  font-weight: 500;
+}
+
 .about-title {
   font-size: 6rem;
   margin: 0;
+  font-weight: 300;
 }
 
 .about-subtitle {
   font-size: 1.7rem;
   margin: 0;
+  font-weight: 300;
 }
 
 .about-content p {
@@ -362,7 +369,7 @@ export default {};
 } */
 
 .section-title {
-  margin-top: 40px;
+  margin-top: 80px;
   font-size: 2.2rem;
   color: #333;
   text-align: center;
@@ -384,7 +391,7 @@ export default {};
 }
 
 .how-it-works a {
-  color: #0000ff;
+  /* color: #0000ff; */
   text-decoration: underline;
   font-size: 1.5em;
 }

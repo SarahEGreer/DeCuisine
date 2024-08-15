@@ -81,6 +81,14 @@ footer {
   width: 100%;
 }
 
+.dark-link {
+  color: #006272;
+}
+
+.light-link {
+  color: #FFEBC6;
+}
+
 #site-header {
   background-color: #000;
   text-align: center;
@@ -151,6 +159,7 @@ h5,
 h6 {
   color: #333;
   font-weight: bold;
+  font-family: "League Spartan", sans-serif;
 }
 
 
@@ -219,6 +228,7 @@ form label {
 :root {
   --fc-button-active-bg-color: #93272C;
   --fc-event-bg-color: #006272;
+  --fc-event-border-color: #006272;
 }
 
 .fc .fc-prev-button,
@@ -264,4 +274,15 @@ form label {
   background-color: #CF901D;
   opacity: .8;
 }
+
+
+.fc-daygrid-dot-event .fc-event-title {
+  padding: inherit;
+  background-color: #006272;
+  border-radius: inherit;
+  color: #fff;
+  font-weight:inherit;
+  font-variant:inherit;
+  font-size: inherit;
+} 
 </style>
