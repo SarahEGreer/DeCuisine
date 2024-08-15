@@ -273,4 +273,11 @@ form label {
   background-color: #CF901D;
   opacity: .8;
 }
+
+/* 
+.fc-daygrid-dot-event .fc-event-title {
+  padding: 3px;
+  background-color: pink;
+  border-radius: 3px;
+} */
 </style>
