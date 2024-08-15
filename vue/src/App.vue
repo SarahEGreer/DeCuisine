@@ -81,6 +81,14 @@ footer {
   width: 100%;
 }
 
+.dark-link {
+  color: #006272;
+}
+
+.light-link {
+  color: #FFEBC6;
+}
+
 #site-header {
   background-color: #000;
   text-align: center;
@@ -151,6 +159,7 @@ h5,
 h6 {
   color: #333;
   font-weight: bold;
+  font-family: "League Spartan", sans-serif;
 }
 
 
