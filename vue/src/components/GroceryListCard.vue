@@ -1,11 +1,13 @@
 <template>
     <div>
         <form v-on:submit.prevent="submitForm" class="grocery-checklist-form form-container grocery-card">
-            <ul>
+            <ul class="grocery-list-ul">
+
                 <li v-for="(item, index) in updatedGroceryList" :key="index" class="grocery-item">
-                    <input type="checkbox" v-model="item.checked">
-                    {{ item.name }} amount: {{ item.amount }} unit: {{ item.unit }}
+                    <input type="checkbox" v-model="item.checked" class=item-input>
+                    <span class="item-label"> {{ item.name }} - {{ item.amount }} {{ item.unit }}</span>
                 </li>
+
             </ul>
             <button type="submit" id="submit-btn">Delete Checked Items</button>
             <button type="button" class="edit-btn" @click="editGroceryList">Edit Grocery List</button>
@@ -59,9 +61,17 @@ ul {
     list-style: none;
 }
 
+.grocery-list-ul {
+    margin-top: 50px;
+}
+
 .grocery-item {
     font-size: 1.2em;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 #submit-btn {
@@ -78,6 +88,26 @@ ul {
 
 .grocery-card {
     position: relative;
+}
+
+.item-input {
+    accent-color: green;
+    height: 20px;
+    width: 20px;
+}
+
+.item-label {
+    /* align-self: self-start; */
+    /* margin-left: 15px; */
+    margin-top: 3px;
+    font-size: 20px;
+
+}
+
+.flex {
+    display: flex;
+    margin: 1em;
+    flex-direction: column;
 }
 
 .edit-btn {
