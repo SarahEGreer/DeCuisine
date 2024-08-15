@@ -52,12 +52,34 @@ INSERT INTO user_tracked_mealplan (mealplan_id, start_date, user_id) VALUES
 
 INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_id, lunch_recipe_id, dinner_recipe_id) VALUES 
 ((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Healthy Meal Plan'), 1, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Grilled Chicken')),
+((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Healthy Meal Plan'), 2, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Grilled Chicken')),
 ((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Quick and Easy Meals'), 1, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), NULL),
-((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Family Favorites'), 1, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'));
+((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Quick and Easy Meals'), 2, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Pancakes'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Tacos'), NULL),
+
+((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Family Favorites'), 1, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara')),
+((SELECT mealplan_id FROM mealplan WHERE mealplan_name = 'Family Favorites'), 2, (SELECT recipe_id FROM recipe WHERE recipe_name = 'Chocolate Chip Cookies'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Caesar Salad'), (SELECT recipe_id FROM recipe WHERE recipe_name = 'Spaghetti Carbonara'));
 
 
 -- INSERT INTO user_tracked_recipes (recipes_id, user_id) 
 -- SELECT recipe_id, 3 FROM recipe WHERE recipe_name IN ('Chocolate Chip Cookies', 'Spaghetti Carbonara', 'Tacos');
+
+
+INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type, system_of_measurement) 
+SELECT 3, ingredient_name, 1, 'head', 'Imperial'
+FROM ingredients
+WHERE ingredient_name = 'lettuce'
+UNION ALL
+SELECT 3, ingredient_name, 2, 'pieces', 'Imperial'
+FROM ingredients
+WHERE ingredient_name = 'chicken breast'
+UNION ALL
+SELECT 3, ingredient_name, 400, 'grams', 'Metric'
+FROM ingredients
+WHERE ingredient_name = 'spaghetti'
+UNION ALL
+SELECT 3, ingredient_name, 500, 'grams', 'Metric'
+FROM ingredients
+WHERE ingredient_name = 'beef';
 
 
 COMMIT;

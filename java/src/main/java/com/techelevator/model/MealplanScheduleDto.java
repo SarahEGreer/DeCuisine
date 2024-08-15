@@ -4,19 +4,19 @@ public class MealplanScheduleDto {
 
 
     private int day;
-    private int breakfastId;
+    private Integer breakfastId;
     private String breakfastName;
     private String breakfastPhotoUrl;
-    private int lunchId;
+    private Integer lunchId;
     private String lunchName;
     private String lunchPhotoUrl;
-    private int dinnerId;
+    private Integer dinnerId;
     private String dinnerName;
     private String dinnerPhotoUrl;
 
     public MealplanScheduleDto() {}
 
-    public MealplanScheduleDto(int day, int breakfastId, String breakfastName, String breakfastPhotoUrl, int lunchId, String lunchName, String lunchPhotoUrl, int dinnerId, String dinnerName, String dinnerPhotoUrl) {
+    public MealplanScheduleDto(int day, Integer breakfastId, String breakfastName, String breakfastPhotoUrl, Integer lunchId, String lunchName, String lunchPhotoUrl, Integer dinnerId, String dinnerName, String dinnerPhotoUrl) {
         this.day = day;
         this.breakfastId = breakfastId;
         this.breakfastName = breakfastName;
@@ -37,27 +37,27 @@ public class MealplanScheduleDto {
         this.day = day;
     }
 
-    public int getBreakfastId() {
+    public Integer getBreakfastId() {
         return breakfastId;
     }
 
-    public void setBreakfastId(int breakfastId) {
+    public void setBreakfastId(Integer breakfastId) {
         this.breakfastId = breakfastId;
     }
 
-    public int getLunchId() {
+    public Integer getLunchId() {
         return lunchId;
     }
 
-    public void setLunchId(int lunchId) {
+    public void setLunchId(Integer lunchId) {
         this.lunchId = lunchId;
     }
 
-    public int getDinnerId() {
+    public Integer getDinnerId() {
         return dinnerId;
     }
 
-    public void setDinnerId(int dinnerId) {
+    public void setDinnerId(Integer dinnerId) {
         this.dinnerId = dinnerId;
     }
 
