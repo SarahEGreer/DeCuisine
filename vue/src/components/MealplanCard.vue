@@ -10,7 +10,8 @@
         </div>
         <div class="mealplan-schedule form-container">
             <div v-for="(day, index) in mealplan.schedule" :key="index">
-                <h2 class="day-header">Day {{ day.day }}</h2>
+                <h2 class="day-header">Day {{ index + 1 }}</h2>
+                <!-- ^^^^^^^^^^^^^^^^^ band-aid dynamic fix^^ from day.day -->
                 <div v-if="day.breakfastId" @click="viewRecipe(day.breakfastId)">
                     <h3>Breakfast</h3>
                     <div class="recipe-thumbnail ">

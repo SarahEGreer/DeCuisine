@@ -128,7 +128,7 @@
               leading robotics teams,
               Bryan now combines his passion for technology with problem-solving and collaboration skills honed through
               years of creative and advocacy work.
-              He is eager to leverage his unique perspective and growing expertise in software engineering to build
+              He is eager to leverage his unique perspective and growing skill in software engineering to build
               beautiful tools that make the world better and more accessible.</p>
           </div>
         </div>
