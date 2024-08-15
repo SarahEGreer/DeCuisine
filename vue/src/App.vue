@@ -91,7 +91,7 @@ body {
 
 #nav {
   background-color: #000;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;  
@@ -174,7 +174,7 @@ body {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  font-size: 23px;
+  font-size: 15px;
   padding: 15px 10px; /* Adjusted padding to take up full height */
   transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
