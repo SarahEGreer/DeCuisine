@@ -281,7 +281,7 @@ export default {};
   background-color: #f7d9c4;
   padding: 20px;
   border-radius: 10px;
-  margin: 20px 20px;
+  margin: 0px 0px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -295,7 +295,7 @@ export default {};
 
 .feature-card h3 {
   margin-top: 10px;
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .feature-card p {
