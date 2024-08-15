@@ -183,6 +183,7 @@ public class JdbcMealplanDao implements MealplanDao{
                         mealplanDto.getName(),
                         mealplanDto.getDescription(),
                         mealplanId);
+
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {

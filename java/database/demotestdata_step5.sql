@@ -60,6 +60,24 @@ INSERT INTO mealplan_recipe (mealplan_id, mealplan_day_count, breakfast_recipe_i
 -- SELECT recipe_id, 3 FROM recipe WHERE recipe_name IN ('Chocolate Chip Cookies', 'Spaghetti Carbonara', 'Tacos');
 
 
+INSERT INTO user_grocery_list (user_id, item_name, amount, unit_type, system_of_measurement) 
+SELECT 3, ingredient_name, 1, 'head', 'Imperial'
+FROM ingredients
+WHERE ingredient_name = 'lettuce'
+UNION ALL
+SELECT 3, ingredient_name, 2, 'pieces', 'Imperial'
+FROM ingredients
+WHERE ingredient_name = 'chicken breast'
+UNION ALL
+SELECT 3, ingredient_name, 400, 'grams', 'Metric'
+FROM ingredients
+WHERE ingredient_name = 'spaghetti'
+UNION ALL
+SELECT 3, ingredient_name, 500, 'grams', 'Metric'
+FROM ingredients
+WHERE ingredient_name = 'beef';
+
+
 COMMIT;
 -- ROLLBACK;
 
