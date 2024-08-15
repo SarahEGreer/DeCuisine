@@ -5,7 +5,7 @@
 
     </header>
     <div id="nav">
-      
+
       <router-link v-bind:to="{ name: 'mealplan-scheduler' }">MEAL PLANNER</router-link>
       <router-link v-bind:to="{ name: 'mealplan-form' }">CREATE MEAL PLAN</router-link>
       <router-link v-bind:to="{ name: 'recipe-list' }">RECIPES</router-link>
@@ -21,7 +21,7 @@
     <router-view />
 
 
-    <footer> <footer-info /> </footer>
+    <!-- <footer> <footer-info /> </footer> -->
   </div>
 
 </template>
@@ -94,7 +94,7 @@ body {
   padding: 0 0 0 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
 }
 
 
@@ -175,18 +175,22 @@ body {
   text-decoration: none;
   font-weight: bold;
   font-size: 15px;
-  padding: 15px 10px; /* Adjusted padding to take up full height */
+  padding: 15px 10px;
+  /* Adjusted padding to take up full height */
   transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
-  align-items: center; /* Center text within the link */
-  height: 100%; /* Ensure the link takes the full height of the nav bar */
+  align-items: center;
+  /* Center text within the link */
+  height: 100%;
+  /* Ensure the link takes the full height of the nav bar */
 }
 
 #nav a:hover {
   background-color: #fff;
   color: #000;
   text-decoration: none;
-  border-radius: 0; /* Remove border radius to make edges flush */
+  border-radius: 0;
+  /* Remove border radius to make edges flush */
 }
 
 h1,
@@ -294,12 +298,14 @@ footer {
   color: #fff;
 }
 
-.fc .fc-prev-button:hover, .fc .fc-next-button:hover {
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
   /* Specific styling for previous and next buttons on hover */
   background-color: #1b7440;
 }
 
-.fc-icon-chevron-left,.fc-icon-chevron-right {
+.fc-icon-chevron-left,
+.fc-icon-chevron-right {
   /* Specific styling for the chevron icons */
   color: #fff;
 }
