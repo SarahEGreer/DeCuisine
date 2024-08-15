@@ -1,17 +1,13 @@
 <template>
-    <div class="meal-plan-scheduler-view">
-      <div class="sidebar-wrapper">
-    <MealplanSidebar 
-      ref="sidebarContainer"
-      @mealplan-dragged="prepareForDrag" 
-    /></div>
+  <div class="meal-plan-scheduler-view">
+    <div class="sidebar-wrapper">
+      <MealplanSidebar ref="sidebarContainer" @mealplan-dragged="prepareForDrag" />
+    </div>
     <div class="calendar-wrapper">
-    <MealplanCalendar 
-      :draggedMealPlan="draggedMealPlan" 
-      @eventClick="deleteEvent" 
-      @showDetails = "showMealplanDetails"
-    />
-  </div></div>
+      <MealplanCalendar :draggedMealPlan="draggedMealPlan" @eventClick="deleteEvent"
+        @showDetails="showMealplanDetails" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -40,12 +36,12 @@ export default {
       console.log('Delete event:', eventId);
       MealplanService.deleteMealplanEvent(eventId)
       location.reload();
-        // .then(() => {
-        //   this.$refs.calendar.loadTrackedEvents();
-        // })
-        // .catch(error => {
-        //   console.error('Error deleting event:', error);
-        // });
+      // .then(() => {
+      //   this.$refs.calendar.loadTrackedEvents();
+      // })
+      // .catch(error => {
+      //   console.error('Error deleting event:', error);
+      // });
     },
   },
 };
@@ -55,25 +51,24 @@ export default {
 .meal-plan-scheduler-view {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-   
+  /* height: 100vh; */
+
 }
 
 .sidebar-wrapper {
- width: 20%;
- height: 100vh;
- /* height:calc(100vh-50px); */
- background-color: #f0f0f0;
- overflow-y: auto;
- border-right: 1px solid #ccc;
+  width: 20%;
+  height: 100vh;
+  height: calc(100vh-50px);
+  background-color: #f0f0f0;
+  overflow-y: auto;
+  border-right: 1px solid #ccc;
 }
 
 .calendar-wrapper {
-width: 80%;
-height: 100vh;
-margin-top: 1.25vh;
-margin-left: 5vh;
-margin-right: 5vh;
+  width: 80%;
+  /* height: 100vh; */
+  margin-top: 1.25vh;
+  margin-left: 5vh;
+  margin-right: 5vh;
 }
-
 </style>

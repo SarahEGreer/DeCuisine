@@ -32,7 +32,6 @@ const routes = [
     },
   },
 
-
   {
     path: "/login",
     name: "login",

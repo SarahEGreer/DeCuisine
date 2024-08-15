@@ -72,8 +72,8 @@
 </template> -->
 
 <template>
-    <div class="recipe-form-container">
-        <h2>{{ isEdit ? 'Edit Recipe' : 'Create Recipe' }}</h2>
+    <h2 class="page-title">{{ isEdit ? 'Edit Recipe' : 'Create Recipe' }}</h2>
+    <div class="form-container">
         <form v-on:submit.prevent="submitForm" class="recipe-form">
             <div class="form-group">
                 <label for="photo" class="form-label">Recipe Photo Link</label>
@@ -362,17 +362,6 @@ export default {
 
 
 <style scoped>
-.recipe-form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    background-color: #fdfdfd;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
 .form-group {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -416,8 +405,8 @@ export default {
 
 .ingredient-flex-container {
     display: flex;
-    gap: 20px; 
-    align-items: center; 
+    gap: 20px;
+    align-items: center;
 }
 
 .ingredient-group {
@@ -437,7 +426,7 @@ export default {
     padding: 8px 10px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-end; 
+    align-self: flex-end;
     margin-top: 10px;
 }
 

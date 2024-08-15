@@ -1,6 +1,6 @@
 <template>
-    <div class="mealplan-form-container">
-        <h2 class="page-title">{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h2>
+    <h2 class="page-title">{{ isEdit ? 'Edit Mealplan' : 'Create Mealplan' }}</h2>
+    <div class="mealplan-form-container form-container">
         <form v-on:submit.prevent="submitForm" class="mealplan-form">
             <div class="form-group">
                 <label for="name" class="form-label">Meal Plan Name:</label>
@@ -9,7 +9,8 @@
 
             <div class="form-group">
                 <label for="description" class="form-label">Description:</label>
-                <textarea id="description" name="description" v-model="newMealplan.description" class="form-textarea"></textarea>
+                <textarea id="description" name="description" v-model="newMealplan.description"
+                    class="form-textarea"></textarea>
             </div>
 
             <h3 class="section-title">Schedule:</h3>
@@ -20,19 +21,20 @@
                 <div class="form-group">
                     <label for="breakfast" class="form-label">Breakfast:</label>
                     <AutoComplete name="breakfast" id="breakfast" v-model="schedule.breakfast"
-                        :suggestions="filteredRecipes" @complete="searchRecipes" dropdown optionLabel="name" class="form-input"/>
+                        :suggestions="filteredRecipes" @complete="searchRecipes" dropdown optionLabel="name"
+                        class="form-input" />
                 </div>
 
                 <div class="form-group">
                     <label for="lunch" class="form-label">Lunch:</label>
-                    <AutoComplete name="lunch" id="lunch" v-model="schedule.lunch"
-                        :suggestions="filteredRecipes" @complete="searchRecipes" optionLabel="name" dropdown class="form-input"/>
+                    <AutoComplete name="lunch" id="lunch" v-model="schedule.lunch" :suggestions="filteredRecipes"
+                        @complete="searchRecipes" optionLabel="name" dropdown class="form-input" />
                 </div>
 
                 <div class="form-group">
                     <label for="dinner" class="form-label">Dinner:</label>
-                    <AutoComplete name="dinner" id="dinner" v-model="schedule.dinner"
-                        :suggestions="filteredRecipes" @complete="searchRecipes" optionLabel="name" dropdown class="form-input"/>
+                    <AutoComplete name="dinner" id="dinner" v-model="schedule.dinner" :suggestions="filteredRecipes"
+                        @complete="searchRecipes" optionLabel="name" dropdown class="form-input" />
                 </div>
 
                 <button type="button" v-on:click="removeDay(index)" class="remove-day-button">Remove Day</button>
@@ -91,23 +93,23 @@ export default {
     },
 
     watch: {
-    mealplan: {
-        handler(newVal) {
-            this.newMealplan = {
-                userId: newVal.userId,
-                mealplanId: newVal.mealplanId,
-                name: newVal.name,
-                description: newVal.description,
-                schedule: newVal.schedule.map(day => ({
-                    day: day.day,
-                    breakfast: { recipeId: day.breakfastId, name: day.breakfastName },
-                    lunch: { recipeId: day.lunchId, name: day.lunchName },
-                    dinner: { recipeId: day.dinnerId, name: day.dinnerName }
-                })),
-            };
-        },
-        immediate: true
-    }
+        mealplan: {
+            handler(newVal) {
+                this.newMealplan = {
+                    userId: newVal.userId,
+                    mealplanId: newVal.mealplanId,
+                    name: newVal.name,
+                    description: newVal.description,
+                    schedule: newVal.schedule.map(day => ({
+                        day: day.day,
+                        breakfast: { recipeId: day.breakfastId, name: day.breakfastName },
+                        lunch: { recipeId: day.lunchId, name: day.lunchName },
+                        dinner: { recipeId: day.dinnerId, name: day.dinnerName }
+                    })),
+                };
+            },
+            immediate: true
+        }
     },
 
     methods: {
@@ -172,10 +174,15 @@ export default {
             if (this.isEdit) {
                 MealplanService.updateMealplan(this.newMealplan.mealplanId, preparedMealplan).then(response => {
                     this.resetForm();
+                    this.$router.push({ name: 'mealplan-scheduler' });
+
                 });
             } else {
                 MealplanService.submitMealplan(preparedMealplan).then(response => {
                     this.resetForm();
+                    this.$router.push({ name: 'mealplan-scheduler' });
+                    //  fix that
+
                 });
             }
         }
@@ -191,7 +198,7 @@ export default {
 </script>
 
 <style scoped>
-.mealplan-form-container {
+/* .mealplan-form-container {
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
@@ -204,7 +211,6 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* height: 500px;
     overflow-y: auto; */
-}
 
 
 .form-group {
@@ -296,6 +302,3 @@ export default {
     cursor: pointer;
 }
 </style>
-
-
-

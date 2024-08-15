@@ -78,33 +78,38 @@ h3 {
 }
 
 button {
-  margin-top: auto;
-  margin-bottom: 100px;
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: #360C8C;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
+button,
+.mealplan-card {
+  margin: 5px 10px;
+}
+
 button:hover {
-  background-color: #45a049;
+  background-color: #000;
 }
 
 .mealplan-card {
-  padding: 10px;
-  margin: 5px 0;
-  margin-left: 1vh;
-  margin-right: 1vh;
-  background-color: #fff;
+  padding: 18px;
+  background-color: #5e17eb;
+  color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: move;
 }
 
+.mealplan-card:nth-child(odd) {
+  opacity: .8;
+}
+
 .mealplan-card:hover {
-  background-color: #4CAF50;
+  background-color: #36039E;
   cursor: grab;
 }
 

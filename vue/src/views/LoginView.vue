@@ -20,7 +20,7 @@
           </div>
           <button type="submit" class="btn-signin">Sign in</button>
           <p>
-            <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+            <router-link class="register-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
           </p>
         </form>
       </div>
@@ -79,7 +79,7 @@ export default {
 }
 
 .login-form-container {
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -129,5 +129,11 @@ input {
   background-color: #000000;
 }
 
+.register-link {
+  color: #003566;
+}
 
+.register-link:hover {
+  color: #0077b6;
+}
 </style>

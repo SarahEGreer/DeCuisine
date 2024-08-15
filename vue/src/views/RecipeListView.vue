@@ -1,12 +1,7 @@
 <template>
     <div class="recipe-list-container">
-        <h1>Recipe List</h1>
-        <input 
-            type="text" 
-            v-model="searchQuery" 
-            placeholder="Search for a recipe..." 
-            class="recipe-search-bar"
-        />
+        <h1 class="page-title">Recipe List</h1>
+        <input type="text" v-model="searchQuery" placeholder="Search for a recipe..." class="recipe-search-bar" />
         <div v-if="filteredRecipes.length" class="recipe-grid">
             <recipe-thumbnail v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe" />
         </div>
@@ -32,7 +27,7 @@ export default {
     },
     computed: {
         filteredRecipes() {
-            return this.recipes.filter(recipe => 
+            return this.recipes.filter(recipe =>
                 recipe.name.toLowerCase().includes(this.searchQuery.toLowerCase())
             );
         }
@@ -54,7 +49,7 @@ export default {
 .recipe-list-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding-bottom: 20px;
 }
 
 .recipe-search-bar {
@@ -73,6 +68,6 @@ export default {
 }
 
 .recipe-thumbnail {
-    width: 100%; 
+    width: 100%;
 }
 </style>

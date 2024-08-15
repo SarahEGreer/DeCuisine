@@ -1,14 +1,9 @@
 <template>
-    
-    <div class="grocery-list-container">
-       
-    <h1 class="gl-title">GROCERY LIST</h1>
-    
-    <button @click="editGroceryList" id="edit-btn">Edit Grocery List</button>
+
+    <h1 class="page-title">GROCERY LIST</h1>
+
     <!-- Maybe we add a cute icon here -->
     <grocery-list-card v-bind:groceryList="groceryList" />
-    
-</div>
 
 </template>
 
@@ -46,10 +41,6 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', `Could not get message data from server.`);
             }
         },
-        editGroceryList() {
-            // take to edit recipe view 
-            this.$router.push({ name: 'grocery-list-edit', });
-        }
     },
 
     created() {
@@ -60,18 +51,9 @@ export default {
 
 </script>
 <style scoped>
-.grocery-list-container {
+/* .grocery-list-container {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-}
-
-#edit-btn {
-    margin-top: 20px;
-}
-
-.gl-title {
-    text-align: center;
-    margin-top: 1em;
-}
+} */
 </style>

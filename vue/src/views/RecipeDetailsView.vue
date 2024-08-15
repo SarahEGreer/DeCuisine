@@ -11,7 +11,7 @@
         <h1 class="page-title">Recipe Details</h1>
         <div class="recipe-card-container">
             <recipe-card v-if="recipe" :recipe="recipe" />
-            <button v-if="recipe" @click="editRecipe" class="edit-button">Edit Recipe</button>
+
         </div>
     </div>
 </template>
@@ -19,6 +19,7 @@
 <script>
 import RecipeCard from '../components/RecipeCard.vue';
 import RecipeService from '../services/RecipeService';
+
 
 export default {
     components: {
@@ -51,10 +52,6 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', `Could not get message data from server.`);
             }
         },
-        editRecipe() {
-            // take to edit recipe view 
-            this.$router.push({ name: 'recipe-edit', params: { recipeId: this.recipe.recipeId } });
-        }
     },
     created() {
         this.getCurrentRecipeDetails(this.$route.params.recipeId);
@@ -70,12 +67,6 @@ export default {
     padding: 20px;
 }
 
-.page-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
 .recipe-card-container {
     position: relative;
 }
@@ -88,8 +79,26 @@ export default {
     border-radius: 5px;
     cursor: pointer;
     position: absolute;
-    top: 10px; 
-    right: 10px; 
-    z-index: 10; 
+    bottom: 10px;
+    right: 25px;
+    width: 42%;
+    z-index: 10;
+}
+
+.grocery-button {
+    position: absolute;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 0px;
+    /* margin: 0 auto; */
+    min-width: fit-content;
+    width: 42%;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    z-index: 10;
+    bottom: 10px;
+    left: 25px;
 }
 </style>

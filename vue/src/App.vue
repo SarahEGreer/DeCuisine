@@ -5,7 +5,7 @@
 
     </header>
     <div id="nav">
-      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Plans</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'mealplan-scheduler' }">Meal Planner</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'mealplan-form' }">Create Meal Plan</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'recipe-list' }">Recipes</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'recipe-form' }">Create Recipe</router-link>&nbsp;|&nbsp;
@@ -20,10 +20,23 @@
     </div>
     <router-view />
 
-    <!-- <footer id="site-footer"> FOOTER </footer> -->
 
+    <footer> <footer-info /> </footer>
   </div>
+
 </template>
+
+<script>
+import FooterInfo from './components/FooterInfo.vue'
+
+export default {
+  components: {
+    FooterInfo
+  }
+}
+</script>
+
+
 
 <!-- <template>
   <div id="capstone-app">
@@ -78,19 +91,23 @@ export default {
 </script> -->
 
 <style>
+:root {
+  --fd-button-bg-color: pink;
+}
+
 html {
   color-scheme: light;
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "League Spartan", sans-serif;
   margin: 0;
   padding: 0;
   color: #000;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   background-color: #faf7f2;
 }
 
@@ -120,13 +137,13 @@ body {
 }
 
 .logo-image {
-  max-width: 300px; 
+  max-width: 300px;
   height: auto;
 }
 
 #nav {
   background-color: #000;
-  padding: 10px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
 }
@@ -228,6 +245,32 @@ form label {
   font-weight: bold;
 }
 
+.page-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 32px;
+  margin-top: 40px;
+}
+
+.recipe-card,
+.form-container {
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.form-container {
+  width: 80%;
+  max-width: 700px;
+  background-color: #fdfdfd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grocery-checklist-form {
+  max-width: 600px;
+}
+
 /* form input,
 form textarea,
 form select {
@@ -254,4 +297,16 @@ form select {
   left: 0;
   z-index: 10;
 } */
+
+footer {
+  justify-self: flex-end;
+}
+
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  /* Specific styling for previous and next buttons */
+  background-color: #27ae60;
+  /* border-color: #27ae60; */
+  color: #fff;
+}
 </style>
