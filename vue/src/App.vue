@@ -20,8 +20,8 @@
     </div>
     <router-view />
 
+    <footer class="footer-class"> <footer-info /> </footer>
 
-    <!-- <footer> <footer-info /> </footer> -->
   </div>
 
 </template>
@@ -39,13 +39,15 @@ export default {
 
 
 <style>
-:root {
-  --fd-button-bg-color: pink;
+* {
+  box-sizing: border-box;
 }
+
+
 
 html {
   color-scheme: light;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 body {
@@ -63,19 +65,21 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-height: 100vh;
 }
 
-/* #site-header {
+router-view {
+  flex-grow: 1;
+}
+
+footer {
   background-color: #000;
   color: #fff;
-  font-size: 24px;
-  font-weight: bold;
   text-align: center;
   padding: 20px 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border-bottom: 2px solid #e9e9e9;
-} */
+  margin-top: auto;
+  width: 100%;
+}
 
 #site-header {
   background-color: #000;
@@ -104,15 +108,6 @@ body {
   flex-grow: 1;
 }
 
-/* #nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 23px;
-  margin-left: 18px;
-   
-} */
-
 .nav-right {
   display: flex;
   margin-left: auto;
@@ -124,51 +119,6 @@ body {
   margin-left: auto;
 }
 
-/* .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #333;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 5px;
-}
-
-.dropdown-content a {
-  color: #fff;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #575757;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-} */
-
-/* #nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 23px;
-  margin-left: 18px;
-  padding: 5px 10px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-} */
-
-/* #nav a:hover {
-  background-color: #fff;
-  color: #000;
-  text-decoration: none;
-} */
 
 #nav a {
   color: #fff;
@@ -213,6 +163,8 @@ li {
 
 
 button {
+  font-family: "League Spartan", sans-serif;
+
   font-size: 16px;
   padding: 10px 15px;
   border: none;
@@ -238,7 +190,10 @@ form label {
   text-transform: uppercase;
   font-size: 32px;
   margin-top: 40px;
+  letter-spacing: .07rem;
+
 }
+
 
 .recipe-card,
 .form-container {
@@ -259,41 +214,17 @@ form label {
   max-width: 600px;
 }
 
-/* form input,
-form textarea,
-form select {
-  font-size: 16px;
-  color: #555;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 100%;
-  margin-bottom: 15px;
-} */
 
-/* #site-footer {
-  text-align: center;
-  padding: 20px 0;
-  background-color: #000;
-  color: #fff;
-  font-size: 18px;
-  width: 100%;
-  letter-spacing: 1px;
-  margin-top: auto;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-} */
 
-footer {
-  justify-self: flex-end;
+:root {
+  --fc-button-active-bg-color: #93272C;
+  --fc-event-bg-color: #006272;
 }
 
 .fc .fc-prev-button,
 .fc .fc-next-button {
   /* Specific styling for previous and next buttons */
-  background-color: #27ae60;
+  background-color: #93272C;
   border-color: #ffffff;
   color: #fff;
 }
@@ -301,12 +232,36 @@ footer {
 .fc .fc-prev-button:hover,
 .fc .fc-next-button:hover {
   /* Specific styling for previous and next buttons on hover */
-  background-color: #1b7440;
+  background-color: #93272C;
+  border-color: #ffffff;
+  opacity: .8;
 }
+
+
 
 .fc-icon-chevron-left,
 .fc-icon-chevron-right {
   /* Specific styling for the chevron icons */
   color: #fff;
+}
+
+.fc .fc-today-button {
+  background-color: #CF901D;
+  border: none;
+}
+
+.fc .fc-today-button:disabled {
+  background-color: #CF901D;
+}
+
+.fc .fc-today-button:disabled:hover {
+  background-color: #CF901D;
+  opacity: .6;
+}
+
+
+.fc .fc-today-button:hover {
+  background-color: #CF901D;
+  opacity: .8;
 }
 </style>

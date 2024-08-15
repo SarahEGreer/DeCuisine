@@ -1,6 +1,9 @@
 <template>
+
     <div class="recipe-list-container">
-        <h1 class="page-title">Recipe List</h1>
+        <div class="title-container">
+            <h1 class="page-title">Recipe List</h1>
+        </div>
         <input type="text" v-model="searchQuery" placeholder="Search for a recipe..." class="recipe-search-bar" />
         <div v-if="filteredRecipes.length" class="recipe-grid">
             <recipe-thumbnail v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe" />

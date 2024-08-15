@@ -31,15 +31,15 @@
                             dropdown />
                     </div>
 
-                <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-btn">Remove
-                    Item</button>
-                
+                    <button type="button" v-on:click="removeIngredient(index)" class="remove-ingredient-btn">Remove
+                        Item</button>
+
                 </div>
-                
+
                 <!-- change to item -->
             </div>
 
-            <button type="button" v-on:click="addIngredient" class="add-ingredient-btn">Add Ingredient</button>
+            <button type="button" v-on:click="addIngredient" class="add-ingredient-btn">Add Item</button>
 
             <div class="form-buttons">
                 <button type="submit" id="submit-button">Save Changes</button>
@@ -190,8 +190,10 @@ export default {
 .grocery-list-form-container {
     max-width: 800px;
     margin: 0 auto;
+    margin-bottom: 100px;
     background-color: #fdfdfd;
-    padding: 20px;
+    padding: 30px;
+    width: 90%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -226,6 +228,7 @@ export default {
     display: flex;
     gap: 20px;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .form-group {

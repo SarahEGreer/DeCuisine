@@ -12,7 +12,7 @@
       @mousedown="emitDraggedMealplan(mealplan)" @click="goToMealplanDetails(mealplan.mealplanId)">
       {{ mealplan.name }}
     </div>
-    <button @click="goToCreateMealplan">Create New Meal Plan</button>
+    <button @click="goToCreateMealplan" class="create-btn">Create New Meal Plan</button>
   </div>
 </template>
 
@@ -65,6 +65,7 @@ export default {
   padding: 10px;
   height: 100%;
 
+
 }
 
 h3 {
@@ -80,13 +81,19 @@ h3 {
 }
 
 button {
-  margin-top: 50px;
-  padding: 10px;
-  background-color: #27ae60;
+
+  padding: 12px;
+  /* background-color: #223F1F; */
+  background-color: #CF901D;
   color: white;
   border: none;
+  font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.create-btn {
+  margin-top: 60px;
 }
 
 button,
@@ -95,12 +102,13 @@ button,
 }
 
 button:hover {
-  background-color: #1b7440;
+  opacity: .8;
 }
 
 .mealplan-card {
+  margin-top: 15px;
   padding: 18px;
-  background-color: #df5e24;
+  background-color: #006272;
   color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -112,7 +120,7 @@ button:hover {
 }
 
 .mealplan-card:hover {
-  background-color: #b92706;
+  opacity: .6;
   cursor: grab;
 }
 
