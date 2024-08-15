@@ -111,6 +111,7 @@ export default {
                 'clove', // clove
                 'head',  // head
                 'stalk', // stalk
+                'grams', // grams
             ],
             filteredUnits: [],
         };

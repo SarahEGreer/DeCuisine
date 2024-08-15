@@ -217,6 +217,7 @@ export default {
             filteredIngredients: [],
             unitOptions: [
                 'tsp',  // teaspoon
+                'teaspoon',
                 'tbsp', // tablespoon
                 'cup',  // cup
                 'oz',   // ounce
@@ -248,6 +249,7 @@ export default {
                 'clove', // clove
                 'head',  // head
                 'stalk', // stalk
+                'grams',
             ],
             filteredUnits: [],
             prepTimeHours: null,
@@ -338,13 +340,16 @@ export default {
                 RecipeService.updateRecipe(this.newRecipe.recipeId, this.newRecipe).then(response => {
                     console.log("This is our update response data", response.status);
                     this.resetForm();
-                    this.$router.push({ name: 'recipe-list' });
+                    // this.$router.push({ name: 'recipe-list' });
+                    this.$router.back();
                 });
             } else {
                 RecipeService.submitRecipe(this.newRecipe).then(response => {
                     console.log("This is our submit response data", response.status);
                     this.resetForm();
                     this.$router.push({ name: 'recipe-list' });
+                    
+                    
                 });
             }
         }
