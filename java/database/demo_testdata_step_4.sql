@@ -80,8 +80,7 @@ CREATE TABLE user_grocery_list
 	amount NUMERIC NOT NULL,
 	unit_type VARCHAR(100) NOT NULL,
 	system_of_measurement VARCHAR(100),
-	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT fk_item_name FOREIGN KEY (item_name) REFERENCES ingredients(ingredient_name)
+	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 
