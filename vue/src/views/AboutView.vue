@@ -204,7 +204,7 @@
                 With a background in marketing, e-commerce, product design, API integration, database design, and
                 automation, she is committed to creating user-friendly
                 and innovative software solutions. Karyssa is excited to contribute to a collaborative team and make a
-                meaningful impact in software development</p>
+                meaningful impact in software development.</p>
             </div>
           </div>
         </div>
