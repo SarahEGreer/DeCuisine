@@ -73,7 +73,7 @@ export default {
   justify-content: center;
   align-items: center;
   /* background-image: url('@/assets/pexels-photo-1640777.jpeg'); */
-  background-image: url('src/assets/pexels-micheile-8366815.jpg');
+  background-image: url('@/assets/pexels-micheile-8366815.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
