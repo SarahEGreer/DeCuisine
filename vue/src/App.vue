@@ -281,8 +281,15 @@ form label {
   background-color: #006272;
   border-radius: inherit;
   color: #fff;
-  font-weight:inherit;
-  font-variant:inherit;
+  font-weight: inherit;
+  font-variant: inherit;
   font-size: inherit;
-} 
+}
+
+@media (max-width: 800px) {
+
+  #nav a {
+    font-size: .78rem;
+  }
+}
 </style>

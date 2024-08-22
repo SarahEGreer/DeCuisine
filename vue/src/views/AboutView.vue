@@ -4,7 +4,7 @@
       <!-- <img src="@/assets/pexels-photo-1640777.jpeg" alt="About De Cuisine" class="hero-image"> -->
       <img src="src\assets\pexels-micheile-8366815.jpg" alt="About De Cuisine" class="hero-image">
       <div class="hero-overlay">
-        <h1 class="about-title">About <span class="title-brand"> De Cuisine</span></h1>
+        <h1 class="about-title">About <br> <span class="title-brand"> De Cuisine</span></h1>
         <h2 class="about-subtitle">Because Every Meal Deserves A Plan</h2>
       </div>
     </div>
@@ -25,9 +25,11 @@
         <div class="features-grid">
           <div class="feature-card">
             <router-link to="/recipes/new" class="feature-link">
-              <h3>Recipe Creation</h3>
-              <p>Easily create and store your favorite recipes with De Cuisine.</p>
-              <img src="src\assets\Sceenshots\CreateRecipe.png" alt="Recipe Creation" class="feature-image">
+              <div class="feature-card-container">
+                <h3>Recipe Creation</h3>
+                <p>Easily create and store your favorite recipes with De Cuisine.</p>
+                <img src="src\assets\Sceenshots\CreateRecipe.png" alt="Recipe Creation" class="feature-image">
+              </div>
             </router-link>
           </div>
           <div class="feature-card">
@@ -269,6 +271,7 @@ export default {};
   background-color: rgba(0, 0, 0, .8);
   padding: 20px 40px;
   border-radius: 10px;
+  line-height: 1.05;
 }
 
 .about-title,
@@ -299,6 +302,10 @@ export default {};
   margin: 35px 0;
   font-size: 1.75em;
   color: #333;
+}
+
+p {
+  line-height: 1.3;
 }
 
 /* features */
@@ -509,5 +516,40 @@ video {
   width: 80%;
   border-radius: 10px;
   margin: auto;
+}
+
+
+@media (max-width: 945px) {
+
+  .about-title,
+  .title-brand {
+    font-size: 5rem;
+  }
+
+  .about-subtitle,
+  .about-content p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 800px) {
+
+  .about-title,
+  .title-brand {
+    font-size: 3rem;
+  }
+
+  .about-subtitle {
+    font-size: 1rem;
+    margin-top: 15px;
+  }
+
+  .about-content p {
+    font-size: 1.2rem;
+  }
+
+  .hero-overlay {
+    width: 60%;
+  }
 }
 </style>
