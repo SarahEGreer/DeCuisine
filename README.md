@@ -118,7 +118,6 @@ To set up your database, follow these steps:
     - Manually create the user user2024 in PostgreSQL.
 7. Register User
 POST: localhost:9000/register
-
 {
   "username": "user2024",
   "password": "user2024",
@@ -131,6 +130,7 @@ POST: localhost:9000/register
   "username": "user2024",
   "password": "user2024"
 }
+
 9. Continue with:
     - Running demotestdata_step3.sql
     - Running user_step4.sql
@@ -146,4 +146,4 @@ Your database should now have the user2024 account available for demo purposes.
 
 ## Conclusion
 
-De Cuisine: Meal Planner offers a comprehensive solution for meal planning, recipe management, and grocery list integration. This README file outlines the steps necessary to set up and run the application successfully. If you encounter any issues, please refer to the "Common Issues & Solutions" section for troubleshooting assistance.
+De Cuisine: Meal Planner offers a comprehensive solution for meal planning, recipe management, and grocery list integration. If you encounter any issues, please refer to the "Common Issues & Solutions" section for troubleshooting assistance.
