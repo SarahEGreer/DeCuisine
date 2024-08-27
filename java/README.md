@@ -1,101 +1,143 @@
-# Capstone Starter Project
+# De Cuisine: Meal Planner
 
-## Database
+De Cuisine is a full-stack meal planning application designed to simplify the process of meal plan creation, recipe management, and grocery list integration. It also features visual tracking with FullCalendar.io, providing users with an intuitive interface to organize and manage their meal plans. De Cuisine was created using Agile principles and functioned as a final capstone project for Tech Elevator.
 
-Inside the `<project-root>/database/` directory, you'll find an executable Bash script (`.sh` file) and several SQL scripts (`.sql` files). These can be used to build and rebuild a PostgreSQL database for the capstone project.
+## Technologies Used
 
-From a terminal session, execute the following commands:
+- **Frontend**: Vue.js
+- **Backend**: Java with Spring Boot
+- **Database**: PostgreSQL
+- **Additional Libraries/Packages**:
+  - `@fullcalendar/vue3`
+  - `@fullcalendar/daygrid`
+  - `@fullcalendar/interaction`
+  - `primevue`
 
-```
-cd <project-root>/database/
-./create.sh
-```
+## Features
 
-This Bash script drops the existing database, if necessary, creates a new database named `final_capstone`, and runs the various SQL scripts in the correct order. You don't need to modify the Bash script unless you want to change the database name.
+1. **User Authentication**:
+   - Users can log in to access their account data.
+   - New users can register and create an account to start adding recipes and creating meal plans.
 
-Each SQL script has a specific purpose as described here:
+2. **Recipe Management**:
+   - Users can add new recipes to their personal library.
+   - Recipes consist of a list of ingredients and preparation instructions.
+   - Users can view, edit, and manage their saved recipes.
 
-| File Name | Description |
-| --------- | ----------- |
-| `data.sql` | This script populates the database with any static setup data or test/demo data. The project team should modify this script. |
-| `dropdb.sql` | This script destroys the database so that it can be recreated. It drops the database and associated users. The project team shouldn't have to modify this script. |
-| `schema.sql` | This script creates all of the database objects, such as tables and sequences. The project team should modify this script. |
-| `user.sql` | This script creates the database application users and grants them the appropriate privileges. The project team shouldn't have to modify this script. <br /> See the next section for more information on these users. |
+3. **Ingredient Management**:
+   - Users can add new ingredients to the system if the desired ingredient is not already listed.
 
-### Database users
+4. **Meal Plan Creation**:
+   - Users can create meal plans by selecting recipes from their library.
+   - Meal plans can be customized and tracked using FullCalendar.io.
 
-The database superuser—meaning `postgres`—must only be used for database administration. It must not be used by applications. As such, two database users are created for the capstone application to use as described here:
+5. **Grocery List Integration**:
+   - Automatically generate a grocery list based on the ingredients in the user's meal plan.
+   - Users can manage and track their grocery items.
 
-| Username | Description |
-| -------- | ----------- |
-| `final_capstone_owner` | This user is the schema owner. It has full access—meaning granted all privileges—to all database objects within the `capstone` schema and also has privileges to create new schema objects. This user can be used to connect to the database from PGAdmin for administrative purposes. |
-| `final_capstone_appuser` | The application uses this user to make connections to the database. This user is granted `SELECT`, `INSERT`, `UPDATE`, and `DELETE` privileges for all database tables and can `SELECT` from all sequences. The application datasource has been configured to connect using this user. |
+6. **Visual Tracking**:
+   - FullCalendar.io is integrated for meal plan visualization, allowing users to easily track and manage their meals over time.
+
+## ERD
+
+- Please refer to the ERD (Entity Relationship Diagram) provided to understand the database structure and relationships.
+
+## API Endpoints
+
+Refer to the following endpoints for interacting with the backend:
+
+### Authentication
+- **POST** `/register`
+- **POST** `/login`
+
+### Recipes
+- **GET** `/recipes`
+- **POST** `/recipes`
+- **GET** `/recipes/{recipeId}`
+- **PUT** `/recipes/{recipeId}`
+- **DELETE** `/recipes/{recipeId}`
+
+### Meal Plans
+- **GET** `/mealplan`
+- **POST** `/mealplan`
+- **GET** `/mealplan/{mealplanId}`
+- **PUT** `/mealplan/{mealplanId}`
+- **DELETE** `/mealplan/{mealplanId}`
+
+### Grocery Lists
+- **GET** `/grocerylist`
+- **POST** `/grocerylist`
+- **PUT** `/grocerylist`
+- **DELETE** `/grocerylist`
+
+### Tracked Meals
+- **GET** `/tracked`
+- **POST** `/tracked`
+- **PUT** `/tracked`
+- **DELETE** `/tracked/{mealplanId}`
 
 
-## Spring Boot
-Note: Spring Boot has been configured to run on port `9000` for this project. You might be used to port `8080` from earlier in the cohort, but it's changed so as not to conflict with the Vue server that you'll be running concurrently.
 
-### Datasource
+- The list of API endpoints has been provided for reference in managing the application.
 
-A Datasource has been configured for you in `/src/resources/application.properties`. It connects to the database using the `capstone_appuser` database user. You can change the name of this database if you want, but remember to change it here and in the `create.sh` script in the database folder:
+## Common Issues & Solutions
 
-```
-# datasource connection properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/final_capstone
-spring.datasource.name=final_capstone
-spring.datasource.username=final_capstone_appuser
-spring.datasource.password=finalcapstone
-```
+1. **401 Status Error**:
+   - Update the Bearer Token to resolve the issue.
 
-### JdbcTemplate
+2. **500/501 Error**:
+   - Rerun the GRANT permissions in pgAdmin (user_STEP2.sql).
 
-If you look in `/src/main/java/com/techelevator/dao`, you'll see `JdbcUserDao`. This is an example of how to get an instance of `JdbcTemplate` in your DAOs. If you declare a field of type `JdbcTemplate` and add it as an argument to the constructor, Spring automatically injects an instance for you:
+3. **500 Internal Server Error**:
+   - Restart and rerun the server in Java.
 
-```java
-@Service
-public class JdbcUserDao implements UserDao {
+## Setting Up Your Database
 
-    private JdbcTemplate jdbcTemplate;
+To set up your database, follow these steps:
 
-    public JdbcUserDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+1. Open a terminal.
+2. Navigate to the project database folder within the Java folder:
+   ```bash
+   cd <project-root>/java/database/
+   ./create.sh
+3. Open pgAdmin.
+4. Create the database "final_capstone" using the provided scripts.
+5. Right-click on the database and open the Query Tool.
+6. Update the database using the following steps:
+    - Git pull the latest changes.
+    - In pgAdmin, open the Query Tool:
+        - Run schema_step1.sql
+        - Run data_step2.sql
+    - Manually create the user user2024 in PostgreSQL.
+7. Register User
+POST: localhost:9000/register
+
+{
+  "username": "user2024",
+  "password": "user2024",
+  "confirmPassword": "user2024",
+  "role": "ROLE_ADMIN"
 }
-```
 
-### CORS
-
-Any controller that'll be accessed from a client like the Vue Starter application needs the `@CrossOrigin` annotation. This
-tells the browser that you're allowing the client application to access this resource:
-
-```java
-@RestController
-@CrossOrigin
-public class AuthenticationController {
-    // ...
+8. Log in to obtain the AuthToken for testing in PostgreSQL:
+{
+  "username": "user2024",
+  "password": "user2024"
 }
-```
+9. Continue with:
+    - Running demotestdata_step3.sql
+    - Running user_step4.sql
+10. Refresh your tables in the final_capstone database.
+11. In pgAdmin, rerun step_4.sql.
+12. Ensure that you have executed the 'GRANT permissions' for all tables.
+13. Restart the Java server.
+14. Start the Vue.js frontend.
 
-## Security
+Your database should now have the user2024 account available for demo purposes.
 
-Most of the functionality related to Security is located in the `/src/main/java/com/techelevator/security` package. You shouldn't have to modify anything here, but feel free to go through the code if you want to see how things work.
+*Note* You may create other users and those users may add any recipes or mealplans to the site. 
 
-### Authentication Controller
+## Conclusion
 
-There is a single controller in the `com.techelevator.controller` package called `AuthenticationController.java`.
+De Cuisine: Meal Planner offers a comprehensive solution for meal planning, recipe management, and grocery list integration. This README file outlines the steps necessary to set up and run the application successfully. If you encounter any issues, please refer to the "Common Issues & Solutions" section for troubleshooting assistance.
 
-This controller contains the `/login` and `/register` routes and works with the Vue starter as is. If you need to modify the user registration form, start here.
-
-The authentication controller uses the `JdbcUserDao` to read and write data from the users table.
-
-
-## Testing
-
-
-### DAO integration tests
-
-`com.techelevator.dao.BaseDaoTests` has been provided for you to use as a base class for any DAO integration test. It initializes a Datasource for testing and manages rollback of database changes between tests.
-
-`com.techelevator.dao.JdbUserDaoTests` has been provided for you as an example for writing your own DAO integration tests.
-
-Remember that when testing, you're using a copy of the real database. The schema for the test database is defined in the same schema script for the real database, `database/schema.sql`. The data for the test database is defined separately within `/src/test/resources/test-data.sql`.
