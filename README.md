@@ -42,6 +42,8 @@ De Cuisine is a full-stack meal planning application designed to simplify the pr
 
 - Please refer to the ERD (Entity Relationship Diagram) provided to understand the database structure and relationships.
 
+![alt text](erd.png)
+
 ## API Endpoints
 
 Refer to the following endpoints for interacting with the backend:
