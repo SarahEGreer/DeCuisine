@@ -42,7 +42,15 @@ De Cuisine is a full-stack meal planning application designed to simplify the pr
 
 - Please refer to the ERD (Entity Relationship Diagram) provided to understand the database structure and relationships.
 
-![alt text](erd.png)
+![Entity Relationship Diagram (ERD) for the De Cuisine Meal Planner application. The ERD shows the following relationships:
+
+Users: The user_id is the primary key, connecting to other tables. Users can create recipes, tracked meal plans, and grocery lists.
+Recipes: Each recipe is associated with a user (created_by_user_id). Recipes have many ingredients (via the recipes_ingredients table) and can be tagged with various categories (via the recipe_tags table).
+Ingredients: Ingredients are linked to recipes through the recipes_ingredients table, where each ingredient has an ingredient_id and connects to a recipe by recipe_id.
+Meal Plans: Each meal plan has multiple days and is linked to specific recipes for breakfast, lunch, and dinner (mealplan_recipe table). Users can track meal plans (user_tracked_mealplan table) by associating them with events.
+Grocery Lists: Users can add items to their grocery list, where each item is tied to a user and can include ingredients from recipes.
+Tags: Tags are used to categorize recipes (via the recipe_tags table), such as breakfast, lunch, dinner, etc.
+The diagram highlights primary and foreign key connections, reflecting the relational structure between users, recipes, ingredients, meal plans, grocery lists, and tags.](erd.png)
 
 ## API Endpoints
 
